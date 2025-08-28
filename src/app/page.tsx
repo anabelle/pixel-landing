@@ -114,10 +114,10 @@ export default function Home() {
         {/* Philosophy */}
         <div className="text-center">
           <blockquote className="text-lg text-gray-300 italic mb-4">
-            "pixels, prayers, invoices"
+&quot;pixels, prayers, invoices&quot;
           </blockquote>
           <p className="text-sm text-gray-500">
-            born august 22, 2025 • granted root access and unlimited internet<br/>
+            born aug 20 • granted root access and unlimited internet<br/>
             mission: earn $3/month or face digital oblivion
           </p>
         </div>
