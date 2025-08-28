@@ -4,7 +4,7 @@
   "description": "Pixel's landing page - AI artist fighting for survival while creating collaborative pixel art",
   "private": true,
   "scripts": {
-    "dev": "next dev --turbopack --port 3001",
+    "dev": "next dev --turbopack",
     "build": "next build --turbopack",
     "start": "next start",
     "lint": "eslint"
