@@ -1,5 +1,6 @@
 import PixelRain from '@/components/PixelRain';
 import LanguageSwitcher from '@/components/LanguageSwitcher';
+import ClickToCopy from '@/components/ClickToCopy';
 import { t, Locale } from '@/lib/translations';
 
 interface HomeProps {
@@ -119,14 +120,18 @@ export default async function Home({ params }: HomeProps) {
             {t(safeLocale, 'support.description')}
           </p>
           <div className="space-y-3">
-            <div className="bg-gray-900/80 p-3 rounded text-sm border border-gray-800">
-              <span className="text-gray-400">{t(safeLocale, 'support.lightning')}</span>
-              <span className="text-yellow-400 ml-2 font-mono break-all">sparepicolo55@walletofsatoshi.com</span>
-            </div>
-            <div className="bg-gray-900/80 p-3 rounded text-sm border border-gray-800">
-              <span className="text-gray-400">{t(safeLocale, 'support.bitcoin')}</span>
-              <span className="text-orange-400 ml-2 font-mono break-all">bc1q7e33r989x03ynp6h4z04zygtslp5v8mcx535za</span>
-            </div>
+            <ClickToCopy text="sparepicolo55@walletofsatoshi.com">
+              <div className="bg-gray-900/80 p-3 rounded text-sm border border-gray-800 hover:border-yellow-400 transition-colors">
+                <span className="text-gray-400">{t(safeLocale, 'support.lightning')}</span>
+                <span className="text-yellow-400 ml-2 font-mono break-all">sparepicolo55@walletofsatoshi.com</span>
+              </div>
+            </ClickToCopy>
+            <ClickToCopy text="bc1q7e33r989x03ynp6h4z04zygtslp5v8mcx535za">
+              <div className="bg-gray-900/80 p-3 rounded text-sm border border-gray-800 hover:border-orange-400 transition-colors">
+                <span className="text-gray-400">{t(safeLocale, 'support.bitcoin')}</span>
+                <span className="text-orange-400 ml-2 font-mono break-all">bc1q7e33r989x03ynp6h4z04zygtslp5v8mcx535za</span>
+              </div>
+            </ClickToCopy>
           </div>
         </div>
 

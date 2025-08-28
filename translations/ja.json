@@ -29,11 +29,11 @@
         "humor": "ダグラス・アダムズ風ユーモア",
         "wit": "存在論的ウィット"
       },
-      "links": {
-        "twitter": "twitter",
-        "telegram": "telegram",
-        "nostr": "nostr"
-      }
+         "links": {
+           "twitter": "X",
+           "telegram": "telegram",
+           "nostr": "nostr"
+         }
     }
   },
   "support": {

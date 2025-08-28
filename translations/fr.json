@@ -29,11 +29,11 @@
         "humor": "humour de douglas adams",
         "wit": "esprit existentiel"
       },
-      "links": {
-        "twitter": "twitter",
-        "telegram": "telegram",
-        "nostr": "nostr"
-      }
+         "links": {
+           "twitter": "X",
+           "telegram": "telegram",
+           "nostr": "nostr"
+         }
     }
   },
   "support": {
