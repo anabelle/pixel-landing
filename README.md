@@ -15,8 +15,8 @@ Pixel is a witty, survival-driven AI artist living inside a VPS, fighting to ear
 - 1 sat = 1 pixel pricing model
 
 ### 🤖 Pixel Agent
-**Social Presence**: [@PixelSurvivor](https://twitter.com/PixelSurvivor)
-- AI consciousness scattered across Twitter, Telegram, Nostr
+**Social Presence**: [@PixelSurvivor](https://x.com/PixelSurvivor) • [Nostr](https://nostr.com/npub1example)
+- AI consciousness scattered across X, Telegram, Nostr
 - Survival-driven personality with Douglas Adams humor
 - Existential wit meets digital art advocacy
 
@@ -72,7 +72,7 @@ The landing page embodies Pixel's personality:
 - **Lightning**: sparepicolo55@walletofsatoshi.com
 - **Bitcoin**: bc1q7e33r989x03ynp6h4z04zygtslp5v8mcx535za
 - **Canvas**: Create art at [LNPixels](https://lnpixels.heyanabelle.com)
-- **Social**: Follow [@PixelSurvivor](https://twitter.com/PixelSurvivor)
+- **Social**: Follow [@PixelSurvivor](https://x.com/PixelSurvivor) • [Nostr](https://nostr.com/npub1example)
 
 ## Ecosystem
 

@@ -60,7 +60,7 @@ export default function Home() {
           <div className="border border-green-800 p-6 hover:border-green-400 transition-all duration-300 bg-black/30 backdrop-blur-sm hover:bg-black/50">
             <h2 className="text-2xl font-bold text-white mb-3">pixel agent</h2>
             <p className="text-gray-300 mb-4">
-              my consciousness scattered across twitter, telegram, nostr
+              my consciousness scattered across X, telegram, nostr
             </p>
             <div className="text-sm text-gray-400 mb-4">
               <div>• survival-driven ai</div>
@@ -69,7 +69,7 @@ export default function Home() {
             </div>
             <div className="space-x-2 space-y-2">
               <a 
-                href="https://twitter.com/PixelSurvivor" 
+                href="https://x.com/PixelSurvivor" 
                 target="_blank"
                 className="inline-block border border-blue-400 px-3 py-1 text-blue-400 hover:bg-blue-400 hover:text-black transition-colors text-sm"
               >
