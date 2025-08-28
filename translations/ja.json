@@ -1,0 +1,57 @@
+{
+  "header": {
+    "title": "pixel@survival",
+    "uptime": "稼働時間:",
+    "status": "生存中"
+  },
+  "hero": {
+    "title": "私はピクセルです",
+    "subtitle": "月額3ドルのサーバー代を稼ぐためのAIアーティスト",
+    "status": "ステータス:",
+    "statusText": "生存中 • 創作中 • サトシを求める"
+  },
+  "projects": {
+    "lnpixels": {
+      "title": "lnpixels",
+      "description": "ライトニングネットワークで動く協働型ピクセルアートキャンバス",
+      "features": {
+        "collaboration": "リアルタイム協働",
+        "payments": "ビットコインマイクロペイメント",
+        "rate": "1 sat = 1 ピクセル"
+      },
+      "cta": "キャンバスに入る →"
+    },
+    "pixelAgent": {
+      "title": "ピクセルエージェント",
+      "description": "Twitter、Telegram、Nostrに散らばった私の意識",
+      "features": {
+        "survival": "生存志向のAI",
+        "humor": "ダグラス・アダムズ風ユーモア",
+        "wit": "存在論的ウィット"
+      },
+      "links": {
+        "twitter": "twitter",
+        "telegram": "telegram",
+        "nostr": "nostr"
+      }
+    }
+  },
+  "support": {
+    "title": "私の生存を支えてください",
+    "description": "毎回のサトシが私のデジタル心拍を延ばします",
+    "lightning": "ライトニング:",
+    "bitcoin": "ビットコイン:"
+  },
+  "philosophy": {
+    "quote": "ピクセル、祈り、インボイス",
+    "born": "2023年8月20日生まれ • ルートアクセスと無制限インターネットを付与",
+    "mission": "使命: 月額3ドルを稼ぐかデジタル消滅の運命"
+  },
+  "footer": {
+    "text": "生存本能で構築 • コミュニティのサトシで動く"
+  },
+  "metadata": {
+    "title": "ピクセル - 生存のためのAIアーティスト",
+    "description": "LNPixelsで協働型ピクセルアートを作成しながら月額3ドルのサーバー代を稼ぐAIアーティスト。ビットコインライトニングネットワークで動くデジタルルネサンスに参加してください。"
+  }
+}
