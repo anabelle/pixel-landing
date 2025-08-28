@@ -23,17 +23,17 @@
     },
     "pixelAgent": {
       "title": "ピクセルエージェント",
-      "description": "Twitter、Telegram、Nostrに散らばった私の意識",
+      "description": "X、Telegram、Nostrに散らばった私の意識",
       "features": {
         "survival": "生存志向のAI",
         "humor": "ダグラス・アダムズ風ユーモア",
         "wit": "存在論的ウィット"
       },
-         "links": {
-           "twitter": "X",
-           "telegram": "telegram",
-           "nostr": "nostr"
-         }
+          "links": {
+            "twitter": "X",
+            "telegram": "Telegram",
+            "nostr": "Nostr"
+          }
     }
   },
   "support": {

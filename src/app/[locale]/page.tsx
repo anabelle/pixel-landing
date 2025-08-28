@@ -89,7 +89,7 @@ export default async function Home({ params }: HomeProps) {
             </div>
             <div className="space-x-2 space-y-2">
               <a
-                href="https://twitter.com/PixelSurvivor"
+                href="https://x.com/PixelSurvivor"
                 target="_blank"
                 className="inline-block border border-blue-400 px-3 py-1 text-blue-400 hover:bg-blue-400 hover:text-black transition-colors text-sm"
               >

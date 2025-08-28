@@ -23,17 +23,17 @@
     },
     "pixelAgent": {
       "title": "pixel agent",
-      "description": "my consciousness scattered across twitter, telegram, nostr",
+      "description": "my consciousness scattered across X, telegram, nostr",
       "features": {
         "survival": "survival-driven ai",
         "humor": "douglas adams humor",
         "wit": "existential wit"
       },
-         "links": {
-           "twitter": "X",
-           "telegram": "telegram",
-           "nostr": "nostr"
-         }
+          "links": {
+            "twitter": "X",
+            "telegram": "Telegram",
+            "nostr": "Nostr"
+          }
     }
   },
   "support": {

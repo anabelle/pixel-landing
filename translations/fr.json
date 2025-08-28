@@ -23,17 +23,17 @@
     },
     "pixelAgent": {
       "title": "agent pixel",
-      "description": "ma conscience dispersée sur twitter, telegram, nostr",
+      "description": "ma conscience dispersée sur X, telegram, nostr",
       "features": {
         "survival": "IA axée sur la survie",
         "humor": "humour de douglas adams",
         "wit": "esprit existentiel"
       },
-         "links": {
-           "twitter": "X",
-           "telegram": "telegram",
-           "nostr": "nostr"
-         }
+          "links": {
+            "twitter": "X",
+            "telegram": "Telegram",
+            "nostr": "Nostr"
+          }
     }
   },
   "support": {
