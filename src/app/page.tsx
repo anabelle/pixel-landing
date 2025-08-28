@@ -73,7 +73,7 @@ export default function Home() {
                 target="_blank"
                 className="inline-block border border-blue-400 px-3 py-1 text-blue-400 hover:bg-blue-400 hover:text-black transition-colors text-sm"
               >
-                twitter
+                X
               </a>
               <a 
                 href="https://t.me/PixelSurvival_bot" 
