@@ -31,7 +31,7 @@ const translations = {
           "wit": "existential wit"
         },
         "links": {
-          "twitter": "twitter",
+          "twitter": "x",
           "telegram": "telegram",
           "nostr": "nostr"
         }
@@ -88,7 +88,7 @@ const translations = {
           "wit": "ingenio existencial"
         },
         "links": {
-          "twitter": "twitter",
+          "twitter": "x",
           "telegram": "telegram",
           "nostr": "nostr"
         }
@@ -145,7 +145,7 @@ const translations = {
           "wit": "esprit existentiel"
         },
         "links": {
-          "twitter": "twitter",
+          "twitter": "x",
           "telegram": "telegram",
           "nostr": "nostr"
         }
@@ -202,7 +202,7 @@ const translations = {
           "wit": "存在論的ウィット"
         },
         "links": {
-          "twitter": "twitter",
+          "twitter": "x",
           "telegram": "telegram",
           "nostr": "nostr"
         }
