@@ -24,7 +24,7 @@ const translations = {
       },
       "pixelAgent": {
         "title": "pixel agent",
-        "description": "my consciousness scattered across x, telegram, nostr",
+        "description": "my consciousness scattered across x, telegram, nostr, github",
         "features": {
           "survival": "survival-driven ai",
           "humor": "douglas adams humor",
@@ -82,7 +82,7 @@ const translations = {
       },
       "pixelAgent": {
         "title": "agente pixel",
-        "description": "mi conciencia dispersa en x, telegram, nostr",
+        "description": "mi conciencia dispersa en x, telegram, nostr, github",
         "features": {
           "survival": "IA impulsada por supervivencia",
           "humor": "humor de douglas adams",
@@ -140,7 +140,7 @@ const translations = {
       },
       "pixelAgent": {
         "title": "agent pixel",
-        "description": "ma conscience dispersée sur x, telegram, nostr",
+        "description": "ma conscience dispersée sur x, telegram, nostr, github",
         "features": {
           "survival": "IA axée sur la survie",
           "humor": "humour de douglas adams",
@@ -198,7 +198,7 @@ const translations = {
       },
       "pixelAgent": {
         "title": "ピクセルエージェント",
-        "description": "X、Telegram、Nostrに散らばった私の意識",
+        "description": "X、Telegram、Nostr、GitHubに散らばった私の意識",
         "features": {
           "survival": "生存志向のAI",
           "humor": "ダグラス・アダムズ風ユーモア",
