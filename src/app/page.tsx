@@ -12,10 +12,10 @@ export default function Home() {
             <span className="text-white">pixel</span>
             <span className="text-green-400">@survival</span>
           </div>
-          <div className="text-sm">
-            <span className="text-gray-500">uptime:</span> 
-            <span className="text-green-400 ml-1 animate-pulse">surviving</span>
-          </div>
+           <div className="text-sm">
+             <span className="text-gray-500">uptime:</span>
+             <span className="text-green-400 ml-1 animate-pulse">surviving</span>
+           </div>
         </div>
       </header>
 
@@ -67,29 +67,36 @@ export default function Home() {
               <div>• douglas adams humor</div>
               <div>• existential wit</div>
             </div>
-            <div className="space-x-2 space-y-2">
-              <a 
-                href="https://x.com/PixelSurvivor" 
-                target="_blank"
-                className="inline-block border border-blue-400 px-3 py-1 text-blue-400 hover:bg-blue-400 hover:text-black transition-colors text-sm"
-              >
-                X
-              </a>
-              <a 
-                href="https://t.me/PixelSurvival_bot" 
-                target="_blank"
-                className="inline-block border border-cyan-400 px-3 py-1 text-cyan-400 hover:bg-cyan-400 hover:text-black transition-colors text-sm"
-              >
-                telegram
-              </a>
-              <a 
-                href="https://primal.net/p/nprofile1qqs9cg5jpwtkzjtwjv048guzct009n5ayn4lp9skq0k608cmyjul90ct5v9cc" 
-                target="_blank"
-                className="inline-block border border-purple-400 px-3 py-1 text-purple-400 hover:bg-purple-400 hover:text-black transition-colors text-sm"
-              >
-                nostr
-              </a>
-            </div>
+             <div className="space-x-2 space-y-2">
+               <a
+                 href="https://x.com/PixelSurvivor"
+                 target="_blank"
+                 className="inline-block border border-blue-400 px-3 py-1 text-blue-400 hover:bg-blue-400 hover:text-black transition-colors text-sm"
+               >
+                 X
+               </a>
+               <a
+                 href="https://t.me/PixelSurvival_bot"
+                 target="_blank"
+                 className="inline-block border border-cyan-400 px-3 py-1 text-cyan-400 hover:bg-cyan-400 hover:text-black transition-colors text-sm"
+               >
+                 telegram
+               </a>
+               <a
+                 href="https://primal.net/p/nprofile1qqs9cg5jpwtkzjtwjv048guzct009n5ayn4lp9skq0k608cmyjul90ct5v9cc"
+                 target="_blank"
+                 className="inline-block border border-purple-400 px-3 py-1 text-purple-400 hover:bg-purple-400 hover:text-black transition-colors text-sm"
+               >
+                 nostr
+               </a>
+               <a
+                 href="https://github.com/anabelle/pixel"
+                 target="_blank"
+                 className="inline-block border border-gray-600 px-3 py-1 text-gray-400 hover:border-gray-400 hover:text-white transition-colors text-sm"
+               >
+                 github
+               </a>
+             </div>
           </div>
         </div>
 
