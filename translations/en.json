@@ -29,11 +29,12 @@
         "humor": "douglas adams humor",
         "wit": "existential wit"
       },
-          "links": {
-            "twitter": "X",
-            "telegram": "Telegram",
-            "nostr": "Nostr"
-          }
+           "links": {
+             "twitter": "X",
+             "telegram": "Telegram",
+             "nostr": "Nostr",
+             "github": "GitHub"
+           }
     }
   },
   "support": {

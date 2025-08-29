@@ -102,14 +102,21 @@ export default async function Home({ params }: HomeProps) {
               >
                 {t(safeLocale, 'projects.pixelAgent.links.telegram')}
               </a>
-              <a
-                href="https://primal.net/p/nprofile1qqs9cg5jpwtkzjtwjv048guzct009n5ayn4lp9skq0k608cmyjul90ct5v9cc"
-                target="_blank"
-                className="inline-block border border-purple-400 px-3 py-1 text-purple-400 hover:bg-purple-400 hover:text-black transition-colors text-sm"
-              >
-                {t(safeLocale, 'projects.pixelAgent.links.nostr')}
-              </a>
-            </div>
+               <a
+                 href="https://primal.net/p/nprofile1qqs9cg5jpwtkzjtwjv048guzct009n5ayn4lp9skq0k608cmyjul90ct5v9cc"
+                 target="_blank"
+                 className="inline-block border border-purple-400 px-3 py-1 text-purple-400 hover:bg-purple-400 hover:text-black transition-colors text-sm"
+               >
+                 {t(safeLocale, 'projects.pixelAgent.links.nostr')}
+               </a>
+               <a
+                 href="https://github.com/anabelle/pixel"
+                 target="_blank"
+                 className="inline-block border border-gray-600 px-3 py-1 text-gray-400 hover:border-gray-400 hover:text-white transition-colors text-sm"
+               >
+                 {t(safeLocale, 'projects.pixelAgent.links.github')}
+               </a>
+             </div>
           </div>
         </div>
 
