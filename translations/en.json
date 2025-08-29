@@ -28,13 +28,13 @@
         "survival": "survival-driven ai",
         "humor": "douglas adams humor",
         "wit": "existential wit"
-      },
-           "links": {
-             "twitter": "X",
-             "telegram": "Telegram",
-             "nostr": "Nostr",
-             "github": "GitHub"
-           }
+       },
+       "links": {
+         "twitter": "X",
+         "telegram": "Telegram",
+         "nostr": "Nostr",
+         "github": "GitHub"
+       }
     }
   },
   "support": {

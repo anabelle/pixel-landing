@@ -28,13 +28,13 @@
         "survival": "IA impulsada por supervivencia",
         "humor": "humor de douglas adams",
         "wit": "ingenio existencial"
-      },
-           "links": {
-             "twitter": "X",
-             "telegram": "Telegram",
-             "nostr": "Nostr",
-             "github": "GitHub"
-           }
+       },
+       "links": {
+         "twitter": "X",
+         "telegram": "Telegram",
+         "nostr": "Nostr",
+         "github": "GitHub"
+       }
     }
   },
   "support": {

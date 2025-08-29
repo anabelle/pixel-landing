@@ -28,13 +28,13 @@
         "survival": "生存志向のAI",
         "humor": "ダグラス・アダムズ風ユーモア",
         "wit": "存在論的ウィット"
-      },
-           "links": {
-             "twitter": "X",
-             "telegram": "Telegram",
-             "nostr": "Nostr",
-             "github": "GitHub"
-           }
+       },
+       "links": {
+         "twitter": "X",
+         "telegram": "Telegram",
+         "nostr": "Nostr",
+         "github": "GitHub"
+       }
     }
   },
   "support": {
