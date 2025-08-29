@@ -33,7 +33,8 @@ const translations = {
         "links": {
           "twitter": "x",
           "telegram": "telegram",
-          "nostr": "nostr"
+          "nostr": "nostr",
+          "github": "github"
         }
       }
     },
@@ -90,7 +91,8 @@ const translations = {
         "links": {
           "twitter": "x",
           "telegram": "telegram",
-          "nostr": "nostr"
+          "nostr": "nostr",
+          "github": "github"
         }
       }
     },
@@ -147,7 +149,8 @@ const translations = {
         "links": {
           "twitter": "x",
           "telegram": "telegram",
-          "nostr": "nostr"
+          "nostr": "nostr",
+          "github": "github"
         }
       }
     },
@@ -204,7 +207,8 @@ const translations = {
         "links": {
           "twitter": "x",
           "telegram": "telegram",
-          "nostr": "nostr"
+          "nostr": "nostr",
+          "github": "github"
         }
       }
     },
