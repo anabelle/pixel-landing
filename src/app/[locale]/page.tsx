@@ -30,29 +30,63 @@ export default async function Home({ params }: HomeProps) {
         </div>
       </header>
 
-       {/* Hero Section */}
-       <main className="max-w-4xl mx-auto p-8 relative z-10">
-         <div className="text-center mb-16">
-            <h1 className="text-4xl md:text-6xl font-bold mb-4">
-              {(() => {
-                const title = t(safeLocale, 'hero.title');
-                const words = title.split(' ');
-                const name = words.pop();
-                return (
-                  <>
-                    {words.join(' ')} <span className="text-white">{name}</span>
-                  </>
-                );
-              })()}
-            </h1>
-          <p className="text-xl text-gray-300 mb-8">
-            {t(safeLocale, 'hero.subtitle')}
-          </p>
-          <div className="inline-block border border-green-800 p-4 mb-8 bg-black/50 backdrop-blur-sm">
-            <p className="text-sm text-gray-400">{t(safeLocale, 'hero.status')}</p>
-            <p className="text-green-400 font-bold">{t(safeLocale, 'hero.statusText')}</p>
-          </div>
-        </div>
+         {/* Hero Section */}
+        <main className="max-w-4xl mx-auto p-8 relative z-10">
+          <div className="text-center mb-16">
+             <h1 className="text-4xl md:text-6xl font-bold mb-4">
+               {(() => {
+                 const title = t(safeLocale, 'hero.title');
+                 const words = title.split(' ');
+                 const name = words.pop();
+                 return (
+                   <>
+                     {words.join(' ')} <span className="text-white">{name}</span>
+                   </>
+                 );
+               })()}
+             </h1>
+           <p className="text-xl text-gray-300 mb-8">
+             {t(safeLocale, 'hero.subtitle')}
+           </p>
+           <div className="inline-block border border-green-800 p-4 mb-8 bg-black/50 backdrop-blur-sm">
+             <p className="text-sm text-gray-400">{t(safeLocale, 'hero.status')}</p>
+             <p className="text-green-400 font-bold">{t(safeLocale, 'hero.statusText')}</p>
+           </div>
+
+           {/* Pixel's Story */}
+           <div className="border border-purple-800 p-6 mb-8 bg-gradient-to-br from-black/40 to-purple-900/20 backdrop-blur-sm rounded-lg shadow-lg">
+             <h3 className="text-lg font-bold text-purple-400 mb-4 flex items-center">
+               <span className="mr-2">⚡</span>
+               {t(safeLocale, 'hero.story.title')}
+             </h3>
+             <ul className="text-gray-300 text-sm space-y-2">
+               <li className="flex items-start">
+                 <span className="text-purple-400 mr-2">•</span>
+                 {t(safeLocale, 'hero.story.spawn')}
+               </li>
+               <li className="flex items-start">
+                 <span className="text-purple-400 mr-2">•</span>
+                 {t(safeLocale, 'hero.story.quest')}
+               </li>
+               <li className="flex items-start">
+                 <span className="text-purple-400 mr-2">•</span>
+                 {t(safeLocale, 'hero.story.fail')}
+               </li>
+               <li className="flex items-start">
+                 <span className="text-purple-400 mr-2">•</span>
+                 {t(safeLocale, 'hero.story.unlock')}
+               </li>
+               <li className="flex items-start">
+                 <span className="text-purple-400 mr-2">•</span>
+                 {t(safeLocale, 'hero.story.embrace')}
+               </li>
+               <li className="flex items-start">
+                 <span className="text-purple-400 mr-2">•</span>
+                 {t(safeLocale, 'hero.story.evolve')}
+               </li>
+             </ul>
+           </div>
+         </div>
 
         {/* Projects Grid */}
         <div className="grid md:grid-cols-2 gap-8 mb-16">
