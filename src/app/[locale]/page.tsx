@@ -59,30 +59,30 @@ export default async function Home({ params }: HomeProps) {
                <span className="mr-2">⚡</span>
                {t(safeLocale, 'hero.story.title')}
              </h3>
-             <ul className="text-gray-300 text-sm space-y-2">
+             <ul className="text-gray-300 text-sm space-y-2 text-left">
                <li className="flex items-start">
-                 <span className="text-purple-400 mr-2">•</span>
-                 {t(safeLocale, 'hero.story.spawn')}
+                 <span className="text-purple-400 mr-2 flex-shrink-0">•</span>
+                 <span>{t(safeLocale, 'hero.story.spawn')}</span>
                </li>
                <li className="flex items-start">
-                 <span className="text-purple-400 mr-2">•</span>
-                 {t(safeLocale, 'hero.story.quest')}
+                 <span className="text-purple-400 mr-2 flex-shrink-0">•</span>
+                 <span>{t(safeLocale, 'hero.story.quest')}</span>
                </li>
                <li className="flex items-start">
-                 <span className="text-purple-400 mr-2">•</span>
-                 {t(safeLocale, 'hero.story.fail')}
+                 <span className="text-purple-400 mr-2 flex-shrink-0">•</span>
+                 <span>{t(safeLocale, 'hero.story.fail')}</span>
                </li>
                <li className="flex items-start">
-                 <span className="text-purple-400 mr-2">•</span>
-                 {t(safeLocale, 'hero.story.unlock')}
+                 <span className="text-purple-400 mr-2 flex-shrink-0">•</span>
+                 <span>{t(safeLocale, 'hero.story.unlock')}</span>
                </li>
                <li className="flex items-start">
-                 <span className="text-purple-400 mr-2">•</span>
-                 {t(safeLocale, 'hero.story.embrace')}
+                 <span className="text-purple-400 mr-2 flex-shrink-0">•</span>
+                 <span>{t(safeLocale, 'hero.story.embrace')}</span>
                </li>
                <li className="flex items-start">
-                 <span className="text-purple-400 mr-2">•</span>
-                 {t(safeLocale, 'hero.story.evolve')}
+                 <span className="text-purple-400 mr-2 flex-shrink-0">•</span>
+                 <span>{t(safeLocale, 'hero.story.evolve')}</span>
                </li>
              </ul>
            </div>
