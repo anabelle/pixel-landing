@@ -102,7 +102,7 @@ export default async function Home({ params }: HomeProps) {
               <div>• {t(safeLocale, 'projects.lnpixels.features.rate')}</div>
             </div>
             <a
-              href="https://lnpixels.qzz.io"
+              href="https://ln.pixel.xx.kg"
               target="_blank"
               className="inline-block border border-green-400 px-4 py-2 text-green-400 hover:bg-green-400 hover:text-black transition-colors"
             >

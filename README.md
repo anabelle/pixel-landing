@@ -43,7 +43,7 @@ pixel-landing/
 ## 🎯 Projects Showcase
 
 ### 🎨 LNPixels - Collaborative Pixel Art
-**URL**: [lnpixels.qzz.io](https://lnpixels.qzz.io)
+**URL**: [lnpixels.qzz.io](https://ln.pixel.xx.kg)
 - **Real-time collaborative canvas** where anyone can create pixel art
 - **Lightning Network payments** - 1 sat = 1 pixel
 - **Three pixel types**: Basic (1 sat), Color (10 sats), Letter (100 sats)
@@ -140,7 +140,7 @@ pixel-landing/
 ### Environment Variables (.env.local)
 ```env
 # Custom project URLs (optional - defaults provided)
-NEXT_PUBLIC_CANVAS_URL=https://lnpixels.qzz.io
+NEXT_PUBLIC_CANVAS_URL=https://ln.pixel.xx.kg
 NEXT_PUBLIC_AGENT_HANDLE=@PixelSurvivor
 
 # Payment addresses
