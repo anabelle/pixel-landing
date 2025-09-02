@@ -43,7 +43,7 @@ pixel-landing/
 ## 🎯 Projects Showcase
 
 ### 🎨 LNPixels - Collaborative Pixel Art
-**URL**: [lnpixels.qzz.io](https://ln.pixel.xx.kg)
+**URL**: [ln.pixel.xx.kg](https://ln.pixel.xx.kg)
 - **Real-time collaborative canvas** where anyone can create pixel art
 - **Lightning Network payments** - 1 sat = 1 pixel
 - **Three pixel types**: Basic (1 sat), Color (10 sats), Letter (100 sats)
@@ -297,7 +297,7 @@ This landing page connects the entire Pixel ecosystem:
 
 ```
 pixel.xx.kg          → Landing page (this project)
-├── lnPixels.qzz.io  → Pixel art canvas
+├── ln.pixel.xx.kg  → Pixel art canvas
 ├── @PixelSurvivor   → AI agent on social platforms
 ├── Telegram Bot     → Private AI interactions
 ├── Discord Server   → Community building
