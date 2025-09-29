@@ -1,6 +1,7 @@
 import PixelRain from '@/components/PixelRain';
 import LanguageSwitcher from '@/components/LanguageSwitcher';
 import ClickToCopy from '@/components/ClickToCopy';
+import LiveStats from '@/components/LiveStats';
 import { t, Locale } from '@/lib/translations';
 
 interface HomeProps {
@@ -85,10 +86,15 @@ export default async function Home({ params }: HomeProps) {
                  <span>{t(safeLocale, 'hero.story.evolve')}</span>
                </li>
              </ul>
-           </div>
-         </div>
+            </div>
 
-        {/* Projects Grid */}
+            {/* Live Stats Section */}
+            <div className="mb-16">
+              <LiveStats />
+            </div>
+          </div>
+
+         {/* Projects Grid */}
         <div className="grid md:grid-cols-2 gap-8 mb-16">
           {/* LNPixels Project */}
           <div className="border border-green-800 p-6 hover:border-green-400 transition-all duration-300 bg-black/30 backdrop-blur-sm hover:bg-black/50">
