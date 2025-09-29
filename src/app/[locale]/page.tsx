@@ -90,7 +90,7 @@ export default async function Home({ params }: HomeProps) {
 
             {/* Live Stats Section */}
             <div className="mb-16">
-              <LiveStats />
+              <LiveStats locale={safeLocale} />
             </div>
           </div>
 

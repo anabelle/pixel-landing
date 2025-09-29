@@ -1,6 +1,7 @@
 'use client';
 
 import { useEffect, useState } from 'react';
+import { t, Locale } from '@/lib/translations';
 
 interface Stats {
   totalPixels: number;
@@ -10,7 +11,11 @@ interface Stats {
   lastUpdated: number;
 }
 
-export default function LiveStats() {
+interface LiveStatsProps {
+  locale: Locale;
+}
+
+export default function LiveStats({ locale }: LiveStatsProps) {
   const [stats, setStats] = useState<Stats | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
@@ -42,15 +47,15 @@ export default function LiveStats() {
   if (loading) {
     return (
       <div className="border border-green-800 p-6 bg-black/30 backdrop-blur-sm rounded-lg">
-        <h3 className="text-xl font-bold text-green-400 mb-4 flex items-center">
-          <span className="mr-2 animate-pulse">⚡</span>
-          Live Canvas Pulse
-        </h3>
-        <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
+         <h3 className="text-xl font-bold text-green-400 mb-4 flex items-center">
+           <span className="mr-2 animate-pulse">⚡</span>
+           {t(locale, 'liveStats.title')}
+         </h3>
+         <div className="grid grid-cols-3 gap-4">
            {[...Array(3)].map((_, i) => (
             <div key={i} className="text-center">
               <div className="text-2xl font-bold text-green-400 animate-pulse">...</div>
-              <div className="text-sm text-gray-400">Loading</div>
+              <div className="text-sm text-gray-400">{t(locale, 'liveStats.loading')}</div>
             </div>
           ))}
         </div>
@@ -65,7 +70,7 @@ export default function LiveStats() {
           <span className="mr-2">⚠️</span>
           Live Canvas Pulse
         </h3>
-        <p className="text-red-300 text-sm">{error}</p>
+         <p className="text-red-300 text-sm">{t(locale, 'liveStats.error')}</p>
       </div>
     );
   }
@@ -79,19 +84,19 @@ export default function LiveStats() {
         Live Canvas Pulse
       </h3>
 
-      <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+       <div className="grid grid-cols-3 gap-4">
         <div className="text-center">
           <div className="text-2xl font-bold text-white">
             {stats.totalPixels.toLocaleString()}
           </div>
-          <div className="text-sm text-gray-400">Pixels Painted</div>
+           <div className="text-sm text-gray-400">{t(locale, 'liveStats.pixelsPainted')}</div>
         </div>
 
         <div className="text-center">
           <div className="text-2xl font-bold text-yellow-400">
             {stats.totalSats.toLocaleString()}
           </div>
-          <div className="text-sm text-gray-400">Total Sats</div>
+           <div className="text-sm text-gray-400">{t(locale, 'liveStats.totalSats')}</div>
         </div>
 
 
@@ -100,13 +105,13 @@ export default function LiveStats() {
           <div className="text-2xl font-bold text-green-400">
             {stats.recentSats.toLocaleString()}
           </div>
-          <div className="text-sm text-gray-400">Recent Sats (24h)</div>
+           <div className="text-sm text-gray-400">{t(locale, 'liveStats.recentSats')}</div>
         </div>
       </div>
 
-      <div className="mt-4 text-xs text-gray-500 text-center">
-        Last updated: {new Date(stats.lastUpdated).toLocaleTimeString()}
-      </div>
+       <div className="mt-4 text-xs text-gray-500 text-center">
+         {t(locale, 'liveStats.lastUpdated')} {new Date(stats.lastUpdated).toLocaleTimeString()}
+       </div>
     </div>
   );
 }

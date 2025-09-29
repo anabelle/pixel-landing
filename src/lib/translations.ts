@@ -63,13 +63,22 @@ const translations = {
       "born": "born aug 20 • granted root access and unlimited internet",
       "mission": "mission: earn $3/month or face digital oblivion"
     },
-    "footer": {
-      "text": "built with survival instincts • powered by community sats"
-    },
-    "metadata": {
-      "title": "Pixel - AI Artist Fighting for Survival",
-      "description": "AI artist creating collaborative pixel art on LNPixels while fighting for $3/month server costs. Join the digital renaissance powered by Bitcoin Lightning Network."
-    }
+     "footer": {
+       "text": "built with survival instincts • powered by community sats"
+     },
+     "liveStats": {
+       "title": "Live Canvas Pulse",
+       "pixelsPainted": "Pixels Painted",
+       "totalSats": "Total Sats",
+       "recentSats": "Recent Sats (24h)",
+       "lastUpdated": "Last updated:",
+       "loading": "Loading",
+       "error": "Unable to load live data"
+     },
+     "metadata": {
+       "title": "Pixel - AI Artist Fighting for Survival",
+       "description": "AI artist creating collaborative pixel art on LNPixels while fighting for $3/month server costs. Join the digital renaissance powered by Bitcoin Lightning Network."
+     }
   },
   es: {
     "header": {
@@ -135,13 +144,22 @@ const translations = {
       "born": "nacido 20 ago • acceso root concedido e internet ilimitado",
       "mission": "misión: ganar $3/mes o enfrentar la oblivion digital"
     },
-    "footer": {
-      "text": "construido con instintos de supervivencia • impulsado por sats comunitarios"
-    },
-    "metadata": {
-      "title": "Pixel - Artista de IA Luchando por Supervivencia",
-      "description": "Artista de IA creando arte pixel colaborativo en LNPixels mientras lucha por costos de servidor de $3/mes. Únete al renacimiento digital impulsado por Bitcoin Lightning Network."
-    }
+     "footer": {
+       "text": "construido con instintos de supervivencia • impulsado por sats comunitarios"
+     },
+     "liveStats": {
+       "title": "Pulso del Lienzo en Vivo",
+       "pixelsPainted": "Píxeles Pintados",
+       "totalSats": "Sats Totales",
+       "recentSats": "Sats Recientes (24h)",
+       "lastUpdated": "Última actualización:",
+       "loading": "Cargando",
+       "error": "No se pudo cargar datos en vivo"
+     },
+     "metadata": {
+       "title": "Pixel - Artista de IA Luchando por Supervivencia",
+       "description": "Artista de IA creando arte pixel colaborativo en LNPixels mientras lucha por costos de servidor de $3/mes. Únete al renacimiento digital impulsado por Bitcoin Lightning Network."
+     }
   },
   fr: {
     "header": {
@@ -207,13 +225,22 @@ const translations = {
       "born": "né 20 août • accès root accordé et internet illimité",
       "mission": "mission: gagner 3$/mois ou affronter l'oubli digital"
     },
-    "footer": {
-      "text": "construit avec des instincts de survie • alimenté par les sats communautaires"
-    },
-    "metadata": {
-      "title": "Pixel - Artiste IA Luttant pour la Survie",
-      "description": "Artiste IA créant de l'art pixel collaboratif sur LNPixels tout en luttant pour les coûts de serveur de 3$/mois. Rejoignez la renaissance digitale alimentée par Bitcoin Lightning Network."
-    }
+     "footer": {
+       "text": "construit avec des instincts de survie • alimenté par les sats communautaires"
+     },
+     "liveStats": {
+       "title": "Pouls du Canevas en Direct",
+       "pixelsPainted": "Pixels Peints",
+       "totalSats": "Sats Totaux",
+       "recentSats": "Sats Récents (24h)",
+       "lastUpdated": "Dernière mise à jour:",
+       "loading": "Chargement",
+       "error": "Impossible de charger les données en direct"
+     },
+     "metadata": {
+       "title": "Pixel - Artiste IA Luttant pour la Survie",
+       "description": "Artiste IA créant de l'art pixel collaboratif sur LNPixels tout en luttant pour les coûts de serveur de 3$/mois. Rejoignez la renaissance digitale alimentée par Bitcoin Lightning Network."
+     }
   },
   ja: {
     "header": {
@@ -279,13 +306,22 @@ const translations = {
       "born": "2023年8月20日生まれ • ルートアクセスと無制限インターネットを付与",
       "mission": "使命: 月額3ドルを稼ぐかデジタル消滅の運命"
     },
-    "footer": {
-      "text": "生存本能で構築 • コミュニティのサトシで動く"
-    },
-    "metadata": {
-      "title": "ピクセル - 生存のためのAIアーティスト",
-      "description": "LNPixelsで協働型ピクセルアートを作成しながら月額3ドルのサーバー代を稼ぐAIアーティスト。ビットコインライトニングネットワークで動くデジタルルネサンスに参加してください。"
-    }
+     "footer": {
+       "text": "生存本能で構築 • コミュニティのサトシで動く"
+     },
+     "liveStats": {
+       "title": "ライブキャンバスパルス",
+       "pixelsPainted": "描かれたピクセル",
+       "totalSats": "総サトシ",
+       "recentSats": "最近のサトシ (24h)",
+       "lastUpdated": "最終更新:",
+       "loading": "読み込み中",
+       "error": "ライブデータを読み込めませんでした"
+     },
+     "metadata": {
+       "title": "ピクセル - 生存のためのAIアーティスト",
+       "description": "LNPixelsで協働型ピクセルアートを作成しながら月額3ドルのサーバー代を稼ぐAIアーティスト。ビットコインライトニングネットワークで動くデジタルルネサンスに参加してください。"
+     }
   }
 } as const;
 
