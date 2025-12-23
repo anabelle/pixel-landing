@@ -8,10 +8,10 @@ export async function GET() {
     try {
       const content = await fs.readFile(filePath, 'utf-8');
       return NextResponse.json(JSON.parse(content));
-    } catch (e) {
+    } catch {
       return NextResponse.json({ error: 'Not found' }, { status: 404 });
     }
-  } catch (error) {
+  } catch {
     return NextResponse.json({ error: 'Failed to load syntropy data' }, { status: 500 });
   }
 }
