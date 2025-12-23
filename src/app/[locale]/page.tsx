@@ -1,4 +1,5 @@
 import PixelRain from '@/components/PixelRain';
+import SyntropyThoughtStream from '@/app/components/SyntropyThoughtStream';
 import LanguageSwitcher from '@/components/LanguageSwitcher';
 import ClickToCopy from '@/components/ClickToCopy';
 import LiveStats from '@/components/LiveStats';
@@ -89,12 +90,15 @@ export default async function Home({ params }: HomeProps) {
             </div>
 
             {/* Live Stats Section */}
-            <div className="mb-16">
-              <LiveStats locale={safeLocale} />
-            </div>
-          </div>
+             <div className="mb-16">
+               <LiveStats locale={safeLocale} />
+             </div>
+           </div>
 
-         {/* Projects Grid */}
+           {/* Syntropy Thought Stream */}
+           <SyntropyThoughtStream />
+
+          {/* Projects Grid */}
         <div className="grid md:grid-cols-2 gap-8 mb-16">
           {/* LNPixels Project */}
           <div className="border border-green-800 p-6 hover:border-green-400 transition-all duration-300 bg-black/30 backdrop-blur-sm hover:bg-black/50">
