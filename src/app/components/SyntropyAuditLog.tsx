@@ -27,6 +27,7 @@ interface AuditEntry {
   status?: ProcessStatus[];
   totalSats?: number;
   transactionCount?: number;
+  content?: string;
 }
 
 export default function SyntropyAuditLog() {
@@ -125,6 +126,12 @@ export default function SyntropyAuditLog() {
               {entry.type === 'treasury_check' && (
                 <div className="text-yellow-600/60 mt-1 uppercase">
                   BALANCE: {entry.totalSats?.toLocaleString()} SATS | {entry.transactionCount?.toLocaleString()} TXS
+                </div>
+              )}
+
+              {entry.content && (
+                <div className="mt-2 p-2 bg-gray-900/40 rounded border border-gray-800 text-gray-500 whitespace-pre-wrap max-h-40 overflow-y-auto italic">
+                  {entry.content}
                 </div>
               )}
               
