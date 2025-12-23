@@ -1,6 +1,7 @@
 import PixelRain from '@/components/PixelRain';
 import SyntropyThoughtStream from '@/app/components/SyntropyThoughtStream';
 import SyntropyAuditLog from '@/app/components/SyntropyAuditLog';
+import SyntropyContinuity from '@/app/components/SyntropyContinuity';
 import LanguageSwitcher from '@/components/LanguageSwitcher';
 import ClickToCopy from '@/components/ClickToCopy';
 import LiveStats from '@/components/LiveStats';
@@ -94,7 +95,7 @@ export default async function Home({ params }: HomeProps) {
              </ul>
             </div>
 
-           {/* Live Stats Section */}
+            {/* Live Stats Section */}
              <div className="mb-16">
                <LiveStats locale={safeLocale} />
              </div>
@@ -103,7 +104,9 @@ export default async function Home({ params }: HomeProps) {
            {/* Syntropy Audit Log & Thought Stream */}
            <div className="space-y-12 mb-16">
              <SyntropyThoughtStream />
+             <SyntropyContinuity />
            </div>
+
 
            {/* Projects Grid */}
         <div className="grid md:grid-cols-2 gap-8 mb-16">
