@@ -15,7 +15,7 @@ export default function SyntropyThoughtStream() {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const res = await fetch('/syntropy.json');
+        const res = await fetch('/api/syntropy');
         if (res.ok) {
           const json = await res.json();
           setData(json);

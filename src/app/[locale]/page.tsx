@@ -33,6 +33,10 @@ export default async function Home({ params }: HomeProps) {
         </div>
       </header>
 
+      <div className="max-w-4xl mx-auto px-8 pt-4">
+        <SyntropyAuditLog />
+      </div>
+
          {/* Hero Section */}
         <main className="max-w-4xl mx-auto p-8 relative z-10">
           <div className="text-center mb-16">
@@ -90,17 +94,18 @@ export default async function Home({ params }: HomeProps) {
              </ul>
             </div>
 
-            {/* Live Stats Section */}
+           {/* Live Stats Section */}
              <div className="mb-16">
                <LiveStats locale={safeLocale} />
              </div>
            </div>
 
-           {/* Syntropy Thought Stream */}
-           <SyntropyThoughtStream />
-           <SyntropyAuditLog />
+           {/* Syntropy Audit Log & Thought Stream */}
+           <div className="space-y-12 mb-16">
+             <SyntropyThoughtStream />
+           </div>
 
-          {/* Projects Grid */}
+           {/* Projects Grid */}
         <div className="grid md:grid-cols-2 gap-8 mb-16">
           {/* LNPixels Project */}
           <div className="border border-green-800 p-6 hover:border-green-400 transition-all duration-300 bg-black/30 backdrop-blur-sm hover:bg-black/50">

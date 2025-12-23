@@ -24,14 +24,19 @@ export default function SyntropyAuditLog() {
 
   useEffect(() => {
     const fetchAudit = async () => {
+      console.log('Fetching audit log...');
       try {
-        const res = await fetch('/audit.json');
+        const res = await fetch(`/api/audit?t=${Date.now()}`);
+        console.log('Audit log response:', res.status);
         if (res.ok) {
           const json = await res.json();
+          console.log('Audit log items:', json.length);
           setLogs(json);
+        } else {
+          console.error('Failed to fetch audit log:', res.statusText);
         }
       } catch (err) {
-        console.error('Failed to fetch audit log:', err);
+        console.error('Failed to fetch audit log error:', err);
       }
     };
 
@@ -40,7 +45,11 @@ export default function SyntropyAuditLog() {
     return () => clearInterval(interval);
   }, []);
 
-  if (logs.length === 0) return null;
+  if (logs.length === 0) return (
+    <div className="mt-8 p-4 text-xs text-gray-600 border border-dashed border-gray-800 rounded-lg text-center">
+      Waiting for Oversoul audit data...
+    </div>
+  );
 
   return (
     <div className="mt-8 border border-blue-900/50 rounded-lg overflow-hidden bg-black/40 backdrop-blur-sm relative z-20">
