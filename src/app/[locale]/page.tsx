@@ -1,5 +1,6 @@
 import PixelRain from '@/components/PixelRain';
 import SyntropyThoughtStream from '@/app/components/SyntropyThoughtStream';
+import SyntropyAuditLog from '@/app/components/SyntropyAuditLog';
 import LanguageSwitcher from '@/components/LanguageSwitcher';
 import ClickToCopy from '@/components/ClickToCopy';
 import LiveStats from '@/components/LiveStats';
@@ -97,6 +98,7 @@ export default async function Home({ params }: HomeProps) {
 
            {/* Syntropy Thought Stream */}
            <SyntropyThoughtStream />
+           <SyntropyAuditLog />
 
           {/* Projects Grid */}
         <div className="grid md:grid-cols-2 gap-8 mb-16">
