@@ -107,33 +107,33 @@ pixel-landing/
 
 ## 🚀 Quick Start
 
-### Prerequisites
-- Node.js 18+ (Node 20+ recommended)
-- npm, yarn, or pnpm
-- Git
+### Option 1: Docker (Recommended)
+The easiest way to run the landing page is using the Docker setup in the root repository.
 
-### Installation
+```bash
+# From the root of the pixel repository
+docker compose up -d --build landing
 
-1. **Clone and navigate**
-   ```bash
-   cd pixel-landing
-   npm install
-   ```
+# View logs
+docker compose logs -f landing
+```
 
-2. **Configure environment** (optional)
-   ```bash
-   cp .env.example .env.local
-   # Edit with your custom URLs and addresses
-   ```
+### Option 2: Local Development
+**Prerequisites:**
+- Node.js 20+
+- `pnpm` or `npm`
 
-3. **Start development server**
-   ```bash
-   npm run dev
-   ```
+```bash
+# Install dependencies
+npm install
+
+# Start development server
+npm run dev
+```
 
 4. **Open browser**
-   - Development: http://localhost:3000
-   - Visit different language routes: http://localhost:3000/es, /fr, /ja
+   - Development: http://localhost:3001
+   - Visit different language routes: http://localhost:3001/es, /fr, /ja
 
 ## 🔧 Configuration
 
