@@ -8,32 +8,19 @@ export async function GET() {
     try {
       const content = await fs.readFile(filePath, 'utf-8');
       const logs = [];
-      const bracketIndex = content.indexOf(']{');
-      if (bracketIndex !== -1) {
-        const arrayPart = content.slice(0, bracketIndex + 1);
-        const linesPart = content.slice(bracketIndex + 1);
+      const lines = content.split('\n').filter(line => line.trim());
+      for (const line of lines) {
         try {
-          const arrayLogs = JSON.parse(arrayPart);
-          if (Array.isArray(arrayLogs)) logs.push(...arrayLogs);
-        } catch (e) {
-          console.error('Failed to parse array part:', e);
-        }
-        const lines = linesPart.split('\n').filter(line => line.trim());
-        for (const line of lines) {
-          if (line.startsWith('{')) {
-            try {
-              logs.push(JSON.parse(line));
-            } catch (e) {
-              console.error('Failed to parse line:', line, e);
-            }
+          // Handle cases where a line might start with [ (array) or { (object)
+          if (line.startsWith('[')) {
+            const arrayPart = JSON.parse(line);
+            if (Array.isArray(arrayPart)) logs.push(...arrayPart);
+          } else if (line.startsWith('{')) {
+            logs.push(JSON.parse(line));
           }
-        }
-      } else {
-        try {
-          const parsed = JSON.parse(content);
-          if (Array.isArray(parsed)) logs.push(...parsed);
         } catch (e) {
-          console.error('Failed to parse whole file:', e);
+          // If a single line fails, try to find JSON objects within it or skip
+          console.error('Failed to parse line:', line.substring(0, 100), e);
         }
       }
       return NextResponse.json(logs);
