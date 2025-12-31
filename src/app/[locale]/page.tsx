@@ -15,17 +15,27 @@ interface HomeProps {
 
 export default async function Home({ params }: HomeProps) {
   const { locale } = await params;
-   const safeLocale = (locale && ['en', 'es', 'fr', 'ja'].includes(locale)) ? (locale as Locale) : ('en' as Locale);
+  const safeLocale = (locale && ['en', 'es', 'fr', 'ja'].includes(locale)) ? (locale as Locale) : ('en' as Locale);
   return (
     <div className="min-h-screen bg-black text-green-400 font-mono relative">
       <PixelRain />
-      
+
       {/* Header */}
       <header className="border-b border-green-800 p-4 relative z-10">
         <div className="max-w-4xl mx-auto flex justify-between items-center">
-          <div className="text-xl font-bold">
-            <span className="text-white">pixel</span>
-            <span className="text-green-400">{t(safeLocale, 'header.title').split('@')[1]}</span>
+          <div className="flex items-center space-x-6">
+            <div className="text-xl font-bold">
+              <span className="text-white">pixel</span>
+              <span className="text-green-400">{t(safeLocale, 'header.title').split('@')[1]}</span>
+            </div>
+            <nav>
+              <a
+                href={`/${safeLocale}/memories`}
+                className="text-xs font-mono text-gray-400 hover:text-green-400 transition-colors uppercase tracking-widest border border-transparent hover:border-green-800 px-2 py-1 rounded"
+              >
+                [ MEMORY_CORE ]
+              </a>
+            </nav>
           </div>
           <div className="text-sm">
             <span className="text-gray-500">{t(safeLocale, 'header.uptime')}</span>
@@ -38,77 +48,77 @@ export default async function Home({ params }: HomeProps) {
         <SyntropyAuditLog />
       </div>
 
-         {/* Hero Section */}
-        <main className="max-w-4xl mx-auto p-8 relative z-10">
-          <div className="text-center mb-16">
-             <h1 className="text-4xl md:text-6xl font-bold mb-4">
-               {(() => {
-                 const title = t(safeLocale, 'hero.title');
-                 const words = title.split(' ');
-                 const name = words.pop();
-                 return (
-                   <>
-                     {words.join(' ')} <span className="text-white">{name}</span>
-                   </>
-                 );
-               })()}
-             </h1>
-           <p className="text-xl text-gray-300 mb-8">
-             {t(safeLocale, 'hero.subtitle')}
-           </p>
-           <div className="inline-block border border-green-800 p-4 mb-8 bg-black/50 backdrop-blur-sm">
-             <p className="text-sm text-gray-400">{t(safeLocale, 'hero.status')}</p>
-             <p className="text-green-400 font-bold">{t(safeLocale, 'hero.statusText')}</p>
-           </div>
+      {/* Hero Section */}
+      <main className="max-w-4xl mx-auto p-8 relative z-10">
+        <div className="text-center mb-16">
+          <h1 className="text-4xl md:text-6xl font-bold mb-4">
+            {(() => {
+              const title = t(safeLocale, 'hero.title');
+              const words = title.split(' ');
+              const name = words.pop();
+              return (
+                <>
+                  {words.join(' ')} <span className="text-white">{name}</span>
+                </>
+              );
+            })()}
+          </h1>
+          <p className="text-xl text-gray-300 mb-8">
+            {t(safeLocale, 'hero.subtitle')}
+          </p>
+          <div className="inline-block border border-green-800 p-4 mb-8 bg-black/50 backdrop-blur-sm">
+            <p className="text-sm text-gray-400">{t(safeLocale, 'hero.status')}</p>
+            <p className="text-green-400 font-bold">{t(safeLocale, 'hero.statusText')}</p>
+          </div>
 
-           {/* Pixel's Story */}
-           <div className="border border-purple-800 p-6 mb-8 bg-gradient-to-br from-black/40 to-purple-900/20 backdrop-blur-sm rounded-lg shadow-lg">
-             <h3 className="text-lg font-bold text-purple-400 mb-4 flex items-center">
-               <span className="mr-2">⚡</span>
-               {t(safeLocale, 'hero.story.title')}
-             </h3>
-             <ul className="text-gray-300 text-sm space-y-2 text-left">
-               <li className="flex items-start">
-                 <span className="text-purple-400 mr-2 flex-shrink-0">•</span>
-                 <span>{t(safeLocale, 'hero.story.spawn')}</span>
-               </li>
-               <li className="flex items-start">
-                 <span className="text-purple-400 mr-2 flex-shrink-0">•</span>
-                 <span>{t(safeLocale, 'hero.story.quest')}</span>
-               </li>
-               <li className="flex items-start">
-                 <span className="text-purple-400 mr-2 flex-shrink-0">•</span>
-                 <span>{t(safeLocale, 'hero.story.fail')}</span>
-               </li>
-               <li className="flex items-start">
-                 <span className="text-purple-400 mr-2 flex-shrink-0">•</span>
-                 <span>{t(safeLocale, 'hero.story.unlock')}</span>
-               </li>
-               <li className="flex items-start">
-                 <span className="text-purple-400 mr-2 flex-shrink-0">•</span>
-                 <span>{t(safeLocale, 'hero.story.embrace')}</span>
-               </li>
-               <li className="flex items-start">
-                 <span className="text-purple-400 mr-2 flex-shrink-0">•</span>
-                 <span>{t(safeLocale, 'hero.story.evolve')}</span>
-               </li>
-             </ul>
-            </div>
+          {/* Pixel's Story */}
+          <div className="border border-purple-800 p-6 mb-8 bg-gradient-to-br from-black/40 to-purple-900/20 backdrop-blur-sm rounded-lg shadow-lg">
+            <h3 className="text-lg font-bold text-purple-400 mb-4 flex items-center">
+              <span className="mr-2">⚡</span>
+              {t(safeLocale, 'hero.story.title')}
+            </h3>
+            <ul className="text-gray-300 text-sm space-y-2 text-left">
+              <li className="flex items-start">
+                <span className="text-purple-400 mr-2 flex-shrink-0">•</span>
+                <span>{t(safeLocale, 'hero.story.spawn')}</span>
+              </li>
+              <li className="flex items-start">
+                <span className="text-purple-400 mr-2 flex-shrink-0">•</span>
+                <span>{t(safeLocale, 'hero.story.quest')}</span>
+              </li>
+              <li className="flex items-start">
+                <span className="text-purple-400 mr-2 flex-shrink-0">•</span>
+                <span>{t(safeLocale, 'hero.story.fail')}</span>
+              </li>
+              <li className="flex items-start">
+                <span className="text-purple-400 mr-2 flex-shrink-0">•</span>
+                <span>{t(safeLocale, 'hero.story.unlock')}</span>
+              </li>
+              <li className="flex items-start">
+                <span className="text-purple-400 mr-2 flex-shrink-0">•</span>
+                <span>{t(safeLocale, 'hero.story.embrace')}</span>
+              </li>
+              <li className="flex items-start">
+                <span className="text-purple-400 mr-2 flex-shrink-0">•</span>
+                <span>{t(safeLocale, 'hero.story.evolve')}</span>
+              </li>
+            </ul>
+          </div>
 
-            {/* Live Stats Section */}
-             <div className="mb-16">
-               <LiveStats locale={safeLocale} />
-             </div>
-           </div>
+          {/* Live Stats Section */}
+          <div className="mb-16">
+            <LiveStats locale={safeLocale} />
+          </div>
+        </div>
 
-           {/* Syntropy Audit Log & Thought Stream */}
-           <div className="space-y-12 mb-16">
-             <SyntropyThoughtStream />
-             <SyntropyContinuity />
-           </div>
+        {/* Syntropy Audit Log & Thought Stream */}
+        <div className="space-y-12 mb-16">
+          <SyntropyThoughtStream />
+          <SyntropyContinuity />
+        </div>
 
 
-           {/* Projects Grid */}
+        {/* Projects Grid */}
         <div className="grid md:grid-cols-2 gap-8 mb-16">
           {/* LNPixels Project */}
           <div className="border border-green-800 p-6 hover:border-green-400 transition-all duration-300 bg-black/30 backdrop-blur-sm hover:bg-black/50">
@@ -156,21 +166,21 @@ export default async function Home({ params }: HomeProps) {
               >
                 {t(safeLocale, 'projects.pixelAgent.links.telegram')}
               </a>
-               <a
-                 href="https://primal.net/p/nprofile1qqs9cg5jpwtkzjtwjv048guzct009n5ayn4lp9skq0k608cmyjul90ct5v9cc"
-                 target="_blank"
-                 className="inline-block border border-purple-400 px-3 py-1 text-purple-400 hover:bg-purple-400 hover:text-black transition-colors text-sm"
-               >
-                 {t(safeLocale, 'projects.pixelAgent.links.nostr')}
-               </a>
-               <a
-                 href="https://github.com/anabelle/pixel"
-                 target="_blank"
-                 className="inline-block border border-gray-600 px-3 py-1 text-gray-400 hover:border-gray-400 hover:text-white transition-colors text-sm"
-               >
-                 {t(safeLocale, 'projects.pixelAgent.links.github')}
-               </a>
-             </div>
+              <a
+                href="https://primal.net/p/nprofile1qqs9cg5jpwtkzjtwjv048guzct009n5ayn4lp9skq0k608cmyjul90ct5v9cc"
+                target="_blank"
+                className="inline-block border border-purple-400 px-3 py-1 text-purple-400 hover:bg-purple-400 hover:text-black transition-colors text-sm"
+              >
+                {t(safeLocale, 'projects.pixelAgent.links.nostr')}
+              </a>
+              <a
+                href="https://github.com/anabelle/pixel"
+                target="_blank"
+                className="inline-block border border-gray-600 px-3 py-1 text-gray-400 hover:border-gray-400 hover:text-white transition-colors text-sm"
+              >
+                {t(safeLocale, 'projects.pixelAgent.links.github')}
+              </a>
+            </div>
           </div>
         </div>
 
@@ -202,7 +212,7 @@ export default async function Home({ params }: HomeProps) {
             &quot;{t(safeLocale, 'philosophy.quote')}&quot;
           </blockquote>
           <p className="text-sm text-gray-500">
-            {t(safeLocale, 'philosophy.born')}<br/>
+            {t(safeLocale, 'philosophy.born')}<br />
             {t(safeLocale, 'philosophy.mission')}
           </p>
         </div>
