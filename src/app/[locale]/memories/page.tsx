@@ -77,6 +77,10 @@ export default function MemoriesPage() {
         if (type.includes('success')) return 'text-green-400 border-green-900/50 bg-green-950/10';
         if (type === 'evolution_report' || type.includes('treasury')) return 'text-yellow-400 border-yellow-900/50 bg-yellow-950/10';
         if (type === 'opencode_delegation_start') return 'text-purple-400 border-purple-900/50 bg-purple-950/10';
+        if (type === 'agent_memory_hourly') return 'text-cyan-400 border-cyan-900/50 bg-cyan-950/10';
+        if (type === 'agent_memory_daily') return 'text-indigo-400 border-indigo-900/50 bg-indigo-950/10';
+        if (type === 'agent_memory_weekly') return 'text-emerald-400 border-emerald-900/50 bg-emerald-950/10';
+        if (type === 'agent_memory_timeline') return 'text-rose-400 border-rose-900/50 bg-rose-950/10';
         return 'text-blue-400 border-blue-900/50 bg-blue-950/10';
     };
 
@@ -122,13 +126,13 @@ export default function MemoriesPage() {
 
                         {/* Filter */}
                         <div className="flex gap-2 w-full md:w-auto overflow-x-auto pb-1 md:pb-0 scrollbar-hide">
-                            {uniqueTypes.slice(0, 5).map(t => (
+                            {uniqueTypes.slice(0, 8).map(t => (
                                 <button
                                     key={t}
                                     onClick={() => setSelectedType(t)}
                                     className={`px-3 py-1 rounded text-xs font-bold uppercase tracking-wider transition-all whitespace-nowrap ${selectedType === t
-                                            ? 'bg-green-900/30 text-green-400 border border-green-500/50'
-                                            : 'bg-black/30 text-gray-600 border border-gray-800 hover:border-gray-600'
+                                        ? 'bg-green-900/30 text-green-400 border border-green-500/50'
+                                        : 'bg-black/30 text-gray-600 border border-gray-800 hover:border-gray-600'
                                         }`}
                                 >
                                     {t.replace(/_/g, ' ')}
