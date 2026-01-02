@@ -2,10 +2,11 @@ import { NextResponse } from 'next/server';
 import { promises as fs } from 'fs';
 import path from 'path';
 
+export const dynamic = 'force-dynamic';
+
 export async function GET() {
   try {
-    // Correct absolute path to CONTINUITY.md in syntropy-core
-    const filePath = '/home/pixel/pixel/syntropy-core/CONTINUITY.md';
+    const filePath = path.resolve(process.cwd(), 'public/CONTINUITY.md');
     try {
       const content = await fs.readFile(filePath, 'utf-8');
       return NextResponse.json({ content });
