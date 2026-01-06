@@ -73,7 +73,7 @@ export default function SyntropyAuditLog() {
 
   return (
     <div className="mt-8 border border-blue-900/50 rounded-lg overflow-hidden bg-black/40 backdrop-blur-sm relative z-20 font-mono">
-      <button 
+      <button
         onClick={() => setIsOpen(!isOpen)}
         className="w-full flex justify-between items-center p-4 text-xs font-bold text-blue-400 uppercase tracking-widest hover:bg-blue-900/20 transition-colors"
       >
@@ -89,18 +89,17 @@ export default function SyntropyAuditLog() {
           {logs.map((entry, i) => (
             <div key={i} className="border-l-2 border-blue-900/30 pl-4 py-1 relative group text-left">
               <div className="flex justify-between items-start mb-1">
-                <span className={`font-bold ${
-                  entry.type.includes('error') ? 'text-red-400' : 
-                  entry.type.includes('success') ? 'text-green-400' : 'text-blue-400'
-                }`}>
-                  [{entry.type.toUpperCase()}]
-                  {entry.model && <span className="ml-2 text-gray-600 font-normal uppercase">VIA_{entry.model.replace(/^openai\//, '')}</span>}
+                <span className={`font-bold ${(entry.type || '').includes('error') ? 'text-red-400' :
+                    (entry.type || '').includes('success') ? 'text-green-400' : 'text-blue-400'
+                  }`}>
+                  [{(entry.type || 'UNKNOWN').toUpperCase()}]
+                  {typeof entry.model === 'string' && <span className="ml-2 text-gray-600 font-normal uppercase">VIA_{entry.model.replace(/^openai\//, '')}</span>}
                 </span>
                 <span className="text-gray-600 text-[8px] uppercase">
                   {new Date(entry.timestamp).toLocaleString()}
                 </span>
               </div>
-              
+
               {entry.task && <div className="text-gray-400 italic mb-1">&gt; TASK: {entry.task}</div>}
               {entry.file && <div className="text-gray-500 mb-1">TARGET: {entry.file}</div>}
               {entry.summary && <div className="text-gray-400 whitespace-pre-wrap border-t border-blue-900/10 mt-1 pt-1">{entry.summary}</div>}
@@ -109,7 +108,7 @@ export default function SyntropyAuditLog() {
                   {entry.error}
                 </div>
               )}
-              
+
               {entry.type === 'ecosystem_audit' && entry.status && (
                 <div className="grid grid-cols-2 gap-2 mt-2">
                   {entry.status.map((p, pi) => (
@@ -134,7 +133,7 @@ export default function SyntropyAuditLog() {
                   {entry.content}
                 </div>
               )}
-              
+
               {entry.steps && (
                 <div className="mt-2 space-y-1 opacity-60 group-hover:opacity-100 transition-opacity">
                   {entry.steps.map((step, si) => (

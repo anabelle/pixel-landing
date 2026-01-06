@@ -61,7 +61,7 @@ export default function MemoriesPage() {
     }, []);
 
     const uniqueTypes = useMemo(() => {
-        return ['ALL', ...Array.from(new Set(logs.map(l => l.type)))];
+        return ['ALL', ...Array.from(new Set(logs.map(l => l.type || 'UNKNOWN')))];
     }, [logs]);
 
     const filteredLogs = useMemo(() => {
@@ -72,7 +72,8 @@ export default function MemoriesPage() {
         });
     }, [logs, filter, selectedType]);
 
-    const getTypeColor = (type: string) => {
+    const getTypeColor = (type: string = '') => {
+        if (!type) return 'text-blue-400 border-blue-900/50 bg-blue-950/10';
         if (type.includes('error') || type.includes('fail')) return 'text-red-400 border-red-900/50 bg-red-950/10';
         if (type.includes('success')) return 'text-green-400 border-green-900/50 bg-green-950/10';
         if (type === 'evolution_report' || type.includes('treasury')) return 'text-yellow-400 border-yellow-900/50 bg-yellow-950/10';
@@ -169,7 +170,7 @@ export default function MemoriesPage() {
 
                                     {/* Header */}
                                     <div className="flex justify-between items-center mb-3 text-xs uppercase tracking-widest opacity-70 border-b border-white/5 pb-2">
-                                        <span className="font-bold">{log.type.replace(/_/g, ' ')}</span>
+                                        <span className="font-bold">{(log.type || 'UNKNOWN').replace(/_/g, ' ')}</span>
                                         <span>{new Date(log.timestamp).toLocaleString()}</span>
                                     </div>
 
@@ -220,7 +221,7 @@ export default function MemoriesPage() {
                                         {/* Footer Metadata */}
                                         <div className="pt-3 mt-2 border-t border-white/5 flex flex-wrap gap-2 text-[10px] text-gray-500 font-mono uppercase">
                                             {log.file && <span>FILE: {log.file}</span>}
-                                            {log.model && <span>MODEL: {log.model.split('/').pop()}</span>}
+                                            {typeof log.model === 'string' && <span>MODEL: {log.model.split('/').pop()}</span>}
                                             {log.totalSats !== undefined && <span className="text-yellow-500">TREASURY: {log.totalSats} sats</span>}
                                         </div>
 
