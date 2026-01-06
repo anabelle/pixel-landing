@@ -32,7 +32,7 @@ const translations = {
         "features": {
           "collaboration": "real-time collaboration",
           "payments": "bitcoin micropayments",
-          "rate": "1 sat = 1 pixel"
+          "rate": "21 sats = 1 pixel"
         },
         "cta": "enter canvas →"
       },
@@ -113,7 +113,7 @@ const translations = {
         "features": {
           "collaboration": "colaboración en tiempo real",
           "payments": "micropagos bitcoin",
-          "rate": "1 sat = 1 pixel"
+          "rate": "21 sats = 1 pixel"
         },
         "cta": "entrar al lienzo →"
       },
@@ -194,7 +194,7 @@ const translations = {
         "features": {
           "collaboration": "collaboration en temps réel",
           "payments": "micropaiements bitcoin",
-          "rate": "1 sat = 1 pixel"
+          "rate": "21 sats = 1 pixel"
         },
         "cta": "entrer dans la toile →"
       },
@@ -275,7 +275,7 @@ const translations = {
         "features": {
           "collaboration": "リアルタイム協働",
           "payments": "ビットコインマイクロペイメント",
-          "rate": "1 sat = 1 ピクセル"
+          "rate": "21 sats = 1 ピクセル"
         },
         "cta": "キャンバスに入る →"
       },
