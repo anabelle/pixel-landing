@@ -28,12 +28,18 @@ export default async function Home({ params }: HomeProps) {
               <span className="text-white">pixel</span>
               <span className="text-green-400">{t(safeLocale, 'header.title').split('@')[1]}</span>
             </div>
-            <nav>
+            <nav className="flex gap-3">
               <a
                 href={`/${safeLocale}/memories`}
                 className="text-xs font-mono text-gray-400 hover:text-green-400 transition-colors uppercase tracking-widest border border-transparent hover:border-green-800 px-2 py-1 rounded"
               >
                 [ MEMORY_CORE ]
+              </a>
+              <a
+                href={`/${safeLocale}/dashboard`}
+                className="text-xs font-mono text-yellow-400 hover:text-yellow-300 transition-colors uppercase tracking-widest border border-yellow-900/30 hover:border-yellow-600 px-2 py-1 rounded"
+              >
+                [ REVENUE_DASHBOARD ]
               </a>
             </nav>
           </div>
