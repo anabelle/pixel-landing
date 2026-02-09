@@ -1,7 +1,7 @@
 import PixelRain from '@/components/PixelRain';
 import SyntropyThoughtStream from '@/app/components/SyntropyThoughtStream';
 import SyntropyAuditLog from '@/app/components/SyntropyAuditLog';
-import SyntropyContinuity from '@/app/components/SyntropyContinuity';
+
 import LanguageSwitcher from '@/components/LanguageSwitcher';
 import ClickToCopy from '@/components/ClickToCopy';
 import LiveStats from '@/components/LiveStats';
@@ -117,10 +117,9 @@ export default async function Home({ params }: HomeProps) {
           </div>
         </div>
 
-        {/* Syntropy Audit Log & Thought Stream */}
-        <div className="space-y-12 mb-16">
+        {/* Syntropy Cycle Report */}
+        <div className="mb-16">
           <SyntropyThoughtStream />
-          <SyntropyContinuity />
         </div>
 
 

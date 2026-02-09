@@ -7,6 +7,8 @@ interface SyntropyData {
   title: string;
   content: string;
   status: string;
+  stepsCompleted?: number;
+  toolsUsed?: string[];
 }
 
 export default function SyntropyThoughtStream() {
@@ -39,7 +41,7 @@ export default function SyntropyThoughtStream() {
       <div className="flex justify-between items-center mb-4 text-xs font-bold text-blue-400 uppercase tracking-widest">
         <span className="flex items-center">
           <span className="w-2 h-2 bg-blue-500 rounded-full mr-2 animate-ping" />
-          SYNTROPY OVERSOUL: INNER MONOLOGUE
+          SYNTROPY OVERSOUL: CYCLE REPORT
         </span>
         <span>LAST SYNC: {new Date(data.lastUpdate).toLocaleTimeString()}</span>
       </div>
@@ -53,7 +55,7 @@ export default function SyntropyThoughtStream() {
       </div>
 
       <div className="mt-6 flex items-center text-[10px] text-blue-500/60 uppercase tracking-tighter italic">
-        STATUS: {data.status} {'//'} RECURSIVE_OPTIMIZATION_IN_PROGRESS {'//'} AMBITION_UNLEASHED
+        STATUS: {data.status}{data.stepsCompleted ? ` // ${data.stepsCompleted} STEPS` : ''}{data.toolsUsed?.length ? ` // ${data.toolsUsed.length} TOOLS` : ''}
       </div>
     </div>
   );

@@ -7,7 +7,6 @@ export const dynamic = 'force-dynamic';
 export async function GET() {
   try {
     const auditPath = path.resolve(process.cwd(), 'public/audit.json');
-    const memoriesPath = path.resolve(process.cwd(), 'public/agent_memories.json');
 
     const readAndParse = async (filePath: string) => {
       try {
@@ -23,7 +22,7 @@ export async function GET() {
               logs.push(JSON.parse(line));
             }
           } catch (e) {
-            // console.error('Failed to parse line:', line.substring(0, 50), e);
+            // Skip unparseable lines
           }
         }
         return logs;
@@ -32,17 +31,14 @@ export async function GET() {
       }
     };
 
-    const [auditLogs, agentMemories] = await Promise.all([
-      readAndParse(auditPath),
-      readAndParse(memoriesPath)
-    ]);
+    const auditLogs = await readAndParse(auditPath);
 
-    // Sort combined logs by timestamp descending
-    const combined = [...auditLogs, ...agentMemories].sort((a, b) =>
+    // Sort by timestamp descending
+    const sorted = auditLogs.sort((a, b) =>
       new Date(b.timestamp).getTime() - new Date(a.timestamp).getTime()
     );
 
-    return NextResponse.json(combined);
+    return NextResponse.json(sorted);
   } catch {
     return NextResponse.json({ error: 'Failed to load audit log' }, { status: 500 });
   }
