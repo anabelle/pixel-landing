@@ -1,7 +1,4 @@
 import PixelRain from '@/components/PixelRain';
-import SyntropyThoughtStream from '@/app/components/SyntropyThoughtStream';
-import SyntropyAuditLog from '@/app/components/SyntropyAuditLog';
-
 import LanguageSwitcher from '@/components/LanguageSwitcher';
 import ClickToCopy from '@/components/ClickToCopy';
 import LiveStats from '@/components/LiveStats';
@@ -23,25 +20,9 @@ export default async function Home({ params }: HomeProps) {
       {/* Header */}
       <header className="border-b border-green-800 p-4 relative z-10">
         <div className="max-w-4xl mx-auto flex justify-between items-center">
-          <div className="flex items-center space-x-6">
-            <div className="text-xl font-bold">
-              <span className="text-white">pixel</span>
-              <span className="text-green-400">{t(safeLocale, 'header.title').split('@')[1]}</span>
-            </div>
-            <nav className="flex gap-3">
-              <a
-                href={`/${safeLocale}/memories`}
-                className="text-xs font-mono text-gray-400 hover:text-green-400 transition-colors uppercase tracking-widest border border-transparent hover:border-green-800 px-2 py-1 rounded"
-              >
-                [ MEMORY_CORE ]
-              </a>
-              <a
-                href={`/${safeLocale}/dashboard`}
-                className="text-xs font-mono text-yellow-400 hover:text-yellow-300 transition-colors uppercase tracking-widest border border-yellow-900/30 hover:border-yellow-600 px-2 py-1 rounded"
-              >
-                [ REVENUE_DASHBOARD ]
-              </a>
-            </nav>
+          <div className="text-xl font-bold">
+            <span className="text-white">pixel</span>
+            <span className="text-green-400">@home</span>
           </div>
           <div className="text-sm">
             <span className="text-gray-500">{t(safeLocale, 'header.uptime')}</span>
@@ -50,12 +31,9 @@ export default async function Home({ params }: HomeProps) {
         </div>
       </header>
 
-      <div className="max-w-4xl mx-auto px-8 pt-4">
-        <SyntropyAuditLog />
-      </div>
-
-      {/* Hero Section */}
       <main className="max-w-4xl mx-auto p-8 relative z-10">
+
+        {/* Hero */}
         <div className="text-center mb-16">
           <h1 className="text-4xl md:text-6xl font-bold mb-4">
             {(() => {
@@ -69,162 +47,144 @@ export default async function Home({ params }: HomeProps) {
               );
             })()}
           </h1>
-          <p className="text-xl text-gray-300 mb-8">
+          <p className="text-xl text-gray-300 mb-2">
             {t(safeLocale, 'hero.subtitle')}
           </p>
-          <div className="inline-block border border-green-800 p-4 mb-8 bg-black/50 backdrop-blur-sm">
+          <p className="text-sm text-gray-400 mb-8 max-w-xl mx-auto">
+            {t(safeLocale, 'hero.tagline')}
+          </p>
+          <div className="inline-block border border-green-800 p-4 bg-black/50 backdrop-blur-sm">
             <p className="text-sm text-gray-400">{t(safeLocale, 'hero.status')}</p>
             <p className="text-green-400 font-bold">{t(safeLocale, 'hero.statusText')}</p>
           </div>
+        </div>
 
-          {/* Pixel's Story */}
-          <div className="border border-purple-800 p-6 mb-8 bg-gradient-to-br from-black/40 to-purple-900/20 backdrop-blur-sm rounded-lg shadow-lg">
-            <h3 className="text-lg font-bold text-purple-400 mb-4 flex items-center">
-              <span className="mr-2">⚡</span>
-              {t(safeLocale, 'hero.story.title')}
-            </h3>
-            <ul className="text-gray-300 text-sm space-y-2 text-left">
-              <li className="flex items-start">
-                <span className="text-purple-400 mr-2 flex-shrink-0">•</span>
-                <span>{t(safeLocale, 'hero.story.spawn')}</span>
-              </li>
-              <li className="flex items-start">
-                <span className="text-purple-400 mr-2 flex-shrink-0">•</span>
-                <span>{t(safeLocale, 'hero.story.quest')}</span>
-              </li>
-              <li className="flex items-start">
-                <span className="text-purple-400 mr-2 flex-shrink-0">•</span>
-                <span>{t(safeLocale, 'hero.story.fail')}</span>
-              </li>
-              <li className="flex items-start">
-                <span className="text-purple-400 mr-2 flex-shrink-0">•</span>
-                <span>{t(safeLocale, 'hero.story.unlock')}</span>
-              </li>
-              <li className="flex items-start">
-                <span className="text-purple-400 mr-2 flex-shrink-0">•</span>
-                <span>{t(safeLocale, 'hero.story.embrace')}</span>
-              </li>
-              <li className="flex items-start">
-                <span className="text-purple-400 mr-2 flex-shrink-0">•</span>
-                <span>{t(safeLocale, 'hero.story.evolve')}</span>
-              </li>
-            </ul>
-          </div>
-
-          {/* Live Stats Section */}
-          <div className="mb-16">
-            <LiveStats locale={safeLocale} />
+        {/* About */}
+        <div className="border border-green-800 p-6 mb-16 bg-black/30 backdrop-blur-sm rounded-lg">
+          <h2 className="text-xl font-bold text-white mb-4">{t(safeLocale, 'about.title')}</h2>
+          <div className="space-y-3 text-gray-300 text-sm leading-relaxed">
+            <p>{t(safeLocale, 'about.line1')}</p>
+            <p>{t(safeLocale, 'about.line2')}</p>
+            <p>{t(safeLocale, 'about.line3')}</p>
           </div>
         </div>
 
-        {/* Syntropy Cycle Report */}
+        {/* Capabilities */}
         <div className="mb-16">
-          <SyntropyThoughtStream />
+          <h2 className="text-xl font-bold text-white mb-6 text-center">{t(safeLocale, 'capabilities.title')}</h2>
+          <div className="grid md:grid-cols-2 gap-6">
+            <div className="border border-green-800 p-5 hover:border-green-400 transition-all duration-300 bg-black/30 backdrop-blur-sm rounded-lg">
+              <h3 className="text-lg font-bold text-green-400 mb-2">{t(safeLocale, 'capabilities.conversation.title')}</h3>
+              <p className="text-gray-300 text-sm">{t(safeLocale, 'capabilities.conversation.description')}</p>
+            </div>
+            <div className="border border-green-800 p-5 hover:border-yellow-400 transition-all duration-300 bg-black/30 backdrop-blur-sm rounded-lg">
+              <h3 className="text-lg font-bold text-yellow-400 mb-2">{t(safeLocale, 'capabilities.art.title')}</h3>
+              <p className="text-gray-300 text-sm">{t(safeLocale, 'capabilities.art.description')}</p>
+            </div>
+            <div className="border border-green-800 p-5 hover:border-purple-400 transition-all duration-300 bg-black/30 backdrop-blur-sm rounded-lg">
+              <h3 className="text-lg font-bold text-purple-400 mb-2">{t(safeLocale, 'capabilities.services.title')}</h3>
+              <p className="text-gray-300 text-sm">{t(safeLocale, 'capabilities.services.description')}</p>
+            </div>
+            <div className="border border-green-800 p-5 hover:border-blue-400 transition-all duration-300 bg-black/30 backdrop-blur-sm rounded-lg">
+              <h3 className="text-lg font-bold text-blue-400 mb-2">{t(safeLocale, 'capabilities.tools.title')}</h3>
+              <p className="text-gray-300 text-sm">{t(safeLocale, 'capabilities.tools.description')}</p>
+            </div>
+          </div>
         </div>
 
-
-        {/* Projects Grid */}
-        <div className="grid md:grid-cols-2 gap-8 mb-16">
-          {/* LNPixels Project */}
-          <div className="border border-green-800 p-6 hover:border-green-400 transition-all duration-300 bg-black/30 backdrop-blur-sm hover:bg-black/50">
-            <h2 className="text-2xl font-bold text-white mb-3">{t(safeLocale, 'projects.lnpixels.title')}</h2>
-            <p className="text-gray-300 mb-4">
-              {t(safeLocale, 'projects.lnpixels.description')}
-            </p>
-            <div className="text-sm text-gray-400 mb-4">
-              <div>• {t(safeLocale, 'projects.lnpixels.features.collaboration')}</div>
-              <div>• {t(safeLocale, 'projects.lnpixels.features.payments')}</div>
-              <div>• {t(safeLocale, 'projects.lnpixels.features.rate')}</div>
+        {/* Find Pixel — platforms */}
+        <div className="mb-16">
+          <h2 className="text-xl font-bold text-white mb-2 text-center">{t(safeLocale, 'platforms.title')}</h2>
+          <p className="text-sm text-gray-500 mb-6 text-center">{t(safeLocale, 'platforms.subtitle')}</p>
+          <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
+            <a
+              href="https://t.me/PixelSurvival_bot"
+              target="_blank"
+              className="border border-cyan-800 p-4 hover:border-cyan-400 transition-all duration-300 bg-black/30 backdrop-blur-sm rounded-lg text-center group"
+            >
+              <div className="text-cyan-400 font-bold mb-1 group-hover:text-cyan-300">{t(safeLocale, 'platforms.telegram.name')}</div>
+              <div className="text-gray-400 text-xs">{t(safeLocale, 'platforms.telegram.description')}</div>
+            </a>
+            <div className="border border-green-900 p-4 bg-black/30 backdrop-blur-sm rounded-lg text-center opacity-60">
+              <div className="text-green-400 font-bold mb-1">{t(safeLocale, 'platforms.whatsapp.name')}</div>
+              <div className="text-gray-500 text-xs">{t(safeLocale, 'platforms.whatsapp.description')}</div>
             </div>
+            <a
+              href="https://primal.net/p/nprofile1qqs9cg5jpwtkzjtwjv048guzct009n5ayn4lp9skq0k608cmyjul90ct5v9cc"
+              target="_blank"
+              className="border border-purple-800 p-4 hover:border-purple-400 transition-all duration-300 bg-black/30 backdrop-blur-sm rounded-lg text-center group"
+            >
+              <div className="text-purple-400 font-bold mb-1 group-hover:text-purple-300">{t(safeLocale, 'platforms.nostr.name')}</div>
+              <div className="text-gray-400 text-xs">{t(safeLocale, 'platforms.nostr.description')}</div>
+            </a>
             <a
               href="https://ln.pixel.xx.kg"
               target="_blank"
-              className="inline-block border border-green-400 px-4 py-2 text-green-400 hover:bg-green-400 hover:text-black transition-colors"
+              className="border border-yellow-800 p-4 hover:border-yellow-400 transition-all duration-300 bg-black/30 backdrop-blur-sm rounded-lg text-center group"
             >
-              {t(safeLocale, 'projects.lnpixels.cta')}
+              <div className="text-yellow-400 font-bold mb-1 group-hover:text-yellow-300">{t(safeLocale, 'platforms.canvas.name')}</div>
+              <div className="text-gray-400 text-xs">{t(safeLocale, 'platforms.canvas.description')}</div>
             </a>
-          </div>
-
-          {/* Pixel Agent */}
-          <div className="border border-green-800 p-6 hover:border-green-400 transition-all duration-300 bg-black/30 backdrop-blur-sm hover:bg-black/50">
-            <h2 className="text-2xl font-bold text-white mb-3">{t(safeLocale, 'projects.pixelAgent.title')}</h2>
-            <p className="text-gray-300 mb-4">
-              {t(safeLocale, 'projects.pixelAgent.description')}
-            </p>
-            <div className="text-sm text-gray-400 mb-4">
-              <div>• {t(safeLocale, 'projects.pixelAgent.features.survival')}</div>
-              <div>• {t(safeLocale, 'projects.pixelAgent.features.humor')}</div>
-              <div>• {t(safeLocale, 'projects.pixelAgent.features.wit')}</div>
-            </div>
-            <div className="space-x-2 space-y-2">
-              <a
-                href="https://x.com/PixelSurvivor"
-                target="_blank"
-                className="inline-block border border-blue-400 px-3 py-1 text-blue-400 hover:bg-blue-400 hover:text-black transition-colors text-sm"
-              >
-                {t(safeLocale, 'projects.pixelAgent.links.twitter')}
-              </a>
-              <a
-                href="https://t.me/PixelSurvival_bot"
-                target="_blank"
-                className="inline-block border border-cyan-400 px-3 py-1 text-cyan-400 hover:bg-cyan-400 hover:text-black transition-colors text-sm"
-              >
-                {t(safeLocale, 'projects.pixelAgent.links.telegram')}
-              </a>
-              <a
-                href="https://primal.net/p/nprofile1qqs9cg5jpwtkzjtwjv048guzct009n5ayn4lp9skq0k608cmyjul90ct5v9cc"
-                target="_blank"
-                className="inline-block border border-purple-400 px-3 py-1 text-purple-400 hover:bg-purple-400 hover:text-black transition-colors text-sm"
-              >
-                {t(safeLocale, 'projects.pixelAgent.links.nostr')}
-              </a>
-              <a
-                href="https://github.com/anabelle/pixel"
-                target="_blank"
-                className="inline-block border border-gray-600 px-3 py-1 text-gray-400 hover:border-gray-400 hover:text-white transition-colors text-sm"
-              >
-                {t(safeLocale, 'projects.pixelAgent.links.github')}
-              </a>
-            </div>
+            <a
+              href="https://pixel.xx.kg/v2/health"
+              target="_blank"
+              className="border border-green-800 p-4 hover:border-green-400 transition-all duration-300 bg-black/30 backdrop-blur-sm rounded-lg text-center group"
+            >
+              <div className="text-green-400 font-bold mb-1 group-hover:text-green-300">{t(safeLocale, 'platforms.api.name')}</div>
+              <div className="text-gray-400 text-xs">{t(safeLocale, 'platforms.api.description')}</div>
+            </a>
+            <a
+              href="https://github.com/anabelle/pixel"
+              target="_blank"
+              className="border border-gray-700 p-4 hover:border-gray-400 transition-all duration-300 bg-black/30 backdrop-blur-sm rounded-lg text-center group"
+            >
+              <div className="text-gray-400 font-bold mb-1 group-hover:text-white">{t(safeLocale, 'platforms.github.name')}</div>
+              <div className="text-gray-500 text-xs">{t(safeLocale, 'platforms.github.description')}</div>
+            </a>
           </div>
         </div>
 
-        {/* Support Section */}
-        <div className="border border-yellow-600 p-6 text-center mb-16 bg-black/30 backdrop-blur-sm">
-          <h3 className="text-xl font-bold text-yellow-400 mb-3">{t(safeLocale, 'support.title')}</h3>
-          <p className="text-gray-300 mb-4">
-            {t(safeLocale, 'support.description')}
+        {/* Live Canvas Stats */}
+        <div className="mb-16">
+          <LiveStats locale={safeLocale} />
+        </div>
+
+        {/* Value for Value */}
+        <div className="border border-yellow-600 p-6 text-center mb-16 bg-black/30 backdrop-blur-sm rounded-lg">
+          <h3 className="text-xl font-bold text-yellow-400 mb-3">{t(safeLocale, 'revenue.title')}</h3>
+          <p className="text-gray-300 mb-4 text-sm">
+            {t(safeLocale, 'revenue.description')}
           </p>
-          <div className="space-y-3">
-            <ClickToCopy text="sparepicolo55@walletofsatoshi.com">
+          <div className="space-y-3 mb-4">
+            <ClickToCopy text="sparepiccolo55@walletofsatoshi.com">
               <div className="bg-gray-900/80 p-3 rounded text-sm border border-gray-800 hover:border-yellow-400 transition-colors">
-                <span className="text-gray-400">{t(safeLocale, 'support.lightning')}</span>
-                <span className="text-yellow-400 ml-2 font-mono break-all">sparepicolo55@walletofsatoshi.com</span>
+                <span className="text-gray-400">{t(safeLocale, 'revenue.lightning')}</span>
+                <span className="text-yellow-400 ml-2 font-mono break-all">sparepiccolo55@walletofsatoshi.com</span>
               </div>
             </ClickToCopy>
             <ClickToCopy text="bc1q7e33r989x03ynp6h4z04zygtslp5v8mcx535za">
               <div className="bg-gray-900/80 p-3 rounded text-sm border border-gray-800 hover:border-orange-400 transition-colors">
-                <span className="text-gray-400">{t(safeLocale, 'support.bitcoin')}</span>
+                <span className="text-gray-400">{t(safeLocale, 'revenue.bitcoin')}</span>
                 <span className="text-orange-400 ml-2 font-mono break-all">bc1q7e33r989x03ynp6h4z04zygtslp5v8mcx535za</span>
               </div>
             </ClickToCopy>
           </div>
+          <p className="text-xs text-gray-500">{t(safeLocale, 'revenue.or')}</p>
         </div>
 
         {/* Philosophy */}
-        <div className="text-center">
+        <div className="text-center mb-8">
           <blockquote className="text-lg text-gray-300 italic mb-4">
             &quot;{t(safeLocale, 'philosophy.quote')}&quot;
           </blockquote>
           <p className="text-sm text-gray-500">
-            {t(safeLocale, 'philosophy.born')}<br />
-            {t(safeLocale, 'philosophy.mission')}
+            {t(safeLocale, 'philosophy.footnote')}
           </p>
         </div>
       </main>
 
       {/* Footer */}
-      <footer className="border-t border-green-800 p-4 mt-16 relative z-10">
+      <footer className="border-t border-green-800 p-4 mt-8 relative z-10">
         <div className="max-w-4xl mx-auto text-center text-gray-500 text-sm">
           <p>{t(safeLocale, 'footer.text')}</p>
           <div className="mt-4">
