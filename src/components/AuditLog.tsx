@@ -6,6 +6,7 @@ type AuditEntry = {
   ts: string;
   type: string;
   summary: string;
+  data?: Record<string, any>;
 };
 
 interface AuditLogProps {
@@ -65,11 +66,24 @@ export default function AuditLog({ limit = 20 }: AuditLogProps) {
       <div className="space-y-2 text-xs text-gray-300 font-mono max-h-80 overflow-auto pr-2">
         {entries.map((entry, idx) => {
           const time = new Date(entry.ts).toLocaleTimeString();
+          const isBash = entry.type === 'tool_use' && typeof entry.data?.input?.command === 'string';
+          const bashPreview = isBash ? String(entry.data?.output?.outputPreview ?? '').trim() : '';
+          const bashMeta = isBash
+            ? `exit=${entry.data?.output?.exitCode ?? '?'} len=${entry.data?.output?.outputLength ?? '?'}${entry.data?.output?.truncated ? ' truncated' : ''}`
+            : '';
           return (
-            <div key={`${entry.ts}-${idx}`} className="flex gap-2">
-              <span className="text-gray-500">{time}</span>
-              <span className="text-green-400">{entry.type}</span>
-              <span className="text-gray-300">{entry.summary}</span>
+            <div key={`${entry.ts}-${idx}`} className="space-y-1">
+              <div className="flex gap-2">
+                <span className="text-gray-500">{time}</span>
+                <span className="text-green-400">{entry.type}</span>
+                <span className="text-gray-300">{entry.summary}</span>
+              </div>
+              {isBash && (
+                <div className="text-gray-500 pl-6">
+                  <div>{bashMeta}</div>
+                  {bashPreview && <pre className="whitespace-pre-wrap">{bashPreview}</pre>}
+                </div>
+              )}
             </div>
           );
         })}
