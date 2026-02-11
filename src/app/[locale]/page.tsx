@@ -2,6 +2,7 @@ import PixelRain from '@/components/PixelRain';
 import LanguageSwitcher from '@/components/LanguageSwitcher';
 import ClickToCopy from '@/components/ClickToCopy';
 import LiveStats from '@/components/LiveStats';
+import AuditLog from '@/components/AuditLog';
 import { t, Locale } from '@/lib/translations';
 
 interface HomeProps {
@@ -147,6 +148,11 @@ export default async function Home({ params }: HomeProps) {
         {/* Live Canvas Stats */}
         <div className="mb-16">
           <LiveStats locale={safeLocale} />
+        </div>
+
+        {/* Audit Feed */}
+        <div className="mb-16">
+          <AuditLog limit={20} />
         </div>
 
         {/* Value for Value */}
