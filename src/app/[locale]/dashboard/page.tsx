@@ -118,6 +118,21 @@ function since(iso: string | null | undefined) {
   return `${days}d ago`;
 }
 
+function countdown(iso: string | null | undefined) {
+  if (!iso) return '—';
+  const diff = new Date(iso).getTime() - Date.now();
+  if (Number.isNaN(diff)) return '—';
+  if (diff <= 0) return 'overdue';
+  const minutes = Math.floor(diff / 60000);
+  if (minutes < 60) return `in ${minutes}m`;
+  const hours = Math.floor(minutes / 60);
+  const remainMin = minutes % 60;
+  if (hours < 24) return `in ${hours}h ${remainMin}m`;
+  const days = Math.floor(hours / 24);
+  const remainHours = hours % 24;
+  return `in ${days}d ${remainHours}h`;
+}
+
 export default function DashboardPage() {
   const [health, setHealth] = useState<HealthPayload | null>(null);
   const [stats, setStats] = useState<StatsPayload | null>(null);
@@ -687,24 +702,39 @@ export default function DashboardPage() {
           </div>
         </section>
 
-        {isUnlocked && (
-          <section className="border border-green-900/40 bg-black/60 p-6 rounded-lg">
-            <div className="text-xs text-green-400 uppercase tracking-widest">Reminders</div>
-            <div className="mt-4 grid gap-2 text-xs text-gray-300">
-              <div className="text-gray-500">Active reminders: {formatNumber(reminders?.stats?.active)}</div>
-              <div className="grid gap-2 max-h-64 overflow-auto pr-2">
-                {reminders?.reminders?.map((reminder) => (
-                  <div key={reminder.id} className="border border-green-900/20 p-3 rounded">
-                    <div className="text-[10px] text-gray-500 uppercase">{reminder.platform} · {reminder.status}</div>
-                    <div className="text-gray-200">{reminder.rawMessage}</div>
-                    <div className="text-gray-500">Due {new Date(reminder.dueAt).toLocaleString()}</div>
-                  </div>
-                ))}
-                {reminders?.reminders?.length === 0 && <div className="text-gray-500">No active reminders.</div>}
+        {isUnlocked && (() => {
+          const REMINDERS_PREVIEW = 3;
+          const sorted = [...(reminders?.reminders ?? [])].sort((a, b) => new Date(a.dueAt).getTime() - new Date(b.dueAt).getTime());
+          const visible = sorted.slice(0, REMINDERS_PREVIEW);
+          const remaining = sorted.length - visible.length;
+          return (
+            <section className="border border-green-900/40 bg-black/60 p-6 rounded-lg">
+              <div className="flex items-center justify-between">
+                <div className="text-xs text-green-400 uppercase tracking-widest">Reminders</div>
+                <div className="text-xs text-gray-500">{formatNumber(reminders?.stats?.active)} active</div>
               </div>
-            </div>
-          </section>
-        )}
+              <div className="mt-4 grid gap-2 text-xs text-gray-300">
+                {visible.map((reminder) => {
+                  const cd = countdown(reminder.dueAt);
+                  const isOverdue = cd === 'overdue';
+                  return (
+                    <div key={reminder.id} className={`border p-3 rounded ${isOverdue ? 'border-red-900/40 bg-red-900/10' : 'border-green-900/20'}`}>
+                      <div className="flex items-center justify-between">
+                        <div className="text-[10px] text-gray-500 uppercase">{reminder.platform} · {reminder.status}</div>
+                        <div className={`text-[10px] font-bold ${isOverdue ? 'text-red-400' : 'text-green-300'}`}>{cd}</div>
+                      </div>
+                      <div className="text-gray-200 mt-1">{reminder.rawMessage}</div>
+                    </div>
+                  );
+                })}
+                {visible.length === 0 && <div className="text-gray-500">No active reminders.</div>}
+                {remaining > 0 && (
+                  <div className="text-gray-500 text-center mt-1">+{remaining} more reminder{remaining > 1 ? 's' : ''}</div>
+                )}
+              </div>
+            </section>
+          );
+        })()}
       </main>
     </div>
   );
