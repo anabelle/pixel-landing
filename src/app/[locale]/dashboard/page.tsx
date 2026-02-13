@@ -84,6 +84,12 @@ type MemoriesPayload = {
 
 type HeartbeatSummaryPayload = { status: Record<string, any> };
 
+type ConversationsPayload = {
+  messages: { ts: string; platform: string; user: string; assistant: string }[];
+  count: number;
+  userId: string;
+};
+
 const POLL_FAST = 15000;
 const POLL_SLOW = 30000;
 const OWNER_NPUB = 'npub1m3hxtn6auzjfdwux4cpzrpzt8dyt60dzvs7dm08rfes82jk9hxtseudltp';
@@ -149,6 +155,7 @@ export default function DashboardPage() {
   const [innerLife, setInnerLife] = useState<InnerLifePayload | null>(null);
   const [memories, setMemories] = useState<MemoriesPayload | null>(null);
   const [heartbeatSummary, setHeartbeatSummary] = useState<HeartbeatSummaryPayload | null>(null);
+  const [conversations, setConversations] = useState<ConversationsPayload | null>(null);
   const [filter, setFilter] = useState<string>('all');
   const [memorySearch, setMemorySearch] = useState('');
   const [isUnlocked, setIsUnlocked] = useState(false);
@@ -297,6 +304,7 @@ export default function DashboardPage() {
     signedFetchJson<RemindersPayload>('/v2/api/reminders?limit=20', setReminders);
     signedFetchJson<InnerLifePayload>('/v2/api/inner-life', setInnerLife);
     signedFetchJson<MemoriesPayload>('/v2/api/memories?limit=120', setMemories);
+    signedFetchJson<ConversationsPayload>('/v2/api/conversations/syntropy?limit=100', setConversations);
 
     const privatePoll = setInterval(() => {
       signedFetchJson<AuditPayload>('/v2/api/audit?limit=120', setAudit);
@@ -306,6 +314,7 @@ export default function DashboardPage() {
       signedFetchJson<RemindersPayload>('/v2/api/reminders?limit=20', setReminders);
       signedFetchJson<InnerLifePayload>('/v2/api/inner-life', setInnerLife);
       signedFetchJson<MemoriesPayload>('/v2/api/memories?limit=120', setMemories);
+      signedFetchJson<ConversationsPayload>('/v2/api/conversations/syntropy?limit=100', setConversations);
     }, POLL_SLOW);
 
     return () => {
@@ -552,6 +561,37 @@ export default function DashboardPage() {
                     <div className="mt-2 whitespace-pre-wrap max-h-40 overflow-auto">{innerLife?.projects.content || '—'}</div>
                   </div>
                 </div>
+              </div>
+            </section>
+
+            <section className="border border-teal-900/40 bg-black/60 p-6 rounded-lg">
+              <div className="flex flex-col gap-3 md:flex-row md:items-center md:justify-between">
+                <div>
+                  <div className="text-xs text-teal-300 uppercase tracking-widest">Syntropy Conversations</div>
+                  <div className="text-sm text-gray-500">Latest exchanges between Syntropy and Pixel</div>
+                </div>
+                <div className="text-xs text-teal-200">{formatNumber(conversations?.count ?? 0)} messages</div>
+              </div>
+              <div className="mt-4 space-y-4 text-xs text-gray-300 max-h-96 overflow-auto pr-2">
+                {conversations?.messages?.map((entry, idx) => (
+                  <div key={`${entry.ts}-${idx}`} className="border border-teal-900/30 bg-teal-900/10 rounded p-3">
+                    <div className="flex items-center justify-between text-[10px] uppercase text-teal-200">
+                      <span>{entry.platform || 'http'} · {since(entry.ts)}</span>
+                      <span>{new Date(entry.ts).toLocaleString()}</span>
+                    </div>
+                    <div className="mt-2">
+                      <div className="text-[10px] text-teal-300 uppercase">Syntropy</div>
+                      <div className="mt-1 whitespace-pre-wrap text-gray-200">{entry.user || '—'}</div>
+                    </div>
+                    <div className="mt-3">
+                      <div className="text-[10px] text-teal-400 uppercase">Pixel</div>
+                      <div className="mt-1 whitespace-pre-wrap text-gray-100">{entry.assistant || '—'}</div>
+                    </div>
+                  </div>
+                ))}
+                {(!conversations?.messages || conversations.messages.length === 0) && (
+                  <div className="text-gray-500">No Syntropy conversations yet.</div>
+                )}
               </div>
             </section>
 
