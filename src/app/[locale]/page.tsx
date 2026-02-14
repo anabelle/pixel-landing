@@ -136,6 +136,13 @@ export default async function Home({ params }: HomeProps) {
               <div className="text-gray-400 text-xs">{t(safeLocale, 'platforms.api.description')}</div>
             </a>
             <a
+              href={`/${safeLocale}/dashboard`}
+              className="border border-blue-800 p-4 hover:border-blue-400 transition-all duration-300 bg-black/30 backdrop-blur-sm rounded-lg text-center group"
+            >
+              <div className="text-blue-400 font-bold mb-1 group-hover:text-blue-300">{t(safeLocale, 'platforms.dashboard.name')}</div>
+              <div className="text-gray-400 text-xs">{t(safeLocale, 'platforms.dashboard.description')}</div>
+            </a>
+            <a
               href="https://github.com/anabelle/pixel"
               target="_blank"
               className="border border-gray-700 p-4 hover:border-gray-400 transition-all duration-300 bg-black/30 backdrop-blur-sm rounded-lg text-center group"

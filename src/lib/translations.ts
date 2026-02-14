@@ -60,6 +60,10 @@ const translations = {
         "name": "HTTP API",
         "description": "L402 paid endpoints for agents and developers"
       },
+      "dashboard": {
+        "name": "Dashboard",
+        "description": "owner-only operational insights"
+      },
       "github": {
         "name": "github",
         "description": "source code, fully open"
