@@ -324,16 +324,35 @@ export default function DashboardPage() {
 
   const filteredAudit = useMemo(() => {
     if (!audit?.entries) return [];
-    if (filter === 'all') return audit.entries;
-    return audit.entries.filter((entry) => entry.type === filter);
+    const sorted = [...audit.entries].sort((a, b) => new Date(b.ts).getTime() - new Date(a.ts).getTime());
+    if (filter === 'all') return sorted;
+    return sorted.filter((entry) => entry.type === filter);
   }, [audit, filter]);
 
   const filteredMemories = useMemo(() => {
     if (!memories?.memories) return [];
-    if (!memorySearch.trim()) return memories.memories;
+    const sorted = [...memories.memories].sort((a, b) => new Date(b.updatedAt).getTime() - new Date(a.updatedAt).getTime());
+    if (!memorySearch.trim()) return sorted;
     const term = memorySearch.toLowerCase();
-    return memories.memories.filter((mem) => mem.content.toLowerCase().includes(term));
+    return sorted.filter((mem) => mem.content.toLowerCase().includes(term));
   }, [memories, memorySearch]);
+
+  const sortedConversations = useMemo(() => {
+    if (!conversations?.messages) return [];
+    return [...conversations.messages].sort((a, b) => new Date(b.ts).getTime() - new Date(a.ts).getTime());
+  }, [conversations]);
+
+  const sortedJobs = useMemo(() => {
+    if (!jobs?.jobs) return [];
+    return [...jobs.jobs].sort((a, b) => (b.createdAt ?? 0) - (a.createdAt ?? 0));
+  }, [jobs]);
+
+  const recentRevenue = useMemo(() => {
+    if (!revenue?.recent) return [];
+    return [...revenue.recent]
+      .sort((a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime())
+      .slice(0, 5);
+  }, [revenue]);
 
   const costByDay = useMemo(() => {
     const entries = costHistory?.history?.entries ?? [];
@@ -573,7 +592,7 @@ export default function DashboardPage() {
                 <div className="text-xs text-teal-200">{formatNumber(conversations?.count ?? 0)} messages</div>
               </div>
               <div className="mt-4 space-y-4 text-xs text-gray-300 max-h-96 overflow-auto pr-2">
-                {conversations?.messages?.map((entry, idx) => (
+                {sortedConversations.map((entry, idx) => (
                   <div key={`${entry.ts}-${idx}`} className="border border-teal-900/30 bg-teal-900/10 rounded p-3">
                     <div className="flex items-center justify-between text-[10px] uppercase text-teal-200">
                       <span>{entry.platform || 'http'} · {since(entry.ts)}</span>
@@ -689,13 +708,13 @@ export default function DashboardPage() {
                 <>
                   <div className="text-xs text-gray-500">Recent</div>
                   <div className="space-y-2 text-xs">
-                    {revenue?.recent?.slice(0, 5).map((entry, idx) => (
+                    {recentRevenue.map((entry, idx) => (
                       <div key={`${entry.source}-${idx}`} className="border-b border-yellow-900/20 pb-1">
                         <div className="text-gray-400">{entry.source} · {formatNumber(entry.amountSats)} sats</div>
                         <div className="text-gray-500">{entry.description ?? '—'} · {since(entry.createdAt)}</div>
                       </div>
                     ))}
-                    {revenue?.recent?.length === 0 && <div className="text-gray-500">No revenue yet.</div>}
+                  {recentRevenue.length === 0 && <div className="text-gray-500">No revenue yet.</div>}
                   </div>
                 </>
               )}
@@ -729,7 +748,7 @@ export default function DashboardPage() {
             )}
             {isUnlocked && (
               <div className="mt-4 space-y-3 text-xs text-gray-300 max-h-72 overflow-auto pr-2">
-                {jobs?.jobs?.map((job) => (
+                {sortedJobs.map((job) => (
                   <div key={job.id} className="border-b border-blue-900/20 pb-2">
                     <div className="text-blue-300 text-[10px] uppercase">{job.status}</div>
                     <div className="text-gray-200">{job.prompt}</div>

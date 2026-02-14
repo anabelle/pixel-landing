@@ -50,7 +50,8 @@ export default function NostrFeed({ locale, limit = 10 }: NostrFeedProps) {
       const response = await fetch(`/v2/api/posts?limit=${limit}`);
       if (!response.ok) throw new Error('posts fetch failed');
       const data = await response.json();
-      setPosts(Array.isArray(data?.posts) ? data.posts : []);
+      const fetched = Array.isArray(data?.posts) ? data.posts : [];
+      setPosts(fetched.sort((a, b) => b.ts - a.ts));
       setError(null);
     } catch {
       setError(t(locale, 'nostrFeed.error'));

@@ -23,7 +23,8 @@ export default function AuditLog({ limit = 20 }: AuditLogProps) {
       const response = await fetch(`/v2/api/audit?limit=${limit}`);
       if (!response.ok) throw new Error('audit fetch failed');
       const data = await response.json();
-      setEntries(Array.isArray(data?.entries) ? data.entries : []);
+      const fetched = Array.isArray(data?.entries) ? data.entries : [];
+      setEntries(fetched.sort((a, b) => new Date(b.ts).getTime() - new Date(a.ts).getTime()));
       setError(null);
     } catch {
       setError('Unable to load audit feed');
