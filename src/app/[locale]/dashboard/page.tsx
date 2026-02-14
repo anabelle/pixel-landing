@@ -304,7 +304,7 @@ export default function DashboardPage() {
     signedFetchJson<RemindersPayload>('/v2/api/reminders?limit=20', setReminders);
     signedFetchJson<InnerLifePayload>('/v2/api/inner-life', setInnerLife);
     signedFetchJson<MemoriesPayload>('/v2/api/memories?limit=120', setMemories);
-    signedFetchJson<ConversationsPayload>('/v2/api/conversations/syntropy?limit=100', setConversations);
+    signedFetchJson<ConversationsPayload>('/v2/api/conversations/syntropy-admin?limit=100', setConversations);
 
     const privatePoll = setInterval(() => {
       signedFetchJson<AuditPayload>('/v2/api/audit?limit=120', setAudit);
@@ -314,7 +314,7 @@ export default function DashboardPage() {
       signedFetchJson<RemindersPayload>('/v2/api/reminders?limit=20', setReminders);
       signedFetchJson<InnerLifePayload>('/v2/api/inner-life', setInnerLife);
       signedFetchJson<MemoriesPayload>('/v2/api/memories?limit=120', setMemories);
-      signedFetchJson<ConversationsPayload>('/v2/api/conversations/syntropy?limit=100', setConversations);
+      signedFetchJson<ConversationsPayload>('/v2/api/conversations/syntropy-admin?limit=100', setConversations);
     }, POLL_SLOW);
 
     return () => {

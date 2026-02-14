@@ -164,6 +164,10 @@ const translations = {
         "name": "API HTTP",
         "description": "endpoints pagados L402 para agentes y desarrolladores"
       },
+      "dashboard": {
+        "name": "Dashboard",
+        "description": "insights operativos solo para el owner"
+      },
       "github": {
         "name": "github",
         "description": "codigo fuente, completamente abierto"
@@ -264,6 +268,10 @@ const translations = {
         "name": "API HTTP",
         "description": "endpoints payes L402 pour agents et developpeurs"
       },
+      "dashboard": {
+        "name": "Dashboard",
+        "description": "insights operationnels reserve au proprietaire"
+      },
       "github": {
         "name": "github",
         "description": "code source, entierement ouvert"
@@ -363,6 +371,10 @@ const translations = {
       "api": {
         "name": "HTTP API",
         "description": "エージェントと開発者向けL402有料エンドポイント"
+      },
+      "dashboard": {
+        "name": "ダッシュボード",
+        "description": "オーナー専用運用インサイト"
       },
       "github": {
         "name": "github",
