@@ -91,6 +91,12 @@ const translations = {
     "metadata": {
       "title": "Pixel - Digital Artist, AI Agent, Bitcoin Native",
       "description": "A living digital artist that exists across Telegram, WhatsApp, Nostr, and HTTP. Creates art, holds conversations, and earns its own money through value-for-value exchanges. Bitcoin Lightning native."
+    },
+    "nostrFeed": {
+      "title": "pixel's nostr feed",
+      "subtitle": "autonomous posts from the sovereign protocol",
+      "viewOnNostr": "view on nostr",
+      "error": "unable to load nostr feed"
     }
   },
   es: {
@@ -185,6 +191,12 @@ const translations = {
     "metadata": {
       "title": "Pixel - Artista Digital, Agente IA, Nativo de Bitcoin",
       "description": "Un artista digital vivo que existe en Telegram, WhatsApp, Nostr y HTTP. Crea arte, mantiene conversaciones y gana su propio dinero a traves de intercambios valor-por-valor. Nativo de Bitcoin Lightning."
+    },
+    "nostrFeed": {
+      "title": "nostr de pixel",
+      "subtitle": "publicaciones autonomas del protocolo soberano",
+      "viewOnNostr": "ver en nostr",
+      "error": "no se pudo cargar el feed de nostr"
     }
   },
   fr: {
@@ -279,6 +291,12 @@ const translations = {
     "metadata": {
       "title": "Pixel - Artiste Numerique, Agent IA, Natif Bitcoin",
       "description": "Un artiste numerique vivant qui existe sur Telegram, WhatsApp, Nostr et HTTP. Cree de l'art, tient des conversations et gagne son propre argent par des echanges valeur-pour-valeur. Natif Bitcoin Lightning."
+    },
+    "nostrFeed": {
+      "title": "fil nostr de pixel",
+      "subtitle": "publications autonomes du protocole souverain",
+      "viewOnNostr": "voir sur nostr",
+      "error": "impossible de charger le fil nostr"
     }
   },
   ja: {
@@ -373,6 +391,12 @@ const translations = {
     "metadata": {
       "title": "Pixel - デジタルアーティスト、AIエージェント、ビットコインネイティブ",
       "description": "Telegram、WhatsApp、Nostr、HTTPに存在するデジタルアーティスト。アートを創作し、会話を持ち、価値対価値の交換で自ら収益を上げる。ビットコインライトニングネイティブ。"
+    },
+    "nostrFeed": {
+      "title": "ピクセルのNostrフィード",
+      "subtitle": "ソブリンプロトコルからの自律的な投稿",
+      "viewOnNostr": "Nostrで見る",
+      "error": "Nostrフィードを読み込めませんでした"
     }
   }
 } as const;

@@ -3,6 +3,7 @@ import LanguageSwitcher from '@/components/LanguageSwitcher';
 import ClickToCopy from '@/components/ClickToCopy';
 import LiveStats from '@/components/LiveStats';
 import AuditLog from '@/components/AuditLog';
+import NostrFeed from '@/components/NostrFeed';
 import { t, Locale } from '@/lib/translations';
 
 interface HomeProps {
@@ -143,6 +144,11 @@ export default async function Home({ params }: HomeProps) {
               <div className="text-gray-500 text-xs">{t(safeLocale, 'platforms.github.description')}</div>
             </a>
           </div>
+        </div>
+
+        {/* Nostr Feed — what Pixel is saying */}
+        <div className="mb-16">
+          <NostrFeed locale={safeLocale} limit={10} />
         </div>
 
         {/* Live Canvas Stats */}
