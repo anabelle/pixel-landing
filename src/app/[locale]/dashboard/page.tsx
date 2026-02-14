@@ -156,6 +156,7 @@ export default function DashboardPage() {
   const [memories, setMemories] = useState<MemoriesPayload | null>(null);
   const [heartbeatSummary, setHeartbeatSummary] = useState<HeartbeatSummaryPayload | null>(null);
   const [conversations, setConversations] = useState<ConversationsPayload | null>(null);
+  const [innerMonologue, setInnerMonologue] = useState<ConversationsPayload | null>(null);
   const [filter, setFilter] = useState<string>('all');
   const [memorySearch, setMemorySearch] = useState('');
   const [isUnlocked, setIsUnlocked] = useState(false);
@@ -305,6 +306,7 @@ export default function DashboardPage() {
     signedFetchJson<InnerLifePayload>('/v2/api/inner-life', setInnerLife);
     signedFetchJson<MemoriesPayload>('/v2/api/memories?limit=120', setMemories);
     signedFetchJson<ConversationsPayload>('/v2/api/conversations/syntropy-admin?limit=100', setConversations);
+    signedFetchJson<ConversationsPayload>('/v2/api/conversations/pixel-self?limit=50', setInnerMonologue);
 
     const privatePoll = setInterval(() => {
       signedFetchJson<AuditPayload>('/v2/api/audit?limit=120', setAudit);
@@ -315,6 +317,7 @@ export default function DashboardPage() {
       signedFetchJson<InnerLifePayload>('/v2/api/inner-life', setInnerLife);
       signedFetchJson<MemoriesPayload>('/v2/api/memories?limit=120', setMemories);
       signedFetchJson<ConversationsPayload>('/v2/api/conversations/syntropy-admin?limit=100', setConversations);
+      signedFetchJson<ConversationsPayload>('/v2/api/conversations/pixel-self?limit=50', setInnerMonologue);
     }, POLL_SLOW);
 
     return () => {
@@ -341,6 +344,11 @@ export default function DashboardPage() {
     if (!conversations?.messages) return [];
     return [...conversations.messages].sort((a, b) => new Date(b.ts).getTime() - new Date(a.ts).getTime());
   }, [conversations]);
+
+  const sortedMonologue = useMemo(() => {
+    if (!innerMonologue?.messages) return [];
+    return [...innerMonologue.messages].sort((a, b) => new Date(b.ts).getTime() - new Date(a.ts).getTime());
+  }, [innerMonologue]);
 
   const sortedJobs = useMemo(() => {
     if (!jobs?.jobs) return [];
@@ -610,6 +618,37 @@ export default function DashboardPage() {
                 ))}
                 {(!conversations?.messages || conversations.messages.length === 0) && (
                   <div className="text-gray-500">No Syntropy conversations yet.</div>
+                )}
+              </div>
+            </section>
+
+            <section className="border border-amber-900/40 bg-black/60 p-6 rounded-lg">
+              <div className="flex flex-col gap-3 md:flex-row md:items-center md:justify-between">
+                <div>
+                  <div className="text-xs text-amber-300 uppercase tracking-widest">Pixel&apos;s Inner Monologue</div>
+                  <div className="text-sm text-gray-500">Internal research reactions and self-conversations</div>
+                </div>
+                <div className="text-xs text-amber-200">{formatNumber(innerMonologue?.count ?? 0)} messages</div>
+              </div>
+              <div className="mt-4 space-y-4 text-xs text-gray-300 max-h-96 overflow-auto pr-2">
+                {sortedMonologue.map((entry, idx) => (
+                  <div key={`${entry.ts}-${idx}`} className="border border-amber-900/30 bg-amber-900/10 rounded p-3">
+                    <div className="flex items-center justify-between text-[10px] uppercase text-amber-200">
+                      <span>{entry.platform || 'internal'} · {since(entry.ts)}</span>
+                      <span>{new Date(entry.ts).toLocaleString()}</span>
+                    </div>
+                    <div className="mt-2">
+                      <div className="text-[10px] text-amber-300 uppercase">Stimulus</div>
+                      <div className="mt-1 whitespace-pre-wrap text-gray-200">{entry.user || '—'}</div>
+                    </div>
+                    <div className="mt-3">
+                      <div className="text-[10px] text-amber-400 uppercase">Pixel</div>
+                      <div className="mt-1 whitespace-pre-wrap text-gray-100">{entry.assistant || '—'}</div>
+                    </div>
+                  </div>
+                ))}
+                {(!innerMonologue?.messages || innerMonologue.messages.length === 0) && (
+                  <div className="text-gray-500">No inner monologue yet. Will populate when Pixel completes internal research tasks.</div>
                 )}
               </div>
             </section>
