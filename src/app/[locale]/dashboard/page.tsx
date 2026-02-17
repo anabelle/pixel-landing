@@ -75,6 +75,8 @@ type InnerLifePayload = {
   evolution: { content: string; truncated: boolean; updatedAt: string | null };
   ideaGarden: { content: string; truncated: boolean; updatedAt: string | null };
   projects: { content: string; truncated: boolean; updatedAt: string | null };
+  activeMissions: { content: string; truncated: boolean; updatedAt: string | null };
+  innerMonologueFile: { content: string; truncated: boolean; updatedAt: string | null };
   status: Record<string, any>;
 };
 
@@ -549,6 +551,24 @@ export default function DashboardPage() {
 
         {isUnlocked && (
           <>
+            <section className="grid gap-6 md:grid-cols-2">
+              <div className="border border-rose-900/40 bg-black/60 p-6 rounded-lg">
+                <div className="text-xs text-rose-400 uppercase tracking-widest">Active Missions</div>
+                <div className="text-[10px] text-gray-500 mt-1">Updated {since(innerLife?.activeMissions?.updatedAt)}</div>
+                <div className="mt-4 text-xs text-gray-300 whitespace-pre-wrap max-h-60 overflow-auto">
+                  {innerLife?.activeMissions?.content || '—'}
+                </div>
+              </div>
+
+              <div className="border border-amber-900/40 bg-black/60 p-6 rounded-lg">
+                <div className="text-xs text-amber-400 uppercase tracking-widest">Inner Monologue</div>
+                <div className="text-[10px] text-gray-500 mt-1">Updated {since(innerLife?.innerMonologueFile?.updatedAt)}</div>
+                <div className="mt-4 text-xs text-gray-300 whitespace-pre-wrap max-h-60 overflow-auto">
+                  {innerLife?.innerMonologueFile?.content || '—'}
+                </div>
+              </div>
+            </section>
+
             <section className="grid gap-6 md:grid-cols-2">
               <div className="border border-purple-900/40 bg-black/60 p-6 rounded-lg">
                 <div className="text-xs text-purple-400 uppercase tracking-widest">Inner Life</div>
