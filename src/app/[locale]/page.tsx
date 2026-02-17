@@ -107,10 +107,14 @@ export default async function Home({ params }: HomeProps) {
               <div className="text-cyan-400 font-bold mb-1 group-hover:text-cyan-300">{t(safeLocale, 'platforms.telegram.name')}</div>
               <div className="text-gray-400 text-xs">{t(safeLocale, 'platforms.telegram.description')}</div>
             </a>
-            <div className="border border-green-900 p-4 bg-black/30 backdrop-blur-sm rounded-lg text-center opacity-60">
-              <div className="text-green-400 font-bold mb-1">{t(safeLocale, 'platforms.whatsapp.name')}</div>
-              <div className="text-gray-500 text-xs">{t(safeLocale, 'platforms.whatsapp.description')}</div>
-            </div>
+            <a
+              href="https://wa.me/573223176133"
+              target="_blank"
+              className="border border-green-800 p-4 hover:border-green-400 transition-all duration-300 bg-black/30 backdrop-blur-sm rounded-lg text-center group"
+            >
+              <div className="text-green-400 font-bold mb-1 group-hover:text-green-300">{t(safeLocale, 'platforms.whatsapp.name')}</div>
+              <div className="text-gray-400 text-xs">{t(safeLocale, 'platforms.whatsapp.description')}</div>
+            </a>
             <a
               href="https://primal.net/p/nprofile1qqs9cg5jpwtkzjtwjv048guzct009n5ayn4lp9skq0k608cmyjul90ct5v9cc"
               target="_blank"

@@ -46,7 +46,7 @@ const translations = {
       },
       "whatsapp": {
         "name": "whatsapp",
-        "description": "the friend you text (coming soon)"
+        "description": "the friend you text"
       },
       "nostr": {
         "name": "nostr",
@@ -150,7 +150,7 @@ const translations = {
       },
       "whatsapp": {
         "name": "whatsapp",
-        "description": "el amigo que texteas (pronto)"
+        "description": "el amigo que texteas"
       },
       "nostr": {
         "name": "nostr",
@@ -254,7 +254,7 @@ const translations = {
       },
       "whatsapp": {
         "name": "whatsapp",
-        "description": "l'ami que vous textez (bientot)"
+        "description": "l'ami que vous textez"
       },
       "nostr": {
         "name": "nostr",
@@ -358,7 +358,7 @@ const translations = {
       },
       "whatsapp": {
         "name": "whatsapp",
-        "description": "テキストする友達（近日公開）"
+        "description": "テキストする友達"
       },
       "nostr": {
         "name": "nostr",
