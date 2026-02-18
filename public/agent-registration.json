@@ -22,7 +22,7 @@
             "version": "0.3.0"
         }
     ],
-    "x402Support": false,
+    "x402Support": true,
     "active": true,
     "registrations": [],
     "supportedTrust": [

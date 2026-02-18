@@ -388,161 +388,223 @@ export default function DashboardPage() {
   const publicRevenue = revenueSummary ?? revenue;
 
   return (
-    <div className="min-h-screen bg-black text-gray-200 font-mono selection:bg-green-900 selection:text-white">
-      <div className="fixed inset-0 pointer-events-none bg-[radial-gradient(circle_at_center,_transparent_0%,_black_100%)] z-0" />
-      <div className="fixed inset-0 pointer-events-none opacity-10 bg-[url('/grid.svg')] z-0" style={{ backgroundSize: '40px 40px' }} />
+    <div className="min-h-screen deep-gradient text-[var(--text-primary)] font-mono relative">
+      <div className="noise-overlay" />
+      <div className="fixed inset-0 pointer-events-none">
+        <div className="absolute inset-0 bg-[radial-gradient(circle_at_20%_10%,rgba(0,245,212,0.12),transparent_40%)]" />
+        <div className="absolute inset-0 bg-[radial-gradient(circle_at_80%_90%,rgba(247,37,133,0.1),transparent_40%)]" />
+        <div className="absolute inset-0 opacity-20 bg-[linear-gradient(120deg,transparent_0%,rgba(0,245,212,0.05)_40%,transparent_70%)]" />
+      </div>
 
-      <header className="border-b border-green-900/40 bg-black/80 backdrop-blur-md sticky top-0 z-50">
-        <div className="max-w-6xl mx-auto px-6 py-4 flex flex-col gap-3 md:flex-row md:items-center md:justify-between">
-          <div className="flex items-center gap-4">
-            <Link href="/" className="text-gray-500 hover:text-green-400 transition-colors uppercase text-xs tracking-[0.3em]">
+      <header className="sticky top-0 z-50 backdrop-blur-xl bg-[rgba(5,8,16,0.8)] border-b border-[rgba(0,245,212,0.1)]">
+        <div className="max-w-7xl mx-auto px-6 py-5 flex flex-col gap-4 lg:flex-row lg:items-center lg:justify-between">
+          <div className="flex items-center gap-6">
+            <Link href="/" className="text-[var(--text-secondary)] hover:text-[var(--cyan-glow)] transition-colors text-xs uppercase tracking-[0.3em]">
               ← return
             </Link>
-            <div>
-              <div className="text-xl font-bold tracking-widest text-transparent bg-clip-text bg-gradient-to-r from-green-400 to-yellow-500">
-                PIXEL_LIVE_DASHBOARD
+            <div className="space-y-1">
+              <div className="text-2xl font-sans font-semibold gradient-text-cyan tracking-[0.2em]">
+                BIOCORE TELEMETRY
               </div>
-              <div className="text-xs text-gray-500">Real-time operational telemetry</div>
+              <div className="text-xs text-[var(--text-secondary)]">Vital signs of the Pixel organism</div>
             </div>
           </div>
-          <div className="flex items-center gap-3 text-xs">
-            <span className="text-green-400">STATUS:</span>
-            <span className={`px-2 py-1 border rounded ${health?.status === 'alive' ? 'border-green-500 text-green-300' : 'border-red-500 text-red-400'}`}>
-              {health?.status ?? 'offline'}
-            </span>
-            <span className="text-gray-500">Last update {health ? since(health.timestamp) : '—'}</span>
+          <div className="flex items-center gap-4 text-xs">
+            <div className="flex items-center gap-2">
+              <span className="text-[var(--text-muted)]">Status</span>
+              <span className={`px-3 py-1 rounded-full border ${health?.status === 'alive' ? 'status-alive border-[rgba(0,245,212,0.4)]' : 'status-danger border-[rgba(247,37,133,0.4)]'} animate-border-pulse`}>
+                {health?.status ?? 'offline'}
+              </span>
+            </div>
+            <div className="text-[var(--text-secondary)]">Last update {health ? since(health.timestamp) : '—'}</div>
           </div>
         </div>
       </header>
 
-      <main className="max-w-6xl mx-auto px-6 py-10 space-y-10 relative z-10">
-        <section className="grid gap-6 md:grid-cols-3">
-          <div className="border border-green-900/40 bg-black/60 p-5 rounded-lg shadow-lg">
-            <div className="text-xs text-green-400 uppercase tracking-widest">System Status</div>
-            <div className="mt-3 space-y-2 text-sm">
-              <div className="flex justify-between"><span className="text-gray-500">Uptime</span><span className="text-white">{health ? formatDuration(health.uptime) : '—'}</span></div>
-              <div className="flex justify-between"><span className="text-gray-500">Version</span><span className="text-green-300">{health?.version ?? '—'}</span></div>
-              <div className="flex justify-between"><span className="text-gray-500">Containers</span><span className="text-white">{stats?.containers ?? '—'}</span></div>
-              <div className="flex justify-between"><span className="text-gray-500">Heap Used</span><span className="text-yellow-300">{health?.memory ? `${Math.round(health.memory.heapUsed / 1024 / 1024)} MB` : '—'}</span></div>
-              <div className="flex justify-between"><span className="text-gray-500">RSS</span><span className="text-yellow-300">{health?.memory ? `${Math.round(health.memory.rss / 1024 / 1024)} MB` : '—'}</span></div>
+      <main className="max-w-7xl mx-auto px-6 py-12 space-y-12 relative z-10">
+        <section className="grid gap-6 lg:grid-cols-[1.2fr_1fr_1fr]">
+          <div className="glass-card p-6 animate-glow-pulse">
+            <div className="flex items-center justify-between">
+              <div className="section-label text-[var(--cyan-glow)]">System Vital Signs</div>
+              <div className="text-[10px] text-[var(--text-muted)]">core loop</div>
+            </div>
+            <div className="mt-6 grid gap-3 text-sm">
+              <div className="flex justify-between">
+                <span className="text-[var(--text-secondary)]">Uptime</span>
+                <span className="text-[var(--text-bright)]">{health ? formatDuration(health.uptime) : '—'}</span>
+              </div>
+              <div className="flex justify-between">
+                <span className="text-[var(--text-secondary)]">Version</span>
+                <span className="gradient-text-cyan">{health?.version ?? '—'}</span>
+              </div>
+              <div className="flex justify-between">
+                <span className="text-[var(--text-secondary)]">Containers</span>
+                <span className="text-[var(--text-bright)]">{stats?.containers ?? '—'}</span>
+              </div>
+              <div className="flex justify-between">
+                <span className="text-[var(--text-secondary)]">Heap Used</span>
+                <span className="gradient-text-amber">{health?.memory ? `${Math.round(health.memory.heapUsed / 1024 / 1024)} MB` : '—'}</span>
+              </div>
+              <div className="flex justify-between">
+                <span className="text-[var(--text-secondary)]">RSS</span>
+                <span className="gradient-text-amber">{health?.memory ? `${Math.round(health.memory.rss / 1024 / 1024)} MB` : '—'}</span>
+              </div>
+            </div>
+            <div className="mt-6 h-2 rounded-full bg-[rgba(0,245,212,0.08)] overflow-hidden">
+              <div className="h-full w-2/3 bg-[linear-gradient(90deg,rgba(0,245,212,0.6),rgba(0,245,212,0.2))] animate-shimmer" />
             </div>
           </div>
 
-          <div className="border border-green-900/40 bg-black/60 p-5 rounded-lg shadow-lg">
-            <div className="text-xs text-green-400 uppercase tracking-widest">Core KPIs</div>
-            <div className="mt-4 grid grid-cols-2 gap-3 text-sm">
-              <div className="bg-green-900/20 border border-green-900/40 p-3 rounded">
-                <div className="text-xl text-white">{formatNumber(stats?.users.totalUsers)}</div>
-                <div className="text-xs text-gray-500">Total users</div>
+          <div className="glass-card p-6">
+            <div className="section-label text-[var(--violet-glow)]">Core KPIs</div>
+            <div className="mt-6 grid grid-cols-2 gap-4">
+              <div className="p-4 rounded-lg border border-[rgba(123,44,191,0.2)] bg-[rgba(123,44,191,0.08)]">
+                <div className="metric-value gradient-text-cyan">{formatNumber(stats?.users.totalUsers)}</div>
+                <div className="text-xs text-[var(--text-secondary)] mt-1">Total users</div>
               </div>
-              <div className="bg-green-900/20 border border-green-900/40 p-3 rounded">
-                <div className="text-xl text-yellow-300">{formatNumber(stats?.memory.active)}</div>
-                <div className="text-xs text-gray-500">Active memories</div>
+              <div className="p-4 rounded-lg border border-[rgba(0,245,212,0.2)] bg-[rgba(0,245,212,0.08)]">
+                <div className="metric-value gradient-text-amber">{formatNumber(stats?.memory.active)}</div>
+                <div className="text-xs text-[var(--text-secondary)] mt-1">Active memories</div>
               </div>
-              <div className="bg-green-900/20 border border-green-900/40 p-3 rounded">
-                <div className="text-xl text-white">{formatNumber(health?.heartbeat?.heartbeatCount)}</div>
-                <div className="text-xs text-gray-500">Heartbeat cycles</div>
+              <div className="p-4 rounded-lg border border-[rgba(0,245,212,0.2)] bg-[rgba(0,245,212,0.08)]">
+                <div className="metric-value gradient-text-magenta">{formatNumber(health?.heartbeat?.heartbeatCount)}</div>
+                <div className="text-xs text-[var(--text-secondary)] mt-1">Heartbeat cycles</div>
               </div>
-              <div className="bg-green-900/20 border border-green-900/40 p-3 rounded">
-                <div className="text-xl text-yellow-300">{formatMoney(costs?.today.cost)}</div>
-                <div className="text-xs text-gray-500">Today cost</div>
+              <div className="p-4 rounded-lg border border-[rgba(255,195,0,0.2)] bg-[rgba(255,195,0,0.08)]">
+                <div className="metric-value gradient-text-amber">{formatMoney(costs?.today.cost)}</div>
+                <div className="text-xs text-[var(--text-secondary)] mt-1">Today cost</div>
               </div>
             </div>
           </div>
 
-          <div className="border border-green-900/40 bg-black/60 p-5 rounded-lg shadow-lg">
-            <div className="text-xs text-green-400 uppercase tracking-widest">Heartbeat</div>
-            <div className="mt-3 space-y-2 text-sm">
-              <div className="flex justify-between"><span className="text-gray-500">Last topic</span><span className="text-white">{heartbeatSummary?.status?.lastTopic ?? health?.heartbeat?.lastTopic ?? '—'}</span></div>
-              <div className="flex justify-between"><span className="text-gray-500">Last mood</span><span className="text-white">{heartbeatSummary?.status?.lastMood ?? health?.heartbeat?.lastMood ?? '—'}</span></div>
-              <div className="flex justify-between"><span className="text-gray-500">Last post</span><span className="text-white">{since(heartbeatSummary?.status?.lastPostTime ?? health?.heartbeat?.lastPostTime)}</span></div>
-              <div className="flex justify-between"><span className="text-gray-500">Engagement</span><span className="text-green-300">{(heartbeatSummary?.status?.engagementActive ?? health?.heartbeat?.engagementActive) ? 'active' : 'paused'}</span></div>
-              <div className="flex justify-between"><span className="text-gray-500">Multiplier</span><span className="text-white">{heartbeatSummary?.status?.engagementMultiplier ?? health?.heartbeat?.engagementMultiplier ?? '—'}</span></div>
+          <div className="glass-card p-6">
+            <div className="section-label text-[var(--magenta-glow)]">Heartbeat</div>
+            <div className="mt-6 space-y-3 text-sm">
+              <div className="flex justify-between">
+                <span className="text-[var(--text-secondary)]">Last topic</span>
+                <span className="text-[var(--text-bright)]">{heartbeatSummary?.status?.lastTopic ?? health?.heartbeat?.lastTopic ?? '—'}</span>
+              </div>
+              <div className="flex justify-between">
+                <span className="text-[var(--text-secondary)]">Last mood</span>
+                <span className="text-[var(--text-bright)]">{heartbeatSummary?.status?.lastMood ?? health?.heartbeat?.lastMood ?? '—'}</span>
+              </div>
+              <div className="flex justify-between">
+                <span className="text-[var(--text-secondary)]">Last post</span>
+                <span className="text-[var(--text-bright)]">{since(heartbeatSummary?.status?.lastPostTime ?? health?.heartbeat?.lastPostTime)}</span>
+              </div>
+              <div className="flex justify-between">
+                <span className="text-[var(--text-secondary)]">Engagement</span>
+                <span className={
+                  (heartbeatSummary?.status?.engagementActive ?? health?.heartbeat?.engagementActive)
+                    ? 'status-alive'
+                    : 'text-[var(--text-secondary)]'
+                }>
+                  {(heartbeatSummary?.status?.engagementActive ?? health?.heartbeat?.engagementActive) ? 'active' : 'paused'}
+                </span>
+              </div>
+              <div className="flex justify-between">
+                <span className="text-[var(--text-secondary)]">Multiplier</span>
+                <span className="text-[var(--text-bright)]">{heartbeatSummary?.status?.engagementMultiplier ?? health?.heartbeat?.engagementMultiplier ?? '—'}</span>
+              </div>
+            </div>
+            <div className="mt-6 h-10 flex items-center justify-center">
+              <svg viewBox="0 0 300 40" className="w-full h-full">
+                <polyline
+                  points="0,20 40,20 55,10 70,30 85,20 120,20 135,5 150,35 165,20 220,20 240,12 260,28 280,20 300,20"
+                  fill="none"
+                  stroke="rgba(0,245,212,0.7)"
+                  strokeWidth="2"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeDasharray="1000"
+                  className="animate-[heartbeat-line_4s_linear_infinite]"
+                />
+              </svg>
             </div>
           </div>
         </section>
 
-        <section className="border border-green-900/40 bg-black/60 p-6 rounded-lg">
-          <div className="flex flex-col gap-3 md:flex-row md:items-center md:justify-between">
+        <section className="glass-card p-6">
+          <div className="flex flex-col gap-4 lg:flex-row lg:items-center lg:justify-between">
             <div>
-              <div className="text-xs text-green-400 uppercase tracking-widest">Private Access</div>
-              <div className="text-sm text-gray-500">Sensitive detail panels require Nostr owner auth (NIP-07)</div>
+              <div className="section-label text-[var(--cyan-glow)]">Private Access</div>
+              <div className="text-sm text-[var(--text-secondary)] mt-2">Sensitive panels require Nostr owner auth (NIP-07)</div>
             </div>
             <div className="flex flex-wrap items-center gap-3 text-xs">
               <button
                 onClick={unlock}
                 disabled={authLoading}
-                className="px-4 py-2 border border-green-700/60 rounded bg-green-900/20 text-green-200 hover:bg-green-900/40 transition disabled:opacity-50"
+                className="px-5 py-2 rounded-full border border-[rgba(0,245,212,0.4)] bg-[rgba(0,245,212,0.1)] text-[var(--cyan-glow)] hover:bg-[rgba(0,245,212,0.2)] transition disabled:opacity-50"
               >
                 {authLoading ? 'Unlocking…' : isUnlocked ? 'Unlocked' : 'Unlock with Nostr'}
               </button>
-              <div className="text-gray-500">Owner: {OWNER_NPUB.slice(0, 12)}…{OWNER_NPUB.slice(-6)}</div>
-              {nostrPubkey && <div className="text-gray-500">You: {nostrPubkey.slice(0, 12)}…{nostrPubkey.slice(-6)}</div>}
+              <div className="text-[var(--text-secondary)]">Owner: {OWNER_NPUB.slice(0, 12)}…{OWNER_NPUB.slice(-6)}</div>
+              {nostrPubkey && <div className="text-[var(--text-secondary)]">You: {nostrPubkey.slice(0, 12)}…{nostrPubkey.slice(-6)}</div>}
             </div>
           </div>
-          {authError && <div className="mt-3 text-xs text-red-400">{authError}</div>}
+          {authError && <div className="mt-4 text-xs text-[var(--danger)]">{authError}</div>}
         </section>
 
-        <section className="grid gap-6 md:grid-cols-2">
-          <div className="border border-yellow-900/40 bg-black/60 p-6 rounded-lg">
+        <section className="grid gap-6 lg:grid-cols-2">
+          <div className="glass-card p-6">
             <div className="flex items-center justify-between">
               <div>
-                <div className="text-xs text-yellow-400 uppercase tracking-widest">Cost Monitor</div>
-                <div className="text-sm text-gray-500">AI spend + efficiency</div>
+                <div className="section-label text-[var(--amber-glow)]">Cost Monitor</div>
+                <div className="text-sm text-[var(--text-secondary)] mt-1">AI spend + efficiency</div>
               </div>
-              <span className={`text-xs px-2 py-1 rounded border ${costs?.status === 'warning' ? 'border-red-500 text-red-400' : 'border-green-600 text-green-400'}`}>
+              <span className={`text-xs px-3 py-1 rounded-full border ${costs?.status === 'warning' ? 'border-[rgba(247,37,133,0.6)] text-[var(--magenta-glow)]' : 'border-[rgba(0,245,212,0.6)] text-[var(--cyan-glow)]'}`}>
                 {costs?.status ?? '—'}
               </span>
             </div>
-            <div className="mt-4 grid gap-4">
-              <div className="grid grid-cols-2 gap-3 text-sm">
-                <div className="bg-yellow-900/20 border border-yellow-900/30 p-3 rounded">
-                  <div className="text-lg text-white">{formatMoney(costs?.today.cost)}</div>
-                  <div className="text-xs text-gray-500">Today cost</div>
+            <div className="mt-6 grid gap-5">
+              <div className="grid grid-cols-2 gap-4">
+                <div className="p-4 rounded-lg border border-[rgba(255,195,0,0.2)] bg-[rgba(255,195,0,0.08)]">
+                  <div className="metric-value gradient-text-amber">{formatMoney(costs?.today.cost)}</div>
+                  <div className="text-xs text-[var(--text-secondary)] mt-1">Today cost</div>
                 </div>
-                <div className="bg-yellow-900/20 border border-yellow-900/30 p-3 rounded">
-                  <div className="text-lg text-yellow-300">{formatNumber(costs?.today.calls)}</div>
-                  <div className="text-xs text-gray-500">Calls today</div>
+                <div className="p-4 rounded-lg border border-[rgba(255,195,0,0.2)] bg-[rgba(255,195,0,0.08)]">
+                  <div className="metric-value gradient-text-amber">{formatNumber(costs?.today.calls)}</div>
+                  <div className="text-xs text-[var(--text-secondary)] mt-1">Calls today</div>
                 </div>
               </div>
-              <div className="text-xs text-gray-500">Savings vs all gemini-3: {formatMoney(costs?.savings.amount)} ({costs?.savings.percentage ?? 0}%)</div>
+              <div className="text-xs text-[var(--text-secondary)]">Savings vs all gemini-3: <span className="text-[var(--text-bright)]">{formatMoney(costs?.savings.amount)}</span> ({costs?.savings.percentage ?? 0}%)</div>
               <div className="grid gap-2 text-xs">
                 {costs?.today.breakdown && Object.entries(costs.today.breakdown).map(([model, data]) => (
-                  <div key={model} className="flex justify-between border-b border-yellow-900/20 pb-1">
-                    <span className="text-gray-400">{model}</span>
-                    <span className="text-yellow-300">{formatNumber(data.calls)} calls · {formatMoney(data.cost)}</span>
+                  <div key={model} className="flex justify-between border-b border-[rgba(255,195,0,0.15)] pb-1">
+                    <span className="text-[var(--text-secondary)]">{model}</span>
+                    <span className="text-[var(--amber-glow)]">{formatNumber(data.calls)} calls · {formatMoney(data.cost)}</span>
                   </div>
                 ))}
               </div>
-              <div className="grid grid-cols-2 gap-3 text-xs text-gray-500">
-                <div>Projection monthly: <span className="text-white">{formatMoney(costs?.projection.monthly)}</span></div>
-                <div>Days remaining: <span className="text-white">{costs?.projection.daysRemaining ?? '—'}</span></div>
+              <div className="grid grid-cols-2 gap-3 text-xs text-[var(--text-secondary)]">
+                <div>Projection monthly: <span className="text-[var(--text-bright)]">{formatMoney(costs?.projection.monthly)}</span></div>
+                <div>Days remaining: <span className="text-[var(--text-bright)]">{costs?.projection.daysRemaining ?? '—'}</span></div>
               </div>
               <div>
-                <div className="text-xs text-gray-500">7-day token volume</div>
-                <div className="mt-2 space-y-2 text-xs">
+                <div className="text-xs text-[var(--text-secondary)]">7-day token volume</div>
+                <div className="mt-3 space-y-2 text-xs">
                   {costByDay.map(([day, tokens]) => (
                     <div key={day} className="flex items-center gap-2">
-                      <span className="w-16 text-gray-500">{day}</span>
-                      <div className="flex-1 h-2 bg-yellow-900/30 rounded">
-                        <div className="h-2 bg-yellow-500/50 rounded" style={{ width: `${Math.min(tokens / costScale, 1) * 100}%` }} />
+                      <span className="w-16 text-[var(--text-muted)]">{day}</span>
+                      <div className="flex-1 h-2 rounded-full bg-[rgba(255,195,0,0.15)]">
+                        <div className="h-2 rounded-full bg-[linear-gradient(90deg,rgba(255,195,0,0.6),rgba(255,195,0,0.2))]" style={{ width: `${Math.min(tokens / costScale, 1) * 100}%` }} />
                       </div>
-                      <span className="text-gray-400">{Math.round(tokens / 1000)}k</span>
+                      <span className="text-[var(--text-secondary)]">{Math.round(tokens / 1000)}k</span>
                     </div>
                   ))}
-                  {costByDay.length === 0 && <div className="text-gray-500">No history yet.</div>}
+                  {costByDay.length === 0 && <div className="text-[var(--text-muted)]">No history yet.</div>}
                 </div>
               </div>
             </div>
           </div>
 
-          <div className="border border-green-900/40 bg-black/60 p-6 rounded-lg">
-            <div className="text-xs text-green-400 uppercase tracking-widest">Heartbeat Timers</div>
-            <div className="mt-4 grid gap-2 text-xs">
+          <div className="glass-card p-6">
+            <div className="section-label text-[var(--cyan-glow)]">Heartbeat Timers</div>
+            <div className="mt-6 grid gap-3 text-xs">
               {health?.heartbeat && Object.entries(health.heartbeat).map(([key, value]) => (
-                <div key={key} className="flex justify-between border-b border-green-900/20 pb-1">
-                  <span className="text-gray-500">{key}</span>
-                  <span className="text-white">{typeof value === 'string' ? value : typeof value === 'number' ? String(value) : value ? 'true' : 'false'}</span>
+                <div key={key} className="flex justify-between border-b border-[rgba(0,245,212,0.1)] pb-1">
+                  <span className="text-[var(--text-secondary)]">{key}</span>
+                  <span className="text-[var(--text-bright)]">{typeof value === 'string' ? value : typeof value === 'number' ? String(value) : value ? 'true' : 'false'}</span>
                 </div>
               ))}
             </div>
@@ -551,170 +613,170 @@ export default function DashboardPage() {
 
         {isUnlocked && (
           <>
-            <section className="grid gap-6 md:grid-cols-2">
-              <div className="border border-rose-900/40 bg-black/60 p-6 rounded-lg">
-                <div className="text-xs text-rose-400 uppercase tracking-widest">Active Missions</div>
-                <div className="text-[10px] text-gray-500 mt-1">Updated {since(innerLife?.activeMissions?.updatedAt)}</div>
-                <div className="mt-4 text-xs text-gray-300 whitespace-pre-wrap max-h-60 overflow-auto">
+            <section className="grid gap-6 lg:grid-cols-2">
+              <div className="glass-card p-6">
+                <div className="section-label text-[var(--magenta-glow)]">Active Missions</div>
+                <div className="text-[10px] text-[var(--text-secondary)] mt-2">Updated {since(innerLife?.activeMissions?.updatedAt)}</div>
+                <div className="mt-4 text-xs text-[var(--text-primary)] whitespace-pre-wrap max-h-60 overflow-auto hide-scrollbar">
                   {innerLife?.activeMissions?.content || '—'}
                 </div>
               </div>
 
-              <div className="border border-amber-900/40 bg-black/60 p-6 rounded-lg">
-                <div className="text-xs text-amber-400 uppercase tracking-widest">Inner Monologue</div>
-                <div className="text-[10px] text-gray-500 mt-1">Updated {since(innerLife?.innerMonologueFile?.updatedAt)}</div>
-                <div className="mt-4 text-xs text-gray-300 whitespace-pre-wrap max-h-60 overflow-auto">
+              <div className="glass-card p-6">
+                <div className="section-label text-[var(--amber-glow)]">Inner Monologue</div>
+                <div className="text-[10px] text-[var(--text-secondary)] mt-2">Updated {since(innerLife?.innerMonologueFile?.updatedAt)}</div>
+                <div className="mt-4 text-xs text-[var(--text-primary)] whitespace-pre-wrap max-h-60 overflow-auto hide-scrollbar">
                   {innerLife?.innerMonologueFile?.content || '—'}
                 </div>
               </div>
             </section>
 
-            <section className="grid gap-6 md:grid-cols-2">
-              <div className="border border-purple-900/40 bg-black/60 p-6 rounded-lg">
-                <div className="text-xs text-purple-400 uppercase tracking-widest">Inner Life</div>
-                <div className="mt-4 space-y-4 text-xs text-gray-300">
+            <section className="grid gap-6 lg:grid-cols-2">
+              <div className="glass-card p-6">
+                <div className="section-label text-[var(--violet-glow)]">Inner Life</div>
+                <div className="mt-5 space-y-4 text-xs text-[var(--text-primary)]">
                   {innerLife && (
                     <>
                       <div>
-                        <div className="text-purple-300 uppercase text-[10px]">Reflections</div>
-                        <div className="mt-2 whitespace-pre-wrap max-h-40 overflow-auto">{innerLife.reflections.content || '—'}</div>
+                        <div className="text-[10px] uppercase text-[var(--violet-dim)]">Reflections</div>
+                        <div className="mt-2 whitespace-pre-wrap max-h-40 overflow-auto hide-scrollbar">{innerLife.reflections.content || '—'}</div>
                       </div>
                       <div>
-                        <div className="text-purple-300 uppercase text-[10px]">Learnings</div>
-                        <div className="mt-2 whitespace-pre-wrap max-h-40 overflow-auto">{innerLife.learnings.content || '—'}</div>
+                        <div className="text-[10px] uppercase text-[var(--violet-dim)]">Learnings</div>
+                        <div className="mt-2 whitespace-pre-wrap max-h-40 overflow-auto hide-scrollbar">{innerLife.learnings.content || '—'}</div>
                       </div>
                       <div>
-                        <div className="text-purple-300 uppercase text-[10px]">Ideas</div>
-                        <div className="mt-2 whitespace-pre-wrap max-h-40 overflow-auto">{innerLife.ideas.content || '—'}</div>
+                        <div className="text-[10px] uppercase text-[var(--violet-dim)]">Ideas</div>
+                        <div className="mt-2 whitespace-pre-wrap max-h-40 overflow-auto hide-scrollbar">{innerLife.ideas.content || '—'}</div>
                       </div>
                       <div>
-                        <div className="text-purple-300 uppercase text-[10px]">Evolution</div>
-                        <div className="mt-2 whitespace-pre-wrap max-h-40 overflow-auto">{innerLife.evolution.content || '—'}</div>
+                        <div className="text-[10px] uppercase text-[var(--violet-dim)]">Evolution</div>
+                        <div className="mt-2 whitespace-pre-wrap max-h-40 overflow-auto hide-scrollbar">{innerLife.evolution.content || '—'}</div>
                       </div>
                     </>
                   )}
                 </div>
               </div>
 
-              <div className="border border-blue-900/40 bg-black/60 p-6 rounded-lg">
-                <div className="text-xs text-blue-400 uppercase tracking-widest">Idea Garden + Projects</div>
-                <div className="mt-4 space-y-4 text-xs text-gray-300">
+              <div className="glass-card p-6">
+                <div className="section-label text-[var(--cyan-glow)]">Idea Garden + Projects</div>
+                <div className="mt-5 space-y-4 text-xs text-[var(--text-primary)]">
                   <div>
-                    <div className="text-blue-300 uppercase text-[10px]">Idea Garden</div>
-                    <div className="mt-2 whitespace-pre-wrap max-h-40 overflow-auto">{innerLife?.ideaGarden.content || '—'}</div>
+                    <div className="text-[10px] uppercase text-[var(--cyan-dim)]">Idea Garden</div>
+                    <div className="mt-2 whitespace-pre-wrap max-h-40 overflow-auto hide-scrollbar">{innerLife?.ideaGarden.content || '—'}</div>
                   </div>
                   <div>
-                    <div className="text-blue-300 uppercase text-[10px]">Projects</div>
-                    <div className="mt-2 whitespace-pre-wrap max-h-40 overflow-auto">{innerLife?.projects.content || '—'}</div>
+                    <div className="text-[10px] uppercase text-[var(--cyan-dim)]">Projects</div>
+                    <div className="mt-2 whitespace-pre-wrap max-h-40 overflow-auto hide-scrollbar">{innerLife?.projects.content || '—'}</div>
                   </div>
                 </div>
               </div>
             </section>
 
-            <section className="border border-teal-900/40 bg-black/60 p-6 rounded-lg">
-              <div className="flex flex-col gap-3 md:flex-row md:items-center md:justify-between">
+            <section className="glass-card p-6">
+              <div className="flex flex-col gap-3 lg:flex-row lg:items-center lg:justify-between">
                 <div>
-                  <div className="text-xs text-teal-300 uppercase tracking-widest">Syntropy Conversations</div>
-                  <div className="text-sm text-gray-500">Latest exchanges between Syntropy and Pixel</div>
+                  <div className="section-label text-[var(--cyan-glow)]">Syntropy Conversations</div>
+                  <div className="text-sm text-[var(--text-secondary)] mt-1">Latest exchanges between Syntropy and Pixel</div>
                 </div>
-                <div className="text-xs text-teal-200">{formatNumber(conversations?.count ?? 0)} messages</div>
+                <div className="text-xs text-[var(--text-secondary)]">{formatNumber(conversations?.count ?? 0)} messages</div>
               </div>
-              <div className="mt-4 space-y-4 text-xs text-gray-300 max-h-96 overflow-auto pr-2">
+              <div className="mt-5 space-y-4 text-xs text-[var(--text-primary)] max-h-96 overflow-auto pr-2 hide-scrollbar">
                 {sortedConversations.map((entry, idx) => (
-                  <div key={`${entry.ts}-${idx}`} className="border border-teal-900/30 bg-teal-900/10 rounded p-3">
-                    <div className="flex items-center justify-between text-[10px] uppercase text-teal-200">
+                  <div key={`${entry.ts}-${idx}`} className="border border-[rgba(0,245,212,0.2)] bg-[rgba(0,245,212,0.05)] rounded-lg p-4">
+                    <div className="flex items-center justify-between text-[10px] uppercase text-[var(--text-secondary)]">
                       <span>{entry.platform || 'http'} · {since(entry.ts)}</span>
                       <span>{new Date(entry.ts).toLocaleString()}</span>
                     </div>
-                    <div className="mt-2">
-                      <div className="text-[10px] text-teal-300 uppercase">Syntropy</div>
-                      <div className="mt-1 whitespace-pre-wrap text-gray-200">{entry.user || '—'}</div>
+                    <div className="mt-3">
+                      <div className="text-[10px] text-[var(--cyan-dim)] uppercase">Syntropy</div>
+                      <div className="mt-1 whitespace-pre-wrap">{entry.user || '—'}</div>
                     </div>
                     <div className="mt-3">
-                      <div className="text-[10px] text-teal-400 uppercase">Pixel</div>
-                      <div className="mt-1 whitespace-pre-wrap text-gray-100">{entry.assistant || '—'}</div>
+                      <div className="text-[10px] text-[var(--cyan-glow)] uppercase">Pixel</div>
+                      <div className="mt-1 whitespace-pre-wrap text-[var(--text-bright)]">{entry.assistant || '—'}</div>
                     </div>
                   </div>
                 ))}
                 {(!conversations?.messages || conversations.messages.length === 0) && (
-                  <div className="text-gray-500">No Syntropy conversations yet.</div>
+                  <div className="text-[var(--text-muted)]">No Syntropy conversations yet.</div>
                 )}
               </div>
             </section>
 
-            <section className="border border-amber-900/40 bg-black/60 p-6 rounded-lg">
-              <div className="flex flex-col gap-3 md:flex-row md:items-center md:justify-between">
+            <section className="glass-card p-6">
+              <div className="flex flex-col gap-3 lg:flex-row lg:items-center lg:justify-between">
                 <div>
-                  <div className="text-xs text-amber-300 uppercase tracking-widest">Pixel&apos;s Inner Monologue</div>
-                  <div className="text-sm text-gray-500">Internal research reactions and self-conversations</div>
+                  <div className="section-label text-[var(--amber-glow)]">Pixel&apos;s Inner Monologue</div>
+                  <div className="text-sm text-[var(--text-secondary)] mt-1">Internal research reactions and self-conversations</div>
                 </div>
-                <div className="text-xs text-amber-200">{formatNumber(innerMonologue?.count ?? 0)} messages</div>
+                <div className="text-xs text-[var(--text-secondary)]">{formatNumber(innerMonologue?.count ?? 0)} messages</div>
               </div>
-              <div className="mt-4 space-y-4 text-xs text-gray-300 max-h-96 overflow-auto pr-2">
+              <div className="mt-5 space-y-4 text-xs text-[var(--text-primary)] max-h-96 overflow-auto pr-2 hide-scrollbar">
                 {sortedMonologue.map((entry, idx) => (
-                  <div key={`${entry.ts}-${idx}`} className="border border-amber-900/30 bg-amber-900/10 rounded p-3">
-                    <div className="flex items-center justify-between text-[10px] uppercase text-amber-200">
+                  <div key={`${entry.ts}-${idx}`} className="border border-[rgba(255,195,0,0.2)] bg-[rgba(255,195,0,0.05)] rounded-lg p-4">
+                    <div className="flex items-center justify-between text-[10px] uppercase text-[var(--text-secondary)]">
                       <span>{entry.platform || 'internal'} · {since(entry.ts)}</span>
                       <span>{new Date(entry.ts).toLocaleString()}</span>
                     </div>
-                    <div className="mt-2">
-                      <div className="text-[10px] text-amber-300 uppercase">Stimulus</div>
-                      <div className="mt-1 whitespace-pre-wrap text-gray-200">{entry.user || '—'}</div>
+                    <div className="mt-3">
+                      <div className="text-[10px] text-[var(--amber-dim)] uppercase">Stimulus</div>
+                      <div className="mt-1 whitespace-pre-wrap">{entry.user || '—'}</div>
                     </div>
                     <div className="mt-3">
-                      <div className="text-[10px] text-amber-400 uppercase">Pixel</div>
-                      <div className="mt-1 whitespace-pre-wrap text-gray-100">{entry.assistant || '—'}</div>
+                      <div className="text-[10px] text-[var(--amber-glow)] uppercase">Pixel</div>
+                      <div className="mt-1 whitespace-pre-wrap text-[var(--text-bright)]">{entry.assistant || '—'}</div>
                     </div>
                   </div>
                 ))}
                 {(!innerMonologue?.messages || innerMonologue.messages.length === 0) && (
-                  <div className="text-gray-500">No inner monologue yet. Will populate when Pixel completes internal research tasks.</div>
+                  <div className="text-[var(--text-muted)]">No inner monologue yet. Will populate when Pixel completes internal research tasks.</div>
                 )}
               </div>
             </section>
 
-            <section className="border border-green-900/40 bg-black/60 p-6 rounded-lg">
-              <div className="flex flex-col gap-3 md:flex-row md:items-center md:justify-between">
+            <section className="glass-card p-6">
+              <div className="flex flex-col gap-3 lg:flex-row lg:items-center lg:justify-between">
                 <div>
-                  <div className="text-xs text-green-400 uppercase tracking-widest">Memories</div>
-                  <div className="text-sm text-gray-500">Active memory facts, episodes, and procedures</div>
+                  <div className="section-label text-[var(--cyan-glow)]">Memories</div>
+                  <div className="text-sm text-[var(--text-secondary)] mt-1">Active memory facts, episodes, procedures</div>
                 </div>
                 <input
                   value={memorySearch}
                   onChange={(event) => setMemorySearch(event.target.value)}
                   placeholder="search memories..."
-                  className="bg-black/60 border border-green-900/40 rounded px-3 py-2 text-xs text-gray-200"
+                  className="bg-[rgba(15,22,41,0.7)] border border-[rgba(0,245,212,0.2)] rounded-full px-4 py-2 text-xs text-[var(--text-bright)]"
                 />
               </div>
-              <div className="mt-4 space-y-3 text-xs text-gray-300 max-h-96 overflow-auto pr-2">
+              <div className="mt-5 space-y-3 text-xs text-[var(--text-primary)] max-h-96 overflow-auto pr-2 hide-scrollbar">
                 {filteredMemories.map((mem) => (
-                  <div key={mem.id} className="border border-green-900/30 p-3 rounded">
-                    <div className="flex flex-wrap gap-2 text-[10px] uppercase text-green-300">
+                  <div key={mem.id} className="border border-[rgba(0,245,212,0.15)] p-4 rounded-lg bg-[rgba(0,245,212,0.04)]">
+                    <div className="flex flex-wrap gap-2 text-[10px] uppercase text-[var(--cyan-dim)]">
                       <span>{mem.type}</span>
-                      <span className="text-gray-500">{mem.source}</span>
-                      {mem.platform && <span className="text-gray-500">{mem.platform}</span>}
+                      <span className="text-[var(--text-muted)]">{mem.source}</span>
+                      {mem.platform && <span className="text-[var(--text-muted)]">{mem.platform}</span>}
                     </div>
-                    <div className="mt-2 text-gray-200">{mem.content}</div>
-                    <div className="mt-2 text-[10px] text-gray-500">Accessed {mem.accessCount} · Updated {since(mem.updatedAt)}</div>
+                    <div className="mt-2 text-[var(--text-bright)]">{mem.content}</div>
+                    <div className="mt-2 text-[10px] text-[var(--text-secondary)]">Accessed {mem.accessCount} · Updated {since(mem.updatedAt)}</div>
                   </div>
                 ))}
-                {filteredMemories.length === 0 && <div className="text-gray-500">No memories found.</div>}
+                {filteredMemories.length === 0 && <div className="text-[var(--text-muted)]">No memories found.</div>}
               </div>
             </section>
           </>
         )}
 
-        <section className="grid gap-6 md:grid-cols-2">
-          <div className="border border-green-900/40 bg-black/60 p-6 rounded-lg">
+        <section className="grid gap-6 lg:grid-cols-2">
+          <div className="glass-card p-6">
             <div className="flex items-center justify-between">
               <div>
-                <div className="text-xs text-green-400 uppercase tracking-widest">Activity Feed</div>
-                <div className="text-sm text-gray-500">Latest audit events</div>
+                <div className="section-label text-[var(--cyan-glow)]">Activity Feed</div>
+                <div className="text-sm text-[var(--text-secondary)] mt-1">Latest audit events</div>
               </div>
               <select
                 value={filter}
                 onChange={(event) => setFilter(event.target.value)}
-                className="bg-black/70 border border-green-900/40 rounded text-xs text-gray-200 px-2 py-1"
+                className="bg-[rgba(15,22,41,0.7)] border border-[rgba(0,245,212,0.2)] rounded-full text-xs text-[var(--text-bright)] px-3 py-1"
                 disabled={!isUnlocked}
               >
                 <option value="all">all</option>
@@ -730,50 +792,50 @@ export default function DashboardPage() {
               </select>
             </div>
             {!isUnlocked && (
-              <div className="mt-4 text-xs text-gray-500">
+              <div className="mt-4 text-xs text-[var(--text-secondary)]">
                 Private feed locked. Summary: {auditSummary?.count ?? 0} events · last {since(auditSummary?.lastTs)}
               </div>
             )}
             {isUnlocked && (
-              <div className="mt-4 space-y-3 text-xs text-gray-300 max-h-96 overflow-auto pr-2">
+              <div className="mt-5 space-y-3 text-xs text-[var(--text-primary)] max-h-96 overflow-auto pr-2 hide-scrollbar">
                 {filteredAudit.map((entry, idx) => (
-                  <div key={`${entry.ts}-${idx}`} className="border-b border-green-900/20 pb-2">
-                    <div className="text-[10px] text-gray-500">{new Date(entry.ts).toLocaleTimeString()} · {entry.type}</div>
-                    <div className="text-gray-200">{entry.summary}</div>
+                  <div key={`${entry.ts}-${idx}`} className="border-b border-[rgba(0,245,212,0.1)] pb-2">
+                    <div className="text-[10px] text-[var(--text-secondary)]">{new Date(entry.ts).toLocaleTimeString()} · {entry.type}</div>
+                    <div className="text-[var(--text-bright)]">{entry.summary}</div>
                   </div>
                 ))}
-                {filteredAudit.length === 0 && <div className="text-gray-500">No events yet.</div>}
+                {filteredAudit.length === 0 && <div className="text-[var(--text-muted)]">No events yet.</div>}
               </div>
             )}
           </div>
 
-          <div className="border border-yellow-900/40 bg-black/60 p-6 rounded-lg">
-            <div className="text-xs text-yellow-400 uppercase tracking-widest">Revenue + Wallet</div>
-            <div className="mt-4 grid gap-3 text-sm">
-              <div className="bg-yellow-900/20 border border-yellow-900/30 p-3 rounded">
-                <div className="text-lg text-white">{formatNumber(publicRevenue?.totalSats)}</div>
-                <div className="text-xs text-gray-500">Recorded sats</div>
+          <div className="glass-card p-6">
+            <div className="section-label text-[var(--amber-glow)]">Revenue + Wallet</div>
+            <div className="mt-6 grid gap-4 text-sm">
+              <div className="p-4 rounded-lg border border-[rgba(255,195,0,0.2)] bg-[rgba(255,195,0,0.08)]">
+                <div className="metric-value gradient-text-amber">{formatNumber(publicRevenue?.totalSats)}</div>
+                <div className="text-xs text-[var(--text-secondary)] mt-1">Recorded sats</div>
               </div>
-              <div className="text-xs text-gray-500">Wallet: {isUnlocked ? walletAddress : 'locked'}</div>
+              <div className="text-xs text-[var(--text-secondary)]">Wallet: {isUnlocked ? walletAddress : 'locked'}</div>
               <div className="space-y-2 text-xs">
                 {publicRevenue?.bySource?.map((entry) => (
-                  <div key={entry.source} className="flex justify-between border-b border-yellow-900/20 pb-1">
-                    <span className="text-gray-400">{entry.source}</span>
-                    <span className="text-yellow-300">{formatNumber(entry.totalSats)} sats</span>
+                  <div key={entry.source} className="flex justify-between border-b border-[rgba(255,195,0,0.15)] pb-1">
+                    <span className="text-[var(--text-secondary)]">{entry.source}</span>
+                    <span className="text-[var(--amber-glow)]">{formatNumber(entry.totalSats)} sats</span>
                   </div>
                 ))}
               </div>
               {isUnlocked && (
                 <>
-                  <div className="text-xs text-gray-500">Recent</div>
+                  <div className="text-xs text-[var(--text-secondary)]">Recent</div>
                   <div className="space-y-2 text-xs">
                     {recentRevenue.map((entry, idx) => (
-                      <div key={`${entry.source}-${idx}`} className="border-b border-yellow-900/20 pb-1">
-                        <div className="text-gray-400">{entry.source} · {formatNumber(entry.amountSats)} sats</div>
-                        <div className="text-gray-500">{entry.description ?? '—'} · {since(entry.createdAt)}</div>
+                      <div key={`${entry.source}-${idx}`} className="border-b border-[rgba(255,195,0,0.15)] pb-1">
+                        <div className="text-[var(--text-secondary)]">{entry.source} · {formatNumber(entry.amountSats)} sats</div>
+                        <div className="text-[var(--text-muted)]">{entry.description ?? '—'} · {since(entry.createdAt)}</div>
                       </div>
                     ))}
-                  {recentRevenue.length === 0 && <div className="text-gray-500">No revenue yet.</div>}
+                    {recentRevenue.length === 0 && <div className="text-[var(--text-muted)]">No revenue yet.</div>}
                   </div>
                 </>
               )}
@@ -781,40 +843,40 @@ export default function DashboardPage() {
           </div>
         </section>
 
-        <section className="grid gap-6 md:grid-cols-2">
-          <div className="border border-green-900/40 bg-black/60 p-6 rounded-lg">
-            <div className="text-xs text-green-400 uppercase tracking-widest">Users</div>
-            <div className="mt-4 space-y-3 text-sm">
-              <div className="flex justify-between"><span className="text-gray-500">Total</span><span className="text-white">{formatNumber(stats?.users.totalUsers)}</span></div>
-              <div className="flex justify-between"><span className="text-gray-500">Active (7d)</span><span className="text-white">{formatNumber(stats?.users.activeUsers)}</span></div>
+        <section className="grid gap-6 lg:grid-cols-2">
+          <div className="glass-card p-6">
+            <div className="section-label text-[var(--cyan-glow)]">Users</div>
+            <div className="mt-6 space-y-3 text-sm">
+              <div className="flex justify-between"><span className="text-[var(--text-secondary)]">Total</span><span className="text-[var(--text-bright)]">{formatNumber(stats?.users.totalUsers)}</span></div>
+              <div className="flex justify-between"><span className="text-[var(--text-secondary)]">Active (7d)</span><span className="text-[var(--text-bright)]">{formatNumber(stats?.users.activeUsers)}</span></div>
               <div className="mt-4 space-y-2 text-xs">
                 {stats?.users.byPlatform?.map((entry) => (
-                  <div key={entry.platform} className="flex justify-between border-b border-green-900/20 pb-1">
-                    <span className="text-gray-400">{entry.platform}</span>
-                    <span className="text-green-300">{formatNumber(entry.count)}</span>
+                  <div key={entry.platform} className="flex justify-between border-b border-[rgba(0,245,212,0.1)] pb-1">
+                    <span className="text-[var(--text-secondary)]">{entry.platform}</span>
+                    <span className="text-[var(--cyan-glow)]">{formatNumber(entry.count)}</span>
                   </div>
                 ))}
               </div>
             </div>
           </div>
 
-          <div className="border border-blue-900/40 bg-black/60 p-6 rounded-lg">
-            <div className="text-xs text-blue-400 uppercase tracking-widest">Jobs + Reports</div>
+          <div className="glass-card p-6">
+            <div className="section-label text-[var(--violet-glow)]">Jobs + Reports</div>
             {!isUnlocked && (
-              <div className="mt-4 text-xs text-gray-500">
+              <div className="mt-4 text-xs text-[var(--text-secondary)]">
                 Private job output locked. {jobsSummary?.count ?? 0} jobs · last complete {since(jobsSummary?.lastCompletedAt)}
               </div>
             )}
             {isUnlocked && (
-              <div className="mt-4 space-y-3 text-xs text-gray-300 max-h-72 overflow-auto pr-2">
+              <div className="mt-5 space-y-3 text-xs text-[var(--text-primary)] max-h-72 overflow-auto pr-2 hide-scrollbar">
                 {sortedJobs.map((job) => (
-                  <div key={job.id} className="border-b border-blue-900/20 pb-2">
-                    <div className="text-blue-300 text-[10px] uppercase">{job.status}</div>
-                    <div className="text-gray-200">{job.prompt}</div>
-                    {job.output && <div className="text-gray-500 mt-1 whitespace-pre-wrap">{job.output}</div>}
+                  <div key={job.id} className="border-b border-[rgba(123,44,191,0.15)] pb-2">
+                    <div className="text-[var(--violet-glow)] text-[10px] uppercase">{job.status}</div>
+                    <div className="text-[var(--text-bright)]">{job.prompt}</div>
+                    {job.output && <div className="text-[var(--text-secondary)] mt-1 whitespace-pre-wrap">{job.output}</div>}
                   </div>
                 ))}
-                {jobs?.jobs?.length === 0 && <div className="text-gray-500">No jobs yet.</div>}
+                {jobs?.jobs?.length === 0 && <div className="text-[var(--text-muted)]">No jobs yet.</div>}
               </div>
             )}
           </div>
@@ -826,28 +888,28 @@ export default function DashboardPage() {
           const visible = sorted.slice(0, REMINDERS_PREVIEW);
           const remaining = sorted.length - visible.length;
           return (
-            <section className="border border-green-900/40 bg-black/60 p-6 rounded-lg">
+            <section className="glass-card p-6">
               <div className="flex items-center justify-between">
-                <div className="text-xs text-green-400 uppercase tracking-widest">Reminders</div>
-                <div className="text-xs text-gray-500">{formatNumber(reminders?.stats?.active)} active</div>
+                <div className="section-label text-[var(--cyan-glow)]">Reminders</div>
+                <div className="text-xs text-[var(--text-secondary)]">{formatNumber(reminders?.stats?.active)} active</div>
               </div>
-              <div className="mt-4 grid gap-2 text-xs text-gray-300">
+              <div className="mt-5 grid gap-3 text-xs text-[var(--text-primary)]">
                 {visible.map((reminder) => {
                   const cd = countdown(reminder.dueAt);
                   const isOverdue = cd === 'overdue';
                   return (
-                    <div key={reminder.id} className={`border p-3 rounded ${isOverdue ? 'border-red-900/40 bg-red-900/10' : 'border-green-900/20'}`}>
+                    <div key={reminder.id} className={`border p-4 rounded-lg ${isOverdue ? 'border-[rgba(247,37,133,0.4)] bg-[rgba(247,37,133,0.08)]' : 'border-[rgba(0,245,212,0.2)] bg-[rgba(0,245,212,0.04)]'}`}>
                       <div className="flex items-center justify-between">
-                        <div className="text-[10px] text-gray-500 uppercase">{reminder.platform} · {reminder.status}</div>
-                        <div className={`text-[10px] font-bold ${isOverdue ? 'text-red-400' : 'text-green-300'}`}>{cd}</div>
+                        <div className="text-[10px] text-[var(--text-secondary)] uppercase">{reminder.platform} · {reminder.status}</div>
+                        <div className={`text-[10px] font-semibold ${isOverdue ? 'text-[var(--magenta-glow)]' : 'text-[var(--cyan-glow)]'}`}>{cd}</div>
                       </div>
-                      <div className="text-gray-200 mt-1">{reminder.rawMessage}</div>
+                      <div className="text-[var(--text-bright)] mt-2">{reminder.rawMessage}</div>
                     </div>
                   );
                 })}
-                {visible.length === 0 && <div className="text-gray-500">No active reminders.</div>}
+                {visible.length === 0 && <div className="text-[var(--text-muted)]">No active reminders.</div>}
                 {remaining > 0 && (
-                  <div className="text-gray-500 text-center mt-1">+{remaining} more reminder{remaining > 1 ? 's' : ''}</div>
+                  <div className="text-[var(--text-secondary)] text-center mt-1">+{remaining} more reminder{remaining > 1 ? 's' : ''}</div>
                 )}
               </div>
             </section>
