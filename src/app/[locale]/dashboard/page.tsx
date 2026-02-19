@@ -3,6 +3,138 @@
 import { useEffect, useMemo, useState } from 'react';
 import Link from 'next/link';
 
+// Chart color palette matching the bioluminescent theme
+const CHART_COLORS = [
+  '#00f5d4', // cyan-glow
+  '#f72585', // magenta-glow
+  '#ffc300', // amber-glow
+  '#7b2cbf', // violet-glow
+  '#00a896', // cyan-dim
+  '#b5179e', // magenta-dim
+  '#ff9500', // amber-dim
+  '#5a189a', // violet-dim
+];
+
+// Donut chart component
+function DonutChart({ data, size = 120, strokeWidth = 16 }: { data: { label: string; value: number; color?: string }[]; size?: number; strokeWidth?: number }) {
+  const total = data.reduce((sum, d) => sum + d.value, 0);
+  if (total === 0) return <div className="text-[var(--text-muted)] text-xs">No data</div>;
+  
+  const radius = (size - strokeWidth) / 2;
+  const circumference = 2 * Math.PI * radius;
+  let offset = 0;
+  
+  return (
+    <div className="flex items-center gap-4">
+      <svg width={size} height={size} className="transform -rotate-90">
+        {data.map((d, i) => {
+          const percent = d.value / total;
+          const dash = circumference * percent;
+          const color = d.color ?? CHART_COLORS[i % CHART_COLORS.length];
+          const segment = (
+            <circle
+              key={d.label}
+              cx={size / 2}
+              cy={size / 2}
+              r={radius}
+              fill="none"
+              stroke={color}
+              strokeWidth={strokeWidth}
+              strokeDasharray={`${dash} ${circumference - dash}`}
+              strokeDashoffset={-offset}
+              strokeLinecap="round"
+              className="transition-all duration-500"
+              style={{ filter: `drop-shadow(0 0 4px ${color})` }}
+            />
+          );
+          offset += dash;
+          return segment;
+        })}
+      </svg>
+      <div className="flex flex-col gap-1 text-xs">
+        {data.map((d, i) => (
+          <div key={d.label} className="flex items-center gap-2">
+            <div className="w-2 h-2 rounded-full" style={{ backgroundColor: d.color ?? CHART_COLORS[i % CHART_COLORS.length] }} />
+            <span className="text-[var(--text-secondary)]">{d.label}</span>
+            <span className="text-[var(--text-bright)] ml-auto">{d.value}</span>
+          </div>
+        ))}
+      </div>
+    </div>
+  );
+}
+
+// Horizontal bar chart component
+function BarChart({ data, maxValue, color = '#00f5d4' }: { data: { label: string; value: number }[]; maxValue?: number; color?: string }) {
+  const max = maxValue ?? Math.max(...data.map(d => d.value), 1);
+  
+  return (
+    <div className="space-y-2">
+      {data.map((d) => (
+        <div key={d.label} className="flex items-center gap-3">
+          <span className="w-20 text-xs text-[var(--text-secondary)] truncate">{d.label}</span>
+          <div className="flex-1 h-3 rounded-full bg-[rgba(0,245,212,0.1)] overflow-hidden">
+            <div
+              className="h-full rounded-full transition-all duration-500"
+              style={{
+                width: `${(d.value / max) * 100}%`,
+                background: `linear-gradient(90deg, ${color}, ${color}80)`,
+                boxShadow: `0 0 8px ${color}40`,
+              }}
+            />
+          </div>
+          <span className="w-12 text-xs text-[var(--text-bright)] text-right">{d.value}</span>
+        </div>
+      ))}
+    </div>
+  );
+}
+
+// Sparkline / area chart for time series
+function SparklineChart({ data, height = 40, color = '#00f5d4' }: { data: { label: string; value: number }[]; height?: number; color?: string }) {
+  if (data.length === 0) return <div className="text-[var(--text-muted)] text-xs">No data</div>;
+  
+  const max = Math.max(...data.map(d => d.value), 1);
+  const width = 100;
+  const points = data.map((d, i) => {
+    const x = (i / (data.length - 1)) * width;
+    const y = height - (d.value / max) * height;
+    return `${x},${y}`;
+  }).join(' ');
+  
+  const areaPoints = `0,${height} ${points} ${width},${height}`;
+  
+  return (
+    <div className="space-y-2">
+      <svg viewBox={`0 0 ${width} ${height}`} className="w-full" style={{ height }}>
+        <defs>
+          <linearGradient id="sparkGradient" x1="0%" y1="0%" x2="0%" y2="100%">
+            <stop offset="0%" stopColor={color} stopOpacity="0.3" />
+            <stop offset="100%" stopColor={color} stopOpacity="0" />
+          </linearGradient>
+        </defs>
+        <polygon
+          points={areaPoints}
+          fill="url(#sparkGradient)"
+        />
+        <polyline
+          points={points}
+          fill="none"
+          stroke={color}
+          strokeWidth="2"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+          style={{ filter: `drop-shadow(0 0 3px ${color})` }}
+        />
+      </svg>
+      <div className="flex justify-between text-[10px] text-[var(--text-muted)]">
+        {data.length > 0 && <span>{data[0].label}</span>}
+        {data.length > 1 && <span>{data[data.length - 1].label}</span>}
+      </div>
+    </div>
+  );
+}
+
 type HealthPayload = {
   status: string;
   version: string;
@@ -475,6 +607,15 @@ export default function DashboardPage() {
                 <div className="text-xs text-[var(--text-secondary)] mt-1">Today cost</div>
               </div>
             </div>
+            {stats?.memory?.byType && Object.keys(stats.memory.byType).length > 0 && (
+              <div className="mt-6">
+                <div className="text-[10px] uppercase text-[var(--violet-dim)] mb-3">Memory Types</div>
+                <BarChart
+                  data={Object.entries(stats.memory.byType).map(([type, count]) => ({ label: type, value: count as number }))}
+                  color="#7b2cbf"
+                />
+              </div>
+            )}
           </div>
 
           <div className="glass-card p-6">
@@ -568,6 +709,18 @@ export default function DashboardPage() {
                 </div>
               </div>
               <div className="text-xs text-[var(--text-secondary)]">Savings vs all gemini-3: <span className="text-[var(--text-bright)]">{formatMoney(costs?.savings.amount)}</span> ({costs?.savings.percentage ?? 0}%)</div>
+              {costs?.today.breakdown && Object.keys(costs.today.breakdown).length > 0 && (
+                <div>
+                  <div className="text-[10px] uppercase text-[var(--amber-dim)] mb-2">Calls by Model</div>
+                  <BarChart
+                    data={Object.entries(costs.today.breakdown).map(([model, data]) => ({
+                      label: model.replace(/^(gemini-|openrouter\/)/, '').slice(0, 12),
+                      value: data.calls,
+                    }))}
+                    color="#ffc300"
+                  />
+                </div>
+              )}
               <div className="grid gap-2 text-xs">
                 {costs?.today.breakdown && Object.entries(costs.today.breakdown).map(([model, data]) => (
                   <div key={model} className="flex justify-between border-b border-[rgba(255,195,0,0.15)] pb-1">
@@ -582,6 +735,13 @@ export default function DashboardPage() {
               </div>
               <div>
                 <div className="text-xs text-[var(--text-secondary)]">7-day token volume</div>
+                <div className="mt-3">
+                  <SparklineChart
+                    data={costByDay.map(([day, tokens]) => ({ label: day, value: tokens }))}
+                    height={50}
+                    color="#ffc300"
+                  />
+                </div>
                 <div className="mt-3 space-y-2 text-xs">
                   {costByDay.map(([day, tokens]) => (
                     <div key={day} className="flex items-center gap-2">
@@ -794,6 +954,20 @@ export default function DashboardPage() {
             {!isUnlocked && (
               <div className="mt-4 text-xs text-[var(--text-secondary)]">
                 Private feed locked. Summary: {auditSummary?.count ?? 0} events · last {since(auditSummary?.lastTs)}
+                {auditSummary?.byType && Object.keys(auditSummary.byType).length > 0 && (
+                  <div className="mt-3">
+                    <BarChart
+                      data={Object.entries(auditSummary.byType)
+                        .sort((a, b) => b[1] - a[1])
+                        .slice(0, 5)
+                        .map(([type, count]) => ({
+                          label: type.replace(/_/g, ' ').slice(0, 14),
+                          value: count,
+                        }))}
+                      color="#00f5d4"
+                    />
+                  </div>
+                )}
               </div>
             )}
             {isUnlocked && (
@@ -817,14 +991,19 @@ export default function DashboardPage() {
                 <div className="text-xs text-[var(--text-secondary)] mt-1">Recorded sats</div>
               </div>
               <div className="text-xs text-[var(--text-secondary)]">Wallet: {isUnlocked ? walletAddress : 'locked'}</div>
-              <div className="space-y-2 text-xs">
-                {publicRevenue?.bySource?.map((entry) => (
-                  <div key={entry.source} className="flex justify-between border-b border-[rgba(255,195,0,0.15)] pb-1">
-                    <span className="text-[var(--text-secondary)]">{entry.source}</span>
-                    <span className="text-[var(--amber-glow)]">{formatNumber(entry.totalSats)} sats</span>
-                  </div>
-                ))}
-              </div>
+              {publicRevenue?.bySource && publicRevenue.bySource.length > 0 && (
+                <div className="py-2">
+                  <DonutChart
+                    data={publicRevenue.bySource.map((s, i) => ({
+                      label: s.source,
+                      value: s.totalSats,
+                      color: CHART_COLORS[i % CHART_COLORS.length],
+                    }))}
+                    size={100}
+                    strokeWidth={12}
+                  />
+                </div>
+              )}
               {isUnlocked && (
                 <>
                   <div className="text-xs text-[var(--text-secondary)]">Recent</div>
@@ -849,14 +1028,15 @@ export default function DashboardPage() {
             <div className="mt-6 space-y-3 text-sm">
               <div className="flex justify-between"><span className="text-[var(--text-secondary)]">Total</span><span className="text-[var(--text-bright)]">{formatNumber(stats?.users.totalUsers)}</span></div>
               <div className="flex justify-between"><span className="text-[var(--text-secondary)]">Active (7d)</span><span className="text-[var(--text-bright)]">{formatNumber(stats?.users.activeUsers)}</span></div>
-              <div className="mt-4 space-y-2 text-xs">
-                {stats?.users.byPlatform?.map((entry) => (
-                  <div key={entry.platform} className="flex justify-between border-b border-[rgba(0,245,212,0.1)] pb-1">
-                    <span className="text-[var(--text-secondary)]">{entry.platform}</span>
-                    <span className="text-[var(--cyan-glow)]">{formatNumber(entry.count)}</span>
-                  </div>
-                ))}
-              </div>
+              {stats?.users.byPlatform && stats.users.byPlatform.length > 0 && (
+                <div className="mt-4">
+                  <div className="text-[10px] uppercase text-[var(--cyan-dim)] mb-3">By Platform</div>
+                  <BarChart
+                    data={stats.users.byPlatform.map(p => ({ label: p.platform, value: p.count }))}
+                    color="#00f5d4"
+                  />
+                </div>
+              )}
             </div>
           </div>
 
