@@ -90,6 +90,55 @@ function BarChart({ data, maxValue, color = '#00f5d4' }: { data: { label: string
   );
 }
 
+// Stacked bar chart with success/error colors
+function StackedBarChart({ data, maxValue }: { 
+  data: { label: string; success: number; errors: number }[]; 
+  maxValue?: number;
+}) {
+  const max = maxValue ?? Math.max(...data.map(d => d.success + d.errors), 1);
+  
+  return (
+    <div className="space-y-2">
+      {data.map((d) => {
+        const total = d.success + d.errors;
+        const successWidth = (d.success / max) * 100;
+        const errorWidth = (d.errors / max) * 100;
+        return (
+          <div key={d.label} className="flex items-center gap-3">
+            <span className="w-20 text-xs text-[var(--text-secondary)] truncate" title={d.label}>{d.label}</span>
+            <div className="flex-1 h-3 rounded-full bg-[rgba(0,245,212,0.1)] overflow-hidden flex">
+              {d.success > 0 && (
+                <div
+                  className="h-full transition-all duration-500"
+                  style={{
+                    width: `${successWidth}%`,
+                    background: 'linear-gradient(90deg, #ffc300, #ffc30080)',
+                    boxShadow: '0 0 8px rgba(255,195,0,0.25)',
+                  }}
+                />
+              )}
+              {d.errors > 0 && (
+                <div
+                  className="h-full transition-all duration-500"
+                  style={{
+                    width: `${errorWidth}%`,
+                    background: 'linear-gradient(90deg, #f72585, #f7258580)',
+                    boxShadow: '0 0 8px rgba(247,37,133,0.25)',
+                  }}
+                />
+              )}
+            </div>
+            <span className="w-16 text-xs text-right">
+              <span className="text-[var(--amber-glow)]">{d.success}</span>
+              {d.errors > 0 && <span className="text-[var(--magenta-glow)]">/{d.errors}</span>}
+            </span>
+          </div>
+        );
+      })}
+    </div>
+  );
+}
+
 // Sparkline / area chart for time series
 function SparklineChart({ data, height = 40, color = '#00f5d4' }: { data: { label: string; value: number }[]; height?: number; color?: string }) {
   if (data.length === 0) return <div className="text-[var(--text-muted)] text-xs">No data</div>;
@@ -534,6 +583,10 @@ export default function DashboardPage() {
     return Math.max(...costByDay.map(([, tokens]) => tokens), 1);
   }, [costByDay]);
 
+  const totalTokens7Day = useMemo(() => {
+    return costByDay.reduce((sum, [, tokens]) => sum + tokens, 0);
+  }, [costByDay]);
+
   const walletAddress = useMemo(() => {
     if (!wallet) return 'unavailable';
     if ('address' in wallet) return wallet.address;
@@ -728,7 +781,7 @@ export default function DashboardPage() {
               </div>
             </div>
             <div className="mt-6 grid gap-5">
-              <div className="grid grid-cols-3 gap-4">
+              <div className="grid grid-cols-4 gap-4">
                 <div className="p-4 rounded-lg border border-[rgba(255,195,0,0.2)] bg-[rgba(255,195,0,0.08)]">
                   <div className="metric-value gradient-text-amber">{formatMoney(costs?.today.cost)}</div>
                   <div className="text-xs text-[var(--text-secondary)] mt-1">Today cost</div>
@@ -741,17 +794,25 @@ export default function DashboardPage() {
                   <div className={`metric-value ${(costs?.errors?.total ?? 0) > 0 ? 'gradient-text-magenta' : 'gradient-text-cyan'}`}>{formatNumber(costs?.errors?.total)}</div>
                   <div className="text-xs text-[var(--text-secondary)] mt-1">Errors today</div>
                 </div>
+                <div className="p-4 rounded-lg border border-[rgba(123,44,191,0.2)] bg-[rgba(123,44,191,0.08)]">
+                  <div className="metric-value gradient-text-violet">{formatNumber(
+                    costs?.today.breakdown 
+                      ? Object.values(costs.today.breakdown).reduce((sum, d) => sum + d.tokens, 0)
+                      : 0
+                  )}</div>
+                  <div className="text-xs text-[var(--text-secondary)] mt-1">Tokens burned</div>
+                </div>
               </div>
               <div className="text-xs text-[var(--text-secondary)]">Savings vs all gemini-3: <span className="text-[var(--text-bright)]">{formatMoney(costs?.savings.amount)}</span> ({costs?.savings.percentage ?? 0}%)</div>
               {costs?.today.breakdown && Object.keys(costs.today.breakdown).length > 0 && (
                 <div>
                   <div className="text-[10px] uppercase text-[var(--amber-dim)] mb-2">Calls & Errors by Model</div>
-                  <BarChart
+                  <StackedBarChart
                     data={Object.entries(costs.today.breakdown).map(([model, data]) => ({
                       label: model.replace(/^(gemini-|openrouter\/|z-ai\/)/, '').replace(/:free$/, '').slice(0, 14),
-                      value: data.calls + (costs?.errors?.byModel?.[model]?.total ?? 0),
+                      success: data.calls,
+                      errors: costs?.errors?.byModel?.[model]?.total ?? 0,
                     }))}
-                    color="#ffc300"
                   />
                 </div>
               )}
@@ -793,7 +854,10 @@ export default function DashboardPage() {
                 <div>Days remaining: <span className="text-[var(--text-bright)]">{costs?.projection.daysRemaining ?? '—'}</span></div>
               </div>
               <div>
-                <div className="text-xs text-[var(--text-secondary)]">7-day token volume</div>
+                <div className="flex items-center justify-between">
+                  <div className="text-xs text-[var(--text-secondary)]">7-day token volume</div>
+                  <div className="text-xs text-[var(--violet-glow)]">Total: {formatNumber(totalTokens7Day)} tokens</div>
+                </div>
                 <div className="mt-3">
                   <SparklineChart
                     data={costByDay.map(([day, tokens]) => ({ label: day, value: tokens }))}
