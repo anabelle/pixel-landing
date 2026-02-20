@@ -224,6 +224,22 @@ type ConversationsPayload = {
   userId: string;
 };
 
+type SecurityPayload = {
+  totalAlerts: number;
+  highSeverity: number;
+  mediumSeverity: number;
+  lowSeverity: number;
+  byCategory: Record<string, number>;
+  uniqueUsers: number;
+  categories: string[];
+  windowHours: number;
+};
+
+type SecurityAlertsPayload = {
+  alerts: { category: string; severity: string; matched: string; userId: string; platform: string; timestamp: number; rawMessage: string }[];
+  count: number;
+};
+
 const POLL_FAST = 15000;
 const POLL_SLOW = 30000;
 const OWNER_NPUB = 'npub1m3hxtn6auzjfdwux4cpzrpzt8dyt60dzvs7dm08rfes82jk9hxtseudltp';
@@ -291,6 +307,8 @@ export default function DashboardPage() {
   const [heartbeatSummary, setHeartbeatSummary] = useState<HeartbeatSummaryPayload | null>(null);
   const [conversations, setConversations] = useState<ConversationsPayload | null>(null);
   const [innerMonologue, setInnerMonologue] = useState<ConversationsPayload | null>(null);
+  const [security, setSecurity] = useState<SecurityPayload | null>(null);
+  const [securityAlerts, setSecurityAlerts] = useState<SecurityAlertsPayload | null>(null);
   const [filter, setFilter] = useState<string>('all');
   const [memorySearch, setMemorySearch] = useState('');
   const [isUnlocked, setIsUnlocked] = useState(false);
@@ -441,6 +459,8 @@ export default function DashboardPage() {
     signedFetchJson<MemoriesPayload>('/v2/api/memories?limit=120', setMemories);
     signedFetchJson<ConversationsPayload>('/v2/api/conversations/syntropy-admin?limit=100', setConversations);
     signedFetchJson<ConversationsPayload>('/v2/api/conversations/pixel-self?limit=50', setInnerMonologue);
+    signedFetchJson<SecurityPayload>('/v2/api/security/stats', setSecurity);
+    signedFetchJson<SecurityAlertsPayload>('/v2/api/security/alerts?limit=50', setSecurityAlerts);
 
     const privatePoll = setInterval(() => {
       signedFetchJson<AuditPayload>('/v2/api/audit?limit=120', setAudit);
@@ -452,6 +472,8 @@ export default function DashboardPage() {
       signedFetchJson<MemoriesPayload>('/v2/api/memories?limit=120', setMemories);
       signedFetchJson<ConversationsPayload>('/v2/api/conversations/syntropy-admin?limit=100', setConversations);
       signedFetchJson<ConversationsPayload>('/v2/api/conversations/pixel-self?limit=50', setInnerMonologue);
+      signedFetchJson<SecurityPayload>('/v2/api/security/stats', setSecurity);
+      signedFetchJson<SecurityAlertsPayload>('/v2/api/security/alerts?limit=50', setSecurityAlerts);
     }, POLL_SLOW);
 
     return () => {
@@ -836,6 +858,91 @@ export default function DashboardPage() {
             <section className="glass-card p-6">
               <div className="flex flex-col gap-3 lg:flex-row lg:items-center lg:justify-between">
                 <div>
+                  <div className="section-label text-[var(--magenta-glow)]">Security Scanner</div>
+                  <div className="text-sm text-[var(--text-secondary)] mt-1">Threat detection across all platforms</div>
+                </div>
+                <div className="flex items-center gap-4 text-xs">
+                  <span className="text-[var(--text-secondary)]">Window: {security?.windowHours ?? 1}h</span>
+                  <span className={`px-3 py-1 rounded-full border ${(security?.highSeverity ?? 0) > 0 ? 'border-[rgba(247,37,133,0.6)] text-[var(--magenta-glow)]' : 'border-[rgba(0,245,212,0.4)] text-[var(--cyan-glow)]'}`}>
+                    {(security?.highSeverity ?? 0) > 0 ? 'ALERTS' : 'Clear'}
+                  </span>
+                </div>
+              </div>
+              <div className="mt-6 grid grid-cols-4 gap-4">
+                <div className="p-4 rounded-lg border border-[rgba(247,37,133,0.3)] bg-[rgba(247,37,133,0.1)]">
+                  <div className="metric-value gradient-text-magenta">{formatNumber(security?.highSeverity)}</div>
+                  <div className="text-xs text-[var(--text-secondary)] mt-1">HIGH</div>
+                </div>
+                <div className="p-4 rounded-lg border border-[rgba(255,195,0,0.3)] bg-[rgba(255,195,0,0.1)]">
+                  <div className="metric-value gradient-text-amber">{formatNumber(security?.mediumSeverity)}</div>
+                  <div className="text-xs text-[var(--text-secondary)] mt-1">MEDIUM</div>
+                </div>
+                <div className="p-4 rounded-lg border border-[rgba(0,245,212,0.3)] bg-[rgba(0,245,212,0.1)]">
+                  <div className="metric-value gradient-text-cyan">{formatNumber(security?.lowSeverity)}</div>
+                  <div className="text-xs text-[var(--text-secondary)] mt-1">LOW</div>
+                </div>
+                <div className="p-4 rounded-lg border border-[rgba(123,44,191,0.3)] bg-[rgba(123,44,191,0.1)]">
+                  <div className="metric-value gradient-text-violet">{formatNumber(security?.uniqueUsers)}</div>
+                  <div className="text-xs text-[var(--text-secondary)] mt-1">Users</div>
+                </div>
+              </div>
+              {security?.byCategory && Object.keys(security.byCategory).length > 0 && (
+                <div className="mt-6">
+                  <div className="text-[10px] uppercase text-[var(--magenta-dim)] mb-3">By Category</div>
+                  <BarChart
+                    data={Object.entries(security.byCategory)
+                      .sort((a, b) => b[1] - a[1])
+                      .map(([cat, count]) => ({ label: cat, value: count as number }))}
+                    color="#f72585"
+                  />
+                </div>
+              )}
+              {securityAlerts?.alerts && securityAlerts.alerts.length > 0 && (
+                <div className="mt-6">
+                  <div className="text-[10px] uppercase text-[var(--magenta-dim)] mb-3">Recent Alerts ({securityAlerts.count})</div>
+                  <div className="space-y-2 max-h-60 overflow-auto hide-scrollbar">
+                    {securityAlerts.alerts.slice(0, 10).map((alert, idx) => (
+                      <div key={`${alert.timestamp}-${idx}`} className={`p-3 rounded-lg border ${
+                        alert.severity === 'HIGH' 
+                          ? 'border-[rgba(247,37,133,0.4)] bg-[rgba(247,37,133,0.1)]' 
+                          : alert.severity === 'MEDIUM'
+                          ? 'border-[rgba(255,195,0,0.4)] bg-[rgba(255,195,0,0.1)]'
+                          : 'border-[rgba(0,245,212,0.2)] bg-[rgba(0,245,212,0.05)]'
+                      }`}>
+                        <div className="flex items-center justify-between text-[10px]">
+                          <span className={`font-semibold ${
+                            alert.severity === 'HIGH' 
+                              ? 'text-[var(--magenta-glow)]' 
+                              : alert.severity === 'MEDIUM'
+                              ? 'text-[var(--amber-glow)]'
+                              : 'text-[var(--cyan-glow)]'
+                          }`}>
+                            {alert.severity}
+                          </span>
+                          <span className="text-[var(--text-secondary)]">{since(alert.timestamp)}</span>
+                        </div>
+                        <div className="mt-1 text-xs text-[var(--text-primary)]">
+                          <span className="text-[var(--text-secondary)]">{alert.category}</span> — 
+                          <span className="text-[var(--text-bright)]"> &quot;{alert.matched}&quot;</span>
+                        </div>
+                        <div className="mt-1 text-[10px] text-[var(--text-muted)]">
+                          {alert.userId.slice(0, 20)}... via {alert.platform}
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              )}
+              {(!securityAlerts?.alerts || securityAlerts.alerts.length === 0) && (
+                <div className="mt-6 text-xs text-[var(--text-muted)] text-center py-8">
+                  No security alerts in the last {security?.windowHours ?? 1} hour(s)
+                </div>
+              )}
+            </section>
+
+            <section className="glass-card p-6">
+              <div className="flex flex-col gap-3 lg:flex-row lg:items-center lg:justify-between">
+                <div>
                   <div className="section-label text-[var(--cyan-glow)]">Syntropy Conversations</div>
                   <div className="text-sm text-[var(--text-secondary)] mt-1">Latest exchanges between Syntropy and Pixel</div>
                 </div>
@@ -949,6 +1056,7 @@ export default function DashboardPage() {
                 <option value="revenue">revenue</option>
                 <option value="tool_use">tool_use</option>
                 <option value="error">error</option>
+                <option value="security_scan">security_scan</option>
               </select>
             </div>
             {!isUnlocked && (
