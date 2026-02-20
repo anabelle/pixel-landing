@@ -867,23 +867,6 @@ export default function DashboardPage() {
                   />
                 </div>
               )}
-              <div className="grid gap-2 text-xs">
-                {costs?.today.breakdown && Object.entries(costs.today.breakdown).map(([model, data]) => {
-                  const errInfo = costs?.errors?.byModel?.[model];
-                  const errorRate = data.calls > 0 ? ((errInfo?.total ?? 0) / (data.calls + (errInfo?.total ?? 0)) * 100).toFixed(0) : '0';
-                  return (
-                    <div key={model} className="flex justify-between border-b border-[rgba(255,195,0,0.15)] pb-1">
-                      <span className="text-[var(--text-secondary)] truncate max-w-[40%]">{model.replace(/^(gemini-|openrouter\/|z-ai\/)/, '').replace(/:free$/, '')}</span>
-                      <div className="flex items-center gap-2">
-                        <span className="text-[var(--amber-glow)]">{formatNumber(data.calls)} calls</span>
-                        {(errInfo?.total ?? 0) > 0 && (
-                          <span className="text-[var(--magenta-glow)]">· {errInfo?.total} err ({errorRate}%)</span>
-                        )}
-                      </div>
-                    </div>
-                  );
-                })}
-              </div>
               {(costs?.errors?.total ?? 0) > 0 && (
                 <div className="p-3 rounded-lg border border-[rgba(247,37,133,0.2)] bg-[rgba(247,37,133,0.05)]">
                   <div className="text-[10px] uppercase text-[var(--magenta-dim)] mb-2">Error Breakdown</div>
@@ -923,7 +906,7 @@ export default function DashboardPage() {
                       <div className="flex-1 h-2 rounded-full bg-[rgba(255,195,0,0.15)]">
                         <div className="h-2 rounded-full bg-[linear-gradient(90deg,rgba(255,195,0,0.6),rgba(255,195,0,0.2))]" style={{ width: `${Math.min(tokens / costScale, 1) * 100}%` }} />
                       </div>
-                      <span className="text-[var(--text-secondary)]">{Math.round(tokens / 1000)}k</span>
+                      <span className="text-[var(--text-secondary)]">{formatTokens(tokens)}</span>
                     </div>
                   ))}
                   {costByDay.length === 0 && <div className="text-[var(--text-muted)]">No history yet.</div>}
@@ -1095,31 +1078,93 @@ export default function DashboardPage() {
             <section className="glass-card p-6">
               <div className="flex flex-col gap-3 lg:flex-row lg:items-center lg:justify-between">
                 <div>
-                  <div className="section-label text-[var(--cyan-glow)]">Syntropy Conversations</div>
-                  <div className="text-sm text-[var(--text-secondary)] mt-1">Latest exchanges between Syntropy and Pixel</div>
+                  <div className="section-label text-[var(--cyan-glow)]">Conversations Explorer</div>
+                  <div className="text-sm text-[var(--text-secondary)] mt-1">Browse all conversations across platforms</div>
                 </div>
-                <div className="text-xs text-[var(--text-secondary)]">{formatNumber(conversations?.count ?? 0)} messages</div>
+                <div className="flex flex-wrap gap-2 items-center">
+                  <span className="text-xs text-[var(--text-secondary)]">{formatNumber(conversationsList?.stats?.total ?? 0)} users</span>
+                  <span className="text-[var(--text-muted)]">·</span>
+                  <span className="text-xs text-[var(--cyan-glow)]">TG: {conversationsList?.stats?.byPlatform?.telegram ?? 0}</span>
+                  <span className="text-xs text-[var(--magenta-glow)]">WA: {conversationsList?.stats?.byPlatform?.whatsapp ?? 0}</span>
+                  <span className="text-xs text-[var(--amber-glow)]">Nostr: {conversationsList?.stats?.byPlatform?.nostr ?? 0}</span>
+                </div>
               </div>
-              <div className="mt-5 space-y-4 text-xs text-[var(--text-primary)] max-h-96 overflow-auto pr-2 hide-scrollbar">
-                {sortedConversations.map((entry, idx) => (
-                  <div key={`${entry.ts}-${idx}`} className="border border-[rgba(0,245,212,0.2)] bg-[rgba(0,245,212,0.05)] rounded-lg p-4">
-                    <div className="flex items-center justify-between text-[10px] uppercase text-[var(--text-secondary)]">
-                      <span>{entry.platform || 'http'} · {since(entry.ts)}</span>
-                      <span>{new Date(entry.ts).toLocaleString()}</span>
-                    </div>
-                    <div className="mt-3">
-                      <div className="text-[10px] text-[var(--cyan-dim)] uppercase">Syntropy</div>
-                      <div className="mt-1 whitespace-pre-wrap">{entry.user || '—'}</div>
-                    </div>
-                    <div className="mt-3">
-                      <div className="text-[10px] text-[var(--cyan-glow)] uppercase">Pixel</div>
-                      <div className="mt-1 whitespace-pre-wrap text-[var(--text-bright)]">{entry.assistant || '—'}</div>
-                    </div>
+              <div className="mt-4 flex flex-wrap gap-2">
+                <input
+                  value={conversationSearch}
+                  onChange={(e) => setConversationSearch(e.target.value)}
+                  placeholder="search users..."
+                  className="flex-1 min-w-[150px] bg-[rgba(15,22,41,0.7)] border border-[rgba(0,245,212,0.2)] rounded-full px-4 py-2 text-xs text-[var(--text-bright)]"
+                />
+                <select
+                  value={conversationPlatform}
+                  onChange={(e) => setConversationPlatform(e.target.value)}
+                  className="bg-[rgba(15,22,41,0.7)] border border-[rgba(0,245,212,0.2)] rounded-full text-xs text-[var(--text-bright)] px-3 py-2"
+                >
+                  <option value="">All platforms</option>
+                  <option value="telegram">Telegram</option>
+                  <option value="whatsapp">WhatsApp</option>
+                  <option value="nostr">Nostr</option>
+                  <option value="clawstr">Clawstr</option>
+                  <option value="syntropy">Syntropy</option>
+                  <option value="internal">Internal</option>
+                </select>
+              </div>
+              <div className="mt-4 grid gap-4 lg:grid-cols-2">
+                <div className="max-h-80 overflow-auto pr-2 hide-scrollbar space-y-2">
+                  <div className="text-[10px] uppercase text-[var(--text-secondary)] mb-2">Select conversation</div>
+                  {filteredConversationsList.slice(0, 50).map((conv) => (
+                    <button
+                      key={conv.userId}
+                      onClick={() => setSelectedConversation(conv.userId)}
+                      className={`w-full text-left p-3 rounded-lg border transition-all ${
+                        selectedConversation === conv.userId
+                          ? 'border-[var(--cyan-glow)] bg-[rgba(0,245,212,0.1)]'
+                          : 'border-[rgba(0,245,212,0.15)] bg-[rgba(0,245,212,0.03)] hover:border-[rgba(0,245,212,0.3)]'
+                      }`}
+                    >
+                      <div className="flex items-center justify-between">
+                        <span className="text-xs text-[var(--text-bright)] truncate max-w-[180px]">{conv.userId}</span>
+                        <span className="text-[10px] text-[var(--text-muted)]">{conv.messageCount} msgs</span>
+                      </div>
+                      <div className="flex items-center gap-2 mt-1">
+                        <span className="text-[10px] uppercase px-2 py-0.5 rounded bg-[rgba(0,245,212,0.1)] text-[var(--cyan-dim)]">
+                          {conv.inferredPlatform}
+                        </span>
+                        {conv.lastTs && (
+                          <span className="text-[10px] text-[var(--text-muted)]">{since(conv.lastTs)}</span>
+                        )}
+                      </div>
+                    </button>
+                  ))}
+                  {filteredConversationsList.length === 0 && (
+                    <div className="text-[var(--text-muted)] text-xs py-4 text-center">No conversations found</div>
+                  )}
+                </div>
+                <div className="max-h-80 overflow-auto pr-2 hide-scrollbar space-y-3">
+                  <div className="text-[10px] uppercase text-[var(--text-secondary)] mb-2">
+                    {selectedConversation} · {conversations?.count ?? 0} messages
                   </div>
-                ))}
-                {(!conversations?.messages || conversations.messages.length === 0) && (
-                  <div className="text-[var(--text-muted)]">No Syntropy conversations yet.</div>
-                )}
+                  {sortedConversations.slice(0, 20).map((entry, idx) => (
+                    <div key={`${entry.ts}-${idx}`} className="border border-[rgba(0,245,212,0.2)] bg-[rgba(0,245,212,0.05)] rounded-lg p-3">
+                      <div className="flex items-center justify-between text-[10px] uppercase text-[var(--text-secondary)]">
+                        <span>{entry.platform || 'http'} · {since(entry.ts)}</span>
+                        <span>{new Date(entry.ts).toLocaleString()}</span>
+                      </div>
+                      <div className="mt-2">
+                        <div className="text-[10px] text-[var(--cyan-dim)] uppercase">User</div>
+                        <div className="mt-1 whitespace-pre-wrap text-xs line-clamp-3">{entry.user || '—'}</div>
+                      </div>
+                      <div className="mt-2">
+                        <div className="text-[10px] text-[var(--cyan-glow)] uppercase">Pixel</div>
+                        <div className="mt-1 whitespace-pre-wrap text-xs text-[var(--text-bright)] line-clamp-3">{entry.assistant || '—'}</div>
+                      </div>
+                    </div>
+                  ))}
+                  {(!conversations?.messages || conversations.messages.length === 0) && (
+                    <div className="text-[var(--text-muted)] text-xs py-4 text-center">No messages in this conversation</div>
+                  )}
+                </div>
               </div>
             </section>
 
@@ -1160,20 +1205,46 @@ export default function DashboardPage() {
                   <div className="section-label text-[var(--cyan-glow)]">Memories</div>
                   <div className="text-sm text-[var(--text-secondary)] mt-1">Active memory facts, episodes, procedures</div>
                 </div>
+                <div className="text-xs text-[var(--text-secondary)]">{formatNumber(memories?.memories?.length ?? 0)} memories</div>
+              </div>
+              <div className="mt-4 flex flex-wrap gap-2">
                 <input
                   value={memorySearch}
-                  onChange={(event) => setMemorySearch(event.target.value)}
+                  onChange={(e) => setMemorySearch(e.target.value)}
                   placeholder="search memories..."
-                  className="bg-[rgba(15,22,41,0.7)] border border-[rgba(0,245,212,0.2)] rounded-full px-4 py-2 text-xs text-[var(--text-bright)]"
+                  className="flex-1 min-w-[150px] bg-[rgba(15,22,41,0.7)] border border-[rgba(0,245,212,0.2)] rounded-full px-4 py-2 text-xs text-[var(--text-bright)]"
                 />
+                <select
+                  value={memoryType}
+                  onChange={(e) => setMemoryType(e.target.value)}
+                  className="bg-[rgba(15,22,41,0.7)] border border-[rgba(0,245,212,0.2)] rounded-full text-xs text-[var(--text-bright)] px-3 py-2"
+                >
+                  <option value="">All types</option>
+                  <option value="fact">Fact</option>
+                  <option value="episode">Episode</option>
+                  <option value="identity">Identity</option>
+                  <option value="procedural">Procedural</option>
+                </select>
+                <select
+                  value={memorySource}
+                  onChange={(e) => setMemorySource(e.target.value)}
+                  className="bg-[rgba(15,22,41,0.7)] border border-[rgba(0,245,212,0.2)] rounded-full text-xs text-[var(--text-bright)] px-3 py-2"
+                >
+                  <option value="">All sources</option>
+                  <option value="conversation">Conversation</option>
+                  <option value="inner_life">Inner Life</option>
+                  <option value="tool">Tool</option>
+                  <option value="migration">Migration</option>
+                </select>
               </div>
               <div className="mt-5 space-y-3 text-xs text-[var(--text-primary)] max-h-96 overflow-auto pr-2 hide-scrollbar">
                 {filteredMemories.map((mem) => (
                   <div key={mem.id} className="border border-[rgba(0,245,212,0.15)] p-4 rounded-lg bg-[rgba(0,245,212,0.04)]">
                     <div className="flex flex-wrap gap-2 text-[10px] uppercase text-[var(--cyan-dim)]">
-                      <span>{mem.type}</span>
+                      <span className="px-2 py-0.5 rounded bg-[rgba(0,245,212,0.1)]">{mem.type}</span>
                       <span className="text-[var(--text-muted)]">{mem.source}</span>
                       {mem.platform && <span className="text-[var(--text-muted)]">{mem.platform}</span>}
+                      {mem.userId && <span className="text-[var(--text-muted)] truncate max-w-[100px]">{mem.userId}</span>}
                     </div>
                     <div className="mt-2 text-[var(--text-bright)]">{mem.content}</div>
                     <div className="mt-2 text-[10px] text-[var(--text-secondary)]">Accessed {mem.accessCount} · Updated {since(mem.updatedAt)}</div>
