@@ -274,6 +274,21 @@ type ConversationsPayload = {
   userId: string;
 };
 
+type ConversationsListPayload = {
+  conversations: {
+    userId: string;
+    messageCount: number;
+    lastTs: string | null;
+    platforms: string[];
+    inferredPlatform: string;
+  }[];
+  stats: {
+    total: number;
+    byPlatform: { telegram: number; whatsapp: number; nostr: number; clawstr: number; other: number };
+  };
+  count: number;
+};
+
 type SecurityPayload = {
   totalAlerts: number;
   highSeverity: number;
@@ -303,6 +318,13 @@ function formatDuration(totalSeconds: number) {
 
 function formatNumber(value: number | null | undefined) {
   if (value == null || Number.isNaN(value)) return '—';
+  return value.toLocaleString();
+}
+
+function formatTokens(value: number | null | undefined) {
+  if (value == null || Number.isNaN(value)) return '—';
+  if (value >= 1_000_000) return `${(value / 1_000_000).toFixed(1)}M`;
+  if (value >= 1_000) return `${(value / 1_000).toFixed(0)}K`;
   return value.toLocaleString();
 }
 
@@ -359,8 +381,14 @@ export default function DashboardPage() {
   const [innerMonologue, setInnerMonologue] = useState<ConversationsPayload | null>(null);
   const [security, setSecurity] = useState<SecurityPayload | null>(null);
   const [securityAlerts, setSecurityAlerts] = useState<SecurityAlertsPayload | null>(null);
+  const [conversationsList, setConversationsList] = useState<ConversationsListPayload | null>(null);
+  const [selectedConversation, setSelectedConversation] = useState<string>('syntropy-admin');
+  const [conversationSearch, setConversationSearch] = useState('');
+  const [conversationPlatform, setConversationPlatform] = useState('');
   const [filter, setFilter] = useState<string>('all');
   const [memorySearch, setMemorySearch] = useState('');
+  const [memoryType, setMemoryType] = useState('');
+  const [memorySource, setMemorySource] = useState('');
   const [isUnlocked, setIsUnlocked] = useState(false);
   const [authError, setAuthError] = useState<string | null>(null);
   const [authLoading, setAuthLoading] = useState(false);
@@ -506,8 +534,9 @@ export default function DashboardPage() {
     signedFetchJson<JobsPayload>('/v2/api/jobs?limit=10', setJobs);
     signedFetchJson<RemindersPayload>('/v2/api/reminders?limit=20', setReminders);
     signedFetchJson<InnerLifePayload>('/v2/api/inner-life', setInnerLife);
-    signedFetchJson<MemoriesPayload>('/v2/api/memories?limit=120', setMemories);
-    signedFetchJson<ConversationsPayload>('/v2/api/conversations/syntropy-admin?limit=100', setConversations);
+    signedFetchJson<MemoriesPayload>('/v2/api/memories?limit=200', setMemories);
+    signedFetchJson<ConversationsListPayload>('/v2/api/conversations?limit=200', setConversationsList);
+    signedFetchJson<ConversationsPayload>(`/v2/api/conversations/${selectedConversation}?limit=100`, setConversations);
     signedFetchJson<ConversationsPayload>('/v2/api/conversations/pixel-self?limit=50', setInnerMonologue);
     signedFetchJson<SecurityPayload>('/v2/api/security/stats', setSecurity);
     signedFetchJson<SecurityAlertsPayload>('/v2/api/security/alerts?limit=50', setSecurityAlerts);
@@ -519,8 +548,9 @@ export default function DashboardPage() {
       signedFetchJson<JobsPayload>('/v2/api/jobs?limit=10', setJobs);
       signedFetchJson<RemindersPayload>('/v2/api/reminders?limit=20', setReminders);
       signedFetchJson<InnerLifePayload>('/v2/api/inner-life', setInnerLife);
-      signedFetchJson<MemoriesPayload>('/v2/api/memories?limit=120', setMemories);
-      signedFetchJson<ConversationsPayload>('/v2/api/conversations/syntropy-admin?limit=100', setConversations);
+      signedFetchJson<MemoriesPayload>('/v2/api/memories?limit=200', setMemories);
+      signedFetchJson<ConversationsListPayload>('/v2/api/conversations?limit=200', setConversationsList);
+      signedFetchJson<ConversationsPayload>(`/v2/api/conversations/${selectedConversation}?limit=100`, setConversations);
       signedFetchJson<ConversationsPayload>('/v2/api/conversations/pixel-self?limit=50', setInnerMonologue);
       signedFetchJson<SecurityPayload>('/v2/api/security/stats', setSecurity);
       signedFetchJson<SecurityAlertsPayload>('/v2/api/security/alerts?limit=50', setSecurityAlerts);
@@ -529,7 +559,7 @@ export default function DashboardPage() {
     return () => {
       clearInterval(privatePoll);
     };
-  }, [isUnlocked]);
+  }, [isUnlocked, selectedConversation]);
 
   const filteredAudit = useMemo(() => {
     if (!audit?.entries) return [];
@@ -540,11 +570,32 @@ export default function DashboardPage() {
 
   const filteredMemories = useMemo(() => {
     if (!memories?.memories) return [];
-    const sorted = [...memories.memories].sort((a, b) => new Date(b.updatedAt).getTime() - new Date(a.updatedAt).getTime());
-    if (!memorySearch.trim()) return sorted;
-    const term = memorySearch.toLowerCase();
-    return sorted.filter((mem) => mem.content.toLowerCase().includes(term));
-  }, [memories, memorySearch]);
+    let sorted = [...memories.memories].sort((a, b) => new Date(b.updatedAt).getTime() - new Date(a.updatedAt).getTime());
+    if (memoryType) {
+      sorted = sorted.filter((mem) => mem.type === memoryType);
+    }
+    if (memorySource) {
+      sorted = sorted.filter((mem) => mem.source === memorySource);
+    }
+    if (memorySearch.trim()) {
+      const term = memorySearch.toLowerCase();
+      sorted = sorted.filter((mem) => mem.content.toLowerCase().includes(term));
+    }
+    return sorted;
+  }, [memories, memorySearch, memoryType, memorySource]);
+
+  const filteredConversationsList = useMemo(() => {
+    if (!conversationsList?.conversations) return [];
+    let list = conversationsList.conversations;
+    if (conversationPlatform) {
+      list = list.filter((c) => c.inferredPlatform === conversationPlatform);
+    }
+    if (conversationSearch.trim()) {
+      const term = conversationSearch.toLowerCase();
+      list = list.filter((c) => c.userId.toLowerCase().includes(term));
+    }
+    return list;
+  }, [conversationsList, conversationSearch, conversationPlatform]);
 
   const sortedConversations = useMemo(() => {
     if (!conversations?.messages) return [];
@@ -795,7 +846,7 @@ export default function DashboardPage() {
                   <div className="text-xs text-[var(--text-secondary)] mt-1">Errors today</div>
                 </div>
                 <div className="p-4 rounded-lg border border-[rgba(123,44,191,0.2)] bg-[rgba(123,44,191,0.08)]">
-                  <div className="metric-value gradient-text-violet">{formatNumber(
+                  <div className="metric-value gradient-text-violet">{formatTokens(
                     costs?.today.breakdown 
                       ? Object.values(costs.today.breakdown).reduce((sum, d) => sum + d.tokens, 0)
                       : 0
@@ -856,7 +907,7 @@ export default function DashboardPage() {
               <div>
                 <div className="flex items-center justify-between">
                   <div className="text-xs text-[var(--text-secondary)]">7-day token volume</div>
-                  <div className="text-xs text-[var(--violet-glow)]">Total: {formatNumber(totalTokens7Day)} tokens</div>
+                  <div className="text-xs text-[var(--violet-glow)]">Total: {formatTokens(totalTokens7Day)} tokens</div>
                 </div>
                 <div className="mt-3">
                   <SparklineChart
