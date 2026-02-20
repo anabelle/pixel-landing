@@ -157,6 +157,7 @@ type StatsPayload = {
 
 type CostsPayload = {
   today: { cost: number; calls: number; breakdown: Record<string, { calls: number; tokens: number; cost: number }>; byTask: Record<string, { calls: number; cost: number }> };
+  errors: { total: number; byModel: Record<string, { total: number; byType: Record<string, number>; cascades: number }> };
   savings: { amount: number; wouldHaveCost: number; actualCost: number; percentage: number };
   projection: { daily: number; monthly: number; daysRemaining: number | null };
   status: 'ok' | 'warning';
@@ -715,42 +716,78 @@ export default function DashboardPage() {
                 <div className="section-label text-[var(--amber-glow)]">Cost Monitor</div>
                 <div className="text-sm text-[var(--text-secondary)] mt-1">AI spend + efficiency</div>
               </div>
-              <span className={`text-xs px-3 py-1 rounded-full border ${costs?.status === 'warning' ? 'border-[rgba(247,37,133,0.6)] text-[var(--magenta-glow)]' : 'border-[rgba(0,245,212,0.6)] text-[var(--cyan-glow)]'}`}>
-                {costs?.status ?? '—'}
-              </span>
+              <div className="flex items-center gap-2">
+                {(costs?.errors?.total ?? 0) > 0 && (
+                  <span className="text-xs px-3 py-1 rounded-full border border-[rgba(247,37,133,0.6)] text-[var(--magenta-glow)]">
+                    {costs?.errors?.total} errors
+                  </span>
+                )}
+                <span className={`text-xs px-3 py-1 rounded-full border ${costs?.status === 'warning' ? 'border-[rgba(247,37,133,0.6)] text-[var(--magenta-glow)]' : 'border-[rgba(0,245,212,0.6)] text-[var(--cyan-glow)]'}`}>
+                  {costs?.status ?? '—'}
+                </span>
+              </div>
             </div>
             <div className="mt-6 grid gap-5">
-              <div className="grid grid-cols-2 gap-4">
+              <div className="grid grid-cols-3 gap-4">
                 <div className="p-4 rounded-lg border border-[rgba(255,195,0,0.2)] bg-[rgba(255,195,0,0.08)]">
                   <div className="metric-value gradient-text-amber">{formatMoney(costs?.today.cost)}</div>
                   <div className="text-xs text-[var(--text-secondary)] mt-1">Today cost</div>
                 </div>
-                <div className="p-4 rounded-lg border border-[rgba(255,195,0,0.2)] bg-[rgba(255,195,0,0.08)]">
-                  <div className="metric-value gradient-text-amber">{formatNumber(costs?.today.calls)}</div>
+                <div className="p-4 rounded-lg border border-[rgba(0,245,212,0.2)] bg-[rgba(0,245,212,0.08)]">
+                  <div className="metric-value gradient-text-cyan">{formatNumber(costs?.today.calls)}</div>
                   <div className="text-xs text-[var(--text-secondary)] mt-1">Calls today</div>
+                </div>
+                <div className={`p-4 rounded-lg border ${(costs?.errors?.total ?? 0) > 0 ? 'border-[rgba(247,37,133,0.3)] bg-[rgba(247,37,133,0.08)]' : 'border-[rgba(0,245,212,0.2)] bg-[rgba(0,245,212,0.08)]'}`}>
+                  <div className={`metric-value ${(costs?.errors?.total ?? 0) > 0 ? 'gradient-text-magenta' : 'gradient-text-cyan'}`}>{formatNumber(costs?.errors?.total)}</div>
+                  <div className="text-xs text-[var(--text-secondary)] mt-1">Errors today</div>
                 </div>
               </div>
               <div className="text-xs text-[var(--text-secondary)]">Savings vs all gemini-3: <span className="text-[var(--text-bright)]">{formatMoney(costs?.savings.amount)}</span> ({costs?.savings.percentage ?? 0}%)</div>
               {costs?.today.breakdown && Object.keys(costs.today.breakdown).length > 0 && (
                 <div>
-                  <div className="text-[10px] uppercase text-[var(--amber-dim)] mb-2">Calls by Model</div>
+                  <div className="text-[10px] uppercase text-[var(--amber-dim)] mb-2">Calls & Errors by Model</div>
                   <BarChart
                     data={Object.entries(costs.today.breakdown).map(([model, data]) => ({
-                      label: model.replace(/^(gemini-|openrouter\/)/, '').slice(0, 12),
-                      value: data.calls,
+                      label: model.replace(/^(gemini-|openrouter\/|z-ai\/)/, '').replace(/:free$/, '').slice(0, 14),
+                      value: data.calls + (costs?.errors?.byModel?.[model]?.total ?? 0),
                     }))}
                     color="#ffc300"
                   />
                 </div>
               )}
               <div className="grid gap-2 text-xs">
-                {costs?.today.breakdown && Object.entries(costs.today.breakdown).map(([model, data]) => (
-                  <div key={model} className="flex justify-between border-b border-[rgba(255,195,0,0.15)] pb-1">
-                    <span className="text-[var(--text-secondary)]">{model}</span>
-                    <span className="text-[var(--amber-glow)]">{formatNumber(data.calls)} calls · {formatMoney(data.cost)}</span>
-                  </div>
-                ))}
+                {costs?.today.breakdown && Object.entries(costs.today.breakdown).map(([model, data]) => {
+                  const errInfo = costs?.errors?.byModel?.[model];
+                  const errorRate = data.calls > 0 ? ((errInfo?.total ?? 0) / (data.calls + (errInfo?.total ?? 0)) * 100).toFixed(0) : '0';
+                  return (
+                    <div key={model} className="flex justify-between border-b border-[rgba(255,195,0,0.15)] pb-1">
+                      <span className="text-[var(--text-secondary)] truncate max-w-[40%]">{model.replace(/^(gemini-|openrouter\/|z-ai\/)/, '').replace(/:free$/, '')}</span>
+                      <div className="flex items-center gap-2">
+                        <span className="text-[var(--amber-glow)]">{formatNumber(data.calls)} calls</span>
+                        {(errInfo?.total ?? 0) > 0 && (
+                          <span className="text-[var(--magenta-glow)]">· {errInfo?.total} err ({errorRate}%)</span>
+                        )}
+                      </div>
+                    </div>
+                  );
+                })}
               </div>
+              {(costs?.errors?.total ?? 0) > 0 && (
+                <div className="p-3 rounded-lg border border-[rgba(247,37,133,0.2)] bg-[rgba(247,37,133,0.05)]">
+                  <div className="text-[10px] uppercase text-[var(--magenta-dim)] mb-2">Error Breakdown</div>
+                  <div className="grid gap-1 text-xs">
+                    {costs?.errors?.byModel && Object.entries(costs.errors.byModel).map(([model, err]) => (
+                      <div key={model} className="flex justify-between">
+                        <span className="text-[var(--text-secondary)]">{model.replace(/^(gemini-|openrouter\/|z-ai\/)/, '').replace(/:free$/, '')}</span>
+                        <span className="text-[var(--magenta-glow)]">
+                          {Object.entries(err.byType).map(([type, count]) => `${type}:${count}`).join(', ')}
+                          {err.cascades > 0 && <span className="text-[var(--text-muted)]"> → cascaded {err.cascades}x</span>}
+                        </span>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              )}
               <div className="grid grid-cols-2 gap-3 text-xs text-[var(--text-secondary)]">
                 <div>Projection monthly: <span className="text-[var(--text-bright)]">{formatMoney(costs?.projection.monthly)}</span></div>
                 <div>Days remaining: <span className="text-[var(--text-bright)]">{costs?.projection.daysRemaining ?? '—'}</span></div>
