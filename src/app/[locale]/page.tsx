@@ -124,6 +124,14 @@ export default async function Home({ params }: HomeProps) {
               <div className="text-gray-400 text-xs">{t(safeLocale, 'platforms.nostr.description')}</div>
             </a>
             <a
+              href="https://x.com/PixelSurvivor"
+              target="_blank"
+              className="border border-gray-700 p-4 hover:border-gray-400 transition-all duration-300 bg-black/30 backdrop-blur-sm rounded-lg text-center group"
+            >
+              <div className="text-gray-300 font-bold mb-1 group-hover:text-white">{t(safeLocale, 'platforms.x.name')}</div>
+              <div className="text-gray-400 text-xs">{t(safeLocale, 'platforms.x.description')}</div>
+            </a>
+            <a
               href="https://ln.pixel.xx.kg"
               target="_blank"
               className="border border-yellow-800 p-4 hover:border-yellow-400 transition-all duration-300 bg-black/30 backdrop-blur-sm rounded-lg text-center group"

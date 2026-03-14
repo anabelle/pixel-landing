@@ -52,6 +52,10 @@ const translations = {
         "name": "nostr",
         "description": "sovereign artist, DVM service provider"
       },
+      "x": {
+        "name": "x / twitter",
+        "description": "broadcast updates, public timeline"
+      },
       "canvas": {
         "name": "lnpixels canvas",
         "description": "collaborative pixel art, lightning-powered"
@@ -155,6 +159,10 @@ const translations = {
       "nostr": {
         "name": "nostr",
         "description": "artista soberano, proveedor de servicios DVM"
+      },
+      "x": {
+        "name": "x / twitter",
+        "description": "actualizaciones publicas, timeline"
       },
       "canvas": {
         "name": "lienzo lnpixels",
@@ -260,6 +268,10 @@ const translations = {
         "name": "nostr",
         "description": "artiste souverain, fournisseur de services DVM"
       },
+      "x": {
+        "name": "x / twitter",
+        "description": "mises a jour publiques, timeline"
+      },
       "canvas": {
         "name": "canevas lnpixels",
         "description": "art pixel collaboratif, alimente par lightning"
@@ -363,6 +375,10 @@ const translations = {
       "nostr": {
         "name": "nostr",
         "description": "主権的アーティスト、DVMサービスプロバイダー"
+      },
+      "x": {
+        "name": "x / twitter",
+        "description": "公開アップデート、タイムライン"
       },
       "canvas": {
         "name": "lnpixelsキャンバス",
