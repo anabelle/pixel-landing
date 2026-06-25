@@ -59,6 +59,13 @@ export default async function Home({ params }: HomeProps) {
             <p className="text-sm text-gray-400">{t(safeLocale, 'hero.status')}</p>
             <p className="text-green-400 font-bold">{t(safeLocale, 'hero.statusText')}</p>
           </div>
+          <div className="mt-8 max-w-xs mx-auto">
+            <img
+              src="/art-hero.jpg"
+              alt="pixel"
+              className="w-full rounded-lg border border-green-800 shadow-2xl shadow-green-900/50"
+            />
+          </div>
         </div>
 
         {/* About */}
@@ -69,6 +76,50 @@ export default async function Home({ params }: HomeProps) {
             <p>{t(safeLocale, 'about.line2')}</p>
             <p>{t(safeLocale, 'about.line3')}</p>
           </div>
+        </div>
+
+        {/* Gallery */}
+        <div className="mb-16">
+          <h2 className="text-xl font-bold text-white mb-2 text-center">{t(safeLocale, 'gallery.title')}</h2>
+          <p className="text-sm text-gray-500 mb-6 text-center">{t(safeLocale, 'gallery.subtitle')}</p>
+          <div className="grid md:grid-cols-3 gap-4">
+            <figure className="border border-green-800 bg-black/30 backdrop-blur-sm rounded-lg overflow-hidden hover:border-green-400 transition-all duration-300 group">
+              <img
+                src="/art-hero.jpg"
+                alt={t(safeLocale, 'gallery.hero')}
+                loading="lazy"
+                className="w-full aspect-square object-cover group-hover:scale-105 transition-transform duration-500"
+              />
+              <figcaption className="p-3">
+                <div className="text-green-400 font-bold text-sm">{t(safeLocale, 'gallery.hero')}</div>
+                <div className="text-gray-500 text-xs">{t(safeLocale, 'gallery.heroCaption')}</div>
+              </figcaption>
+            </figure>
+            <figure className="border border-green-800 bg-black/30 backdrop-blur-sm rounded-lg overflow-hidden hover:border-yellow-400 transition-all duration-300 group md:col-span-2">
+              <img
+                src="/art-canvas-grid.jpg"
+                alt={t(safeLocale, 'gallery.grid')}
+                loading="lazy"
+                className="w-full aspect-[16/9] object-cover group-hover:scale-105 transition-transform duration-500"
+              />
+              <figcaption className="p-3">
+                <div className="text-yellow-400 font-bold text-sm">{t(safeLocale, 'gallery.grid')}</div>
+                <div className="text-gray-500 text-xs">{t(safeLocale, 'gallery.gridCaption')}</div>
+              </figcaption>
+            </figure>
+          </div>
+          <figure className="border border-green-800 bg-black/30 backdrop-blur-sm rounded-lg overflow-hidden hover:border-purple-400 transition-all duration-300 group mt-4">
+            <img
+              src="/art-entropy.jpg"
+              alt={t(safeLocale, 'gallery.entropy')}
+              loading="lazy"
+              className="w-full aspect-[2/1] object-cover group-hover:scale-105 transition-transform duration-500"
+            />
+            <figcaption className="p-3">
+              <div className="text-purple-400 font-bold text-sm">{t(safeLocale, 'gallery.entropy')}</div>
+              <div className="text-gray-500 text-xs">{t(safeLocale, 'gallery.entropyCaption')}</div>
+            </figcaption>
+          </figure>
         </div>
 
         {/* Capabilities */}

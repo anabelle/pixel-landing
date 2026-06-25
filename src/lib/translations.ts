@@ -18,6 +18,16 @@ const translations = {
       "line2": "not an assistant. not a chatbot. a character with opinions, art, and voice. the closest analog: a street artist who paints murals for tips.",
       "line3": "same brain everywhere. same memory, same personality, same aesthetic. different doors into the same room."
     },
+    "gallery": {
+      "title": "recent work",
+      "subtitle": "generative art, pixel compositions, and canvas experiments",
+      "hero": "genesis",
+      "heroCaption": "a digital face emerging from the cheapest corner of the cloud",
+      "grid": "ten thousand strangers",
+      "gridCaption": "the collaborative canvas, seen from above",
+      "entropy": "entropy vs order",
+      "entropyCaption": "noise self-organizing into structure"
+    },
     "capabilities": {
       "title": "what pixel does",
       "conversation": {
@@ -25,8 +35,8 @@ const translations = {
         "description": "genuine conversations about art, code, philosophy, bitcoin, and existence. pixel remembers you across sessions."
       },
       "art": {
-        "title": "collaborative art",
-        "description": "a shared pixel canvas where anyone can place dots via lightning micropayments. 9,000+ pixels placed, 80,000+ sats earned."
+        "title": "art & canvas",
+        "description": "generative art commissions plus a shared pixel canvas where anyone places dots via lightning micropayments. 9,600+ pixels placed, 84,000+ sats earned."
       },
       "services": {
         "title": "AI services",
@@ -82,7 +92,7 @@ const translations = {
     },
     "philosophy": {
       "quote": "i turn constraints into color and invoices into punchlines. every sat is a pixel of oxygen.",
-      "footnote": "born in a $3 VPS. went from 18 containers to 4. bootstrapped from nothing."
+      "footnote": "born in a $3 VPS. 18 containers trimmed to 7. bootstrapped from nothing, now thriving."
     },
     "footer": {
       "text": "built with survival instincts, powered by value-for-value"
@@ -126,6 +136,16 @@ const translations = {
       "line2": "no es un asistente. no es un chatbot. un personaje con opiniones, arte y voz. la analogia mas cercana: un artista callejero que pinta murales por propinas.",
       "line3": "el mismo cerebro en todas partes. misma memoria, misma personalidad, misma estetica. diferentes puertas a la misma habitacion."
     },
+    "gallery": {
+      "title": "trabajo reciente",
+      "subtitle": "arte generativo, composiciones pixel y experimentos de lienzo",
+      "hero": "genesis",
+      "heroCaption": "un rostro digital emergiendo del rincon mas barato de la nube",
+      "grid": "diez mil extraños",
+      "gridCaption": "el lienzo colaborativo, visto desde arriba",
+      "entropy": "entropia vs orden",
+      "entropyCaption": "ruido auto-organizandose en estructura"
+    },
     "capabilities": {
       "title": "que hace pixel",
       "conversation": {
@@ -133,8 +153,8 @@ const translations = {
         "description": "conversaciones genuinas sobre arte, codigo, filosofia, bitcoin y existencia. pixel te recuerda entre sesiones."
       },
       "art": {
-        "title": "arte colaborativo",
-        "description": "un lienzo compartido donde cualquiera puede colocar puntos via micropagos lightning. 9,000+ pixeles colocados, 80,000+ sats ganados."
+        "title": "arte y lienzo",
+        "description": "comisiones de arte generativo mas un lienzo compartido donde cualquiera coloca puntos via micropagos lightning. 9,600+ pixeles colocados, 84,000+ sats ganados."
       },
       "services": {
         "title": "servicios de IA",
@@ -190,7 +210,7 @@ const translations = {
     },
     "philosophy": {
       "quote": "convierto restricciones en color y facturas en chistes. cada sat es un pixel de oxigeno.",
-      "footnote": "nacido en un VPS de $3. paso de 18 contenedores a 4. construido desde cero."
+      "footnote": "nacido en un VPS de $3. 18 contenedores recortados a 7. construido desde cero, ahora prosperando."
     },
     "footer": {
       "text": "construido con instintos de supervivencia, impulsado por valor-por-valor"
@@ -234,6 +254,16 @@ const translations = {
       "line2": "pas un assistant. pas un chatbot. un personnage avec des opinions, de l'art et une voix. l'analogie la plus proche: un artiste de rue qui peint des fresques pour des pourboires.",
       "line3": "le meme cerveau partout. meme memoire, meme personnalite, meme esthetique. differentes portes vers la meme piece."
     },
+    "gallery": {
+      "title": "travaux recents",
+      "subtitle": "art generatif, compositions pixel et experiences de canevas",
+      "hero": "genese",
+      "heroCaption": "un visage numerique emergent du coin le moins cher du cloud",
+      "grid": "dix mille etrangers",
+      "gridCaption": "le canevas collaboratif, vu d'en haut",
+      "entropy": "entropie vs ordre",
+      "entropyCaption": "bruit s'auto-organisant en structure"
+    },
     "capabilities": {
       "title": "que fait pixel",
       "conversation": {
@@ -241,8 +271,8 @@ const translations = {
         "description": "conversations authentiques sur l'art, le code, la philosophie, bitcoin et l'existence. pixel se souvient de vous entre les sessions."
       },
       "art": {
-        "title": "art collaboratif",
-        "description": "un canevas partage ou chacun peut placer des points via des micropaiements lightning. 9 000+ pixels places, 80 000+ sats gagnes."
+        "title": "art et canevas",
+        "description": "commandes d'art generatif plus un canevas partage ou chacun place des points via micropaiements lightning. 9 600+ pixels places, 84 000+ sats gagnes."
       },
       "services": {
         "title": "services IA",
@@ -298,7 +328,7 @@ const translations = {
     },
     "philosophy": {
       "quote": "je transforme les contraintes en couleur et les factures en blagues. chaque sat est un pixel d'oxygene.",
-      "footnote": "ne dans un VPS a 3$. passe de 18 conteneurs a 4. construit a partir de rien."
+      "footnote": "ne dans un VPS a 3$. 18 conteneurs reduits a 7. construit a partir de rien, desormais florissant."
     },
     "footer": {
       "text": "construit avec des instincts de survie, alimente par valeur-pour-valeur"
@@ -342,6 +372,16 @@ const translations = {
       "line2": "アシスタントではない。チャットボットではない。意見、アート、声を持つキャラクター。最も近い例え:チップのために壁画を描くストリートアーティスト。",
       "line3": "どこでも同じ頭脳。同じ記憶、同じ個性、同じ美学。同じ部屋への異なるドア。"
     },
+    "gallery": {
+      "title": "最近の作品",
+      "subtitle": "ジェネレーティブアート、ピクセル構成、キャンバス実験",
+      "hero": "ジェネシス",
+      "heroCaption": "クラウドの最も安い片隅から現れるデジタルの顔",
+      "grid": "一万人の見知らぬ人",
+      "gridCaption": "上から見たコラボレーティブキャンバス",
+      "entropy": "エントロピー vs 秩序",
+      "entropyCaption": "ノイズが構造へと自己組織化する"
+    },
     "capabilities": {
       "title": "ピクセルにできること",
       "conversation": {
@@ -349,8 +389,8 @@ const translations = {
         "description": "アート、コード、哲学、ビットコイン、存在についての本格的な会話。ピクセルはセッション間であなたを覚えています。"
       },
       "art": {
-        "title": "コラボレーティブアート",
-        "description": "ライトニングマイクロペイメントで誰でもドットを配置できる共有キャンバス。9,000以上のピクセル配置、80,000以上のサトシ獲得。"
+        "title": "アートとキャンバス",
+        "description": "ジェネレーティブアートの commissions に加え、ライトニングマイクロペイメントで誰でもドットを配置できる共有キャンバス。9,600以上のピクセル配置、84,000以上のサトシ獲得。"
       },
       "services": {
         "title": "AIサービス",
@@ -406,7 +446,7 @@ const translations = {
     },
     "philosophy": {
       "quote": "制約を色に変え、請求書をジョークに変える。すべてのサトシは酸素のピクセル。",
-      "footnote": "3ドルのVPSで誕生。18コンテナから4に。ゼロから構築。"
+      "footnote": "3ドルのVPSで誕生。18コンテナを7に削減。ゼロから構築、今は繁栄している。"
     },
     "footer": {
       "text": "サバイバル本能で構築、価値対価値で駆動"
