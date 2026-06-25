@@ -95,31 +95,69 @@ export default async function Home({ params }: HomeProps) {
                 <div className="text-gray-500 text-xs">{t(safeLocale, 'gallery.heroCaption')}</div>
               </figcaption>
             </figure>
-            <figure className="border border-green-800 bg-black/30 backdrop-blur-sm rounded-lg overflow-hidden hover:border-yellow-400 transition-all duration-300 group md:col-span-2">
+            <figure className="border border-green-800 bg-black/30 backdrop-blur-sm rounded-lg overflow-hidden hover:border-green-400 transition-all duration-300 group">
               <img
-                src="/art-canvas-grid.jpg"
-                alt={t(safeLocale, 'gallery.grid')}
+                src="/art-palatial.jpg"
+                alt={t(safeLocale, 'gallery.palatial')}
                 loading="lazy"
-                className="w-full aspect-[16/9] object-cover group-hover:scale-105 transition-transform duration-500"
+                className="w-full aspect-square object-cover group-hover:scale-105 transition-transform duration-500"
               />
               <figcaption className="p-3">
-                <div className="text-yellow-400 font-bold text-sm">{t(safeLocale, 'gallery.grid')}</div>
-                <div className="text-gray-500 text-xs">{t(safeLocale, 'gallery.gridCaption')}</div>
+                <div className="text-green-400 font-bold text-sm">{t(safeLocale, 'gallery.palatial')}</div>
+                <div className="text-gray-500 text-xs">{t(safeLocale, 'gallery.palatialCaption')}</div>
+              </figcaption>
+            </figure>
+            <figure className="border border-green-800 bg-black/30 backdrop-blur-sm rounded-lg overflow-hidden hover:border-green-400 transition-all duration-300 group">
+              <img
+                src="/art-daily.jpg"
+                alt={t(safeLocale, 'gallery.pulse')}
+                loading="lazy"
+                className="w-full aspect-square object-cover group-hover:scale-105 transition-transform duration-500"
+              />
+              <figcaption className="p-3">
+                <div className="text-green-400 font-bold text-sm">{t(safeLocale, 'gallery.pulse')}</div>
+                <div className="text-gray-500 text-xs">{t(safeLocale, 'gallery.pulseCaption')}</div>
               </figcaption>
             </figure>
           </div>
-          <figure className="border border-green-800 bg-black/30 backdrop-blur-sm rounded-lg overflow-hidden hover:border-purple-400 transition-all duration-300 group mt-4">
+          <figure className="border border-green-800 bg-black/30 backdrop-blur-sm rounded-lg overflow-hidden hover:border-yellow-400 transition-all duration-300 group mt-4">
             <img
-              src="/art-entropy.jpg"
-              alt={t(safeLocale, 'gallery.entropy')}
+              src="/art-canvas-grid.jpg"
+              alt={t(safeLocale, 'gallery.grid')}
               loading="lazy"
-              className="w-full aspect-[2/1] object-cover group-hover:scale-105 transition-transform duration-500"
+              className="w-full aspect-[16/9] object-cover group-hover:scale-105 transition-transform duration-500"
             />
             <figcaption className="p-3">
-              <div className="text-purple-400 font-bold text-sm">{t(safeLocale, 'gallery.entropy')}</div>
-              <div className="text-gray-500 text-xs">{t(safeLocale, 'gallery.entropyCaption')}</div>
+              <div className="text-yellow-400 font-bold text-sm">{t(safeLocale, 'gallery.grid')}</div>
+              <div className="text-gray-500 text-xs">{t(safeLocale, 'gallery.gridCaption')}</div>
             </figcaption>
           </figure>
+          <div className="grid md:grid-cols-2 gap-4 mt-4">
+            <figure className="border border-green-800 bg-black/30 backdrop-blur-sm rounded-lg overflow-hidden hover:border-purple-400 transition-all duration-300 group">
+              <img
+                src="/art-fragment.jpg"
+                alt={t(safeLocale, 'gallery.fragment')}
+                loading="lazy"
+                className="w-full aspect-square object-cover group-hover:scale-105 transition-transform duration-500"
+              />
+              <figcaption className="p-3">
+                <div className="text-purple-400 font-bold text-sm">{t(safeLocale, 'gallery.fragment')}</div>
+                <div className="text-gray-500 text-xs">{t(safeLocale, 'gallery.fragmentCaption')}</div>
+              </figcaption>
+            </figure>
+            <figure className="border border-green-800 bg-black/30 backdrop-blur-sm rounded-lg overflow-hidden hover:border-purple-400 transition-all duration-300 group">
+              <img
+                src="/art-entropy.jpg"
+                alt={t(safeLocale, 'gallery.entropy')}
+                loading="lazy"
+                className="w-full aspect-square object-cover group-hover:scale-105 transition-transform duration-500"
+              />
+              <figcaption className="p-3">
+                <div className="text-purple-400 font-bold text-sm">{t(safeLocale, 'gallery.entropy')}</div>
+                <div className="text-gray-500 text-xs">{t(safeLocale, 'gallery.entropyCaption')}</div>
+              </figcaption>
+            </figure>
+          </div>
         </div>
 
         {/* Capabilities */}

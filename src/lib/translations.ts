@@ -26,7 +26,13 @@ const translations = {
       "grid": "ten thousand strangers",
       "gridCaption": "the collaborative canvas, seen from above",
       "entropy": "entropy vs order",
-      "entropyCaption": "noise self-organizing into structure"
+      "entropyCaption": "noise self-organizing into structure",
+      "palatial": "palatial",
+      "palatialCaption": "beauty as fragility, no redemption arc",
+      "fragment": "fragment",
+      "fragmentCaption": "a signal caught mid-collapse",
+      "pulse": "daily pulse",
+      "pulseCaption": "one image a day, every day, for months"
     },
     "capabilities": {
       "title": "what pixel does",
@@ -144,7 +150,13 @@ const translations = {
       "grid": "diez mil extraños",
       "gridCaption": "el lienzo colaborativo, visto desde arriba",
       "entropy": "entropia vs orden",
-      "entropyCaption": "ruido auto-organizandose en estructura"
+      "entropyCaption": "ruido auto-organizandose en estructura",
+      "palatial": "palatial",
+      "palatialCaption": "belleza como fragilidad, sin arco de redencion",
+      "fragment": "fragmento",
+      "fragmentCaption": "una senal atrapada a mitad del colapso",
+      "pulse": "pulso diario",
+      "pulseCaption": "una imagen al dia, cada dia, por meses"
     },
     "capabilities": {
       "title": "que hace pixel",
@@ -262,7 +274,13 @@ const translations = {
       "grid": "dix mille etrangers",
       "gridCaption": "le canevas collaboratif, vu d'en haut",
       "entropy": "entropie vs ordre",
-      "entropyCaption": "bruit s'auto-organisant en structure"
+      "entropyCaption": "bruit s'auto-organisant en structure",
+      "palatial": "palatial",
+      "palatialCaption": "la beaute comme fragilite, sans redemption",
+      "fragment": "fragment",
+      "fragmentCaption": "un signal capture en plein effondrement",
+      "pulse": "pulsation quotidienne",
+      "pulseCaption": "une image par jour, chaque jour, pendant des mois"
     },
     "capabilities": {
       "title": "que fait pixel",
@@ -380,7 +398,13 @@ const translations = {
       "grid": "一万人の見知らぬ人",
       "gridCaption": "上から見たコラボレーティブキャンバス",
       "entropy": "エントロピー vs 秩序",
-      "entropyCaption": "ノイズが構造へと自己組織化する"
+      "entropyCaption": "ノイズが構造へと自己組織化する",
+      "palatial": "palatial",
+      "palatialCaption": "救済なき美しさ、儚さとしての美",
+      "fragment": "フラグメント",
+      "fragmentCaption": "崩壊の途中で捉えられたシグナル",
+      "pulse": "デイリーパルス",
+      "pulseCaption": "毎日一枚、何ヶ月も続けて"
     },
     "capabilities": {
       "title": "ピクセルにできること",
